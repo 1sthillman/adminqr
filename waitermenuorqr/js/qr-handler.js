@@ -194,7 +194,11 @@ function renderMenuItems(categoryName) {
 }
 
 function setupEventListeners() {
-    document.getElementById('callWaiterButton').addEventListener('click', callWaiter);
+    document.getElementById('callWaiterButton').addEventListener('click', () => callWaiter('waiter'));
+    const coalBtn = document.getElementById('callCoalButton');
+    if (coalBtn) {
+        coalBtn.addEventListener('click', () => callWaiter('coal'));
+    }
     document.getElementById('viewCartButton').addEventListener('click', toggleCartPanel);
     document.getElementById('placeOrderButton').addEventListener('click', placeOrder);
     
@@ -235,8 +239,8 @@ function setupRealtimeSubscriptions() {
     realtimeChannels.push(productChanges);
 }
 
-async function callWaiter() {
-    const callButton = document.getElementById('callWaiterButton');
+async function callWaiter(type = 'waiter') {
+    const callButton = type === 'coal' ? document.getElementById('callCoalButton') : document.getElementById('callWaiterButton');
     callButton.disabled = true;
     callButton.innerHTML = `<i class="ri-loader-2-line animate-spin mr-2"></i> Çağrılıyor...`;
 
@@ -244,23 +248,28 @@ async function callWaiter() {
         const { error } = await supabase.from('waiter_calls').insert({
             table_id: tableId,
             table_number: tableNumber,
-            status: 'waiting'
+            status: 'waiting',
+            type: type
         });
 
         if (error) throw error;
 
-        showSuccess('Garson çağrıldı. En kısa sürede masanıza gelecektir.');
+        if (type === 'coal') {
+            showSuccess('Köz isteğiniz garsona iletildi.');
+        } else {
+            showSuccess('Garson çağrıldı. En kısa sürede masanıza gelecektir.');
+        }
         // Butonu bir süre pasif tut
         setTimeout(() => {
             callButton.disabled = false;
-            callButton.innerHTML = `<i class="ri-user-voice-line mr-1"></i> Garson Çağır`;
+            callButton.innerHTML = type === 'coal' ? '<i class="ri-fire-line mr-1"></i> Köz İstiyorum' : '<i class="ri-user-voice-line mr-1"></i> Garson Çağır';
         }, 20000); // 20 saniye bekleme süresi
 
     } catch (error) {
         console.error('Garson çağırma hatası:', error);
-        showError('Garson çağrılamadı. Lütfen tekrar deneyin.');
+        showError(type === 'coal' ? 'Köz isteği gönderilemedi.' : 'Garson çağrılamadı. Lütfen tekrar deneyin.');
         callButton.disabled = false;
-        callButton.innerHTML = `<i class="ri-user-voice-line mr-1"></i> Garson Çağır`;
+        callButton.innerHTML = type === 'coal' ? '<i class="ri-fire-line mr-1"></i> Köz İstiyorum' : '<i class="ri-user-voice-line mr-1"></i> Garson Çağır';
     }
 }
 
