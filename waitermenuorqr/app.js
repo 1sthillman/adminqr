@@ -871,9 +871,13 @@ function handleWaiterCallChange(payload) {
     // Yeni garson çağrısı eklendiğinde bildirimlere ekle
     if (payload.eventType === 'INSERT') {
         const call = payload.new;
+        const isCoal = call.type === 'coal';
 
         if (appState.currentUser.role === 'waiter') {
-            const message = `Masa ${call.table_number} garson çağırıyor`;
+            const message = isCoal
+                ? `Masa ${call.table_number} köz istiyor`
+                : `Masa ${call.table_number} garson çağırıyor`;
+
             const callId = call.id;
             
             // Bildirim ekle
@@ -910,7 +914,7 @@ function handleWaiterCallChange(payload) {
             const tableElement = document.querySelector(`.table-card[data-table="${call.table_number}"]`);
             if (tableElement) {
                 tableElement.classList.add('animate-pulse');
-                tableElement.style.borderColor = '#ef4444'; // kırmızı renk
+                tableElement.style.borderColor = isCoal ? '#F97316' : '#ef4444'; // turuncu for coal, kırmızı for waiter
                 tableElement.style.borderWidth = '2px';
                 // Çağrı yanıtlanana kadar kırmızı kalacak
             }
