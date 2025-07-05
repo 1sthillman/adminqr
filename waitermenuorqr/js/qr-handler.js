@@ -251,7 +251,7 @@ async function callWaiter(type = 'waiter') {
         const { error } = await supabase.from('waiter_calls').insert({
             table_id: tableId,
             table_number: tableNumber,
-            status: 'waiting',
+            status: type === 'coal' ? 'coal' : 'waiting',
             type: type
         });
 
