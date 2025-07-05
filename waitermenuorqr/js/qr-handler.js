@@ -88,6 +88,9 @@ async function loadAndRenderMenu() {
         const kategoriler = kategorilerRes.data;
         const urunler = urunlerRes.data;
 
+        console.log('Kategoriler:', kategorilerRes.data);
+        console.log('Urunler:', urunlerRes.data);
+
         // 1) Kategorileri belirle (eğer tablo boşsa ürünlerden türet)
         let categoryNames = kategoriler.length > 0
             ? kategoriler.map(k => k.ad)
@@ -152,6 +155,8 @@ function renderMenuItems(categoryName) {
         container.innerHTML = `<p class="text-center p-4 text-gray-500">Bu kategoride ürün bulunmuyor.</p>`;
         return;
     }
+
+    console.log('renderMenuItems', categoryName, itemsToShow.length);
 
     itemsToShow.forEach(item => {
         const itemInCart = cart.find(cartItem => cartItem.id === item.id);
