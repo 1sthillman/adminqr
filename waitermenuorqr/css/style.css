@@ -225,4 +225,20 @@ textarea::placeholder, input::placeholder {
     background: rgba(0, 230, 255, 0.25) !important;
     color: #ffffff !important;
     box-shadow: 0 0 6px rgba(0, 230, 255, 0.8);
+}
+
+/* === Header Glass === */
+.header-glass {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+/* further shrink category buttons on very small screens */
+@media (max-width: 375px) {
+    .menu-category-button {
+        font-size: 0.6rem !important;
+        padding: 2px 8px !important;
+    }
 } 
