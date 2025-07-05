@@ -25,13 +25,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
 async function initQrPage() {
     try {
-        const urlParams = new URLSearchParams(window.location.search);
-        tableNumber = urlParams.get('table');
-        
-        if (!tableNumber) {
+    const urlParams = new URLSearchParams(window.location.search);
+    tableNumber = urlParams.get('table');
+    
+    if (!tableNumber) {
             return showError('Geçersiz masa numarası.');
-        }
-        
+    }
+    
         // Supabase bağlantısını oluştur
         supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
         console.log('Supabase bağlantısı kuruldu.');
@@ -63,10 +63,10 @@ async function getOrCreateTable() {
             onConflict: 'masa_no', // masa_no benzersiz
             ignoreDuplicates: false
         })
-        .select('id')
-        .single();
-
-    if (error) {
+                .select('id')
+                .single();
+            
+        if (error) {
         throw new Error('Masa oluşturulamadı/çekilemedi: ' + error.message);
     }
 
@@ -150,12 +150,12 @@ function renderMenuItems(categoryName) {
     const itemsToShow = categoryName === 'all'
         ? Object.values(menu).flat()
         : (menu[categoryName] || []);
-
+    
     if (itemsToShow.length === 0) {
         container.innerHTML = `<p class="text-center p-4 text-gray-500">Bu kategoride ürün bulunmuyor.</p>`;
         return;
     }
-
+    
     console.log('renderMenuItems', categoryName, itemsToShow.length);
 
     itemsToShow.forEach(item => {
@@ -197,7 +197,10 @@ function setupEventListeners() {
     document.getElementById('callWaiterButton').addEventListener('click', () => callWaiter('waiter'));
     const coalBtn = document.getElementById('callCoalButton');
     if (coalBtn) {
-        coalBtn.addEventListener('click', () => callWaiter('coal'));
+        coalBtn.addEventListener('click', () => {
+            console.log('Coal button clicked');
+            callWaiter('coal');
+        });
     }
     document.getElementById('viewCartButton').addEventListener('click', toggleCartPanel);
     document.getElementById('placeOrderButton').addEventListener('click', placeOrder);
@@ -338,10 +341,10 @@ function updateCartUI() {
             `;
             cartItemsList.appendChild(itemElement);
         });
-
+        
         const total = cart.reduce((sum, item) => sum + (item.fiyat * item.quantity), 0);
         cartTotal.textContent = `${total.toLocaleString('tr-TR')}₺`;
-
+        
     } else {
         cartButton.style.transform = 'scale(0)';
         placeOrderButton.disabled = true;
@@ -356,11 +359,11 @@ function toggleCartPanel() {
 
 async function placeOrder() {
     const placeOrderButton = document.getElementById('placeOrderButton');
-    if (cart.length === 0) {
+        if (cart.length === 0) {
         return showError('Sipariş vermek için sepetinizde ürün olmalı.');
-    }
-
-    placeOrderButton.disabled = true;
+        }
+        
+        placeOrderButton.disabled = true;
     placeOrderButton.innerHTML = `<i class="ri-loader-2-line animate-spin mr-2"></i> Gönderiliyor...`;
 
     try {
@@ -379,9 +382,9 @@ async function placeOrder() {
                 note: orderNote,
                 source: 'qr'
             })
-            .select('id')
-            .single();
-
+                .select('id')
+                .single();
+                
         if (orderError) throw orderError;
 
         const newOrderId = orderData.id;
@@ -389,8 +392,8 @@ async function placeOrder() {
         // 2. "order_items" tablosuna sepetteki her bir ürünü ekle
         const orderItems = cart.map(item => ({
             order_id: newOrderId,
-            menu_item_id: item.id,
-            quantity: item.quantity,
+                menu_item_id: item.id,
+                quantity: item.quantity,
             price: item.fiyat,
             name: item.ad,
         }));
@@ -448,7 +451,7 @@ function showToast(message, type = 'success') {
     
     toastMessage.textContent = message;
     toast.classList.remove('hidden');
-
+    
     setTimeout(() => {
         toast.classList.add('hidden');
     }, 4000);
