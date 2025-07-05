@@ -163,7 +163,7 @@ function renderMenuItems(categoryName) {
         const imageUrl = item.image_url || DEFAULT_IMAGES[item.kategori.toLowerCase()] || DEFAULT_IMAGES.default;
 
         const itemElement = document.createElement('div');
-        itemElement.className = 'bg-white rounded-lg shadow-sm p-3 flex justify-between items-center';
+        itemElement.className = 'glass-card neon-border p-4 flex flex-col justify-between h-full';
         itemElement.innerHTML = `
             <div class="flex items-center flex-1">
                 <div class="w-16 h-16 mr-3 rounded-lg overflow-hidden flex-shrink-0">

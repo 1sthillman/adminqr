@@ -7,12 +7,12 @@
     <meta name="description" content="Restoran Garson Çağır ve Sipariş Servisi">
     <title>Restoran Menü</title>
     <script src="https://cdn.tailwindcss.com/3.4.16"></script>
-    <script>tailwind.config={theme:{extend:{colors:{primary:'#FF6B35',secondary:'#3A86FF'},borderRadius:{'none':'0px','sm':'4px',DEFAULT:'8px','md':'12px','lg':'16px','xl':'20px','2xl':'24px','3xl':'32px','full':'9999px','button':'8px'}}}}</script>
+    <script>tailwind.config={theme:{extend:{colors:{primary:'#00E6FF',secondary:'#FF00E6'},borderRadius:{'none':'0px','sm':'4px',DEFAULT:'8px','md':'12px','lg':'16px','xl':'20px','2xl':'24px','3xl':'32px','full':'9999px','button':'8px'}}}}</script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css">
     <link rel="stylesheet" href="css/style.css">
 </head>
-<body class="bg-gray-50 min-h-screen">
+<body class="min-h-screen text-white">
     <div id="qrPage" class="hidden pb-20">
         <div class="bg-white shadow-md p-4 fixed top-0 left-0 right-0 z-10">
             <div class="flex items-center justify-between">
@@ -55,7 +55,7 @@
             </div>
 
             <!-- Menü Öğeleri -->
-            <div id="menuItemsContainer" class="space-y-3 mb-24">
+            <div id="menuItemsContainer" class="grid grid-cols-2 gap-4 mb-24">
                 <!-- Menü öğeleri buraya dinamik olarak eklenecek -->
                 <div class="animate-pulse flex justify-center items-center p-4">
                     <i class="ri-loader-2-line text-primary text-3xl animate-spin"></i>

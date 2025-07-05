@@ -4,6 +4,8 @@ body {
     font-family: 'Inter', sans-serif;
     background-color: #f9f9f9;
     min-height: 100vh;
+    background: radial-gradient(circle at 20% 20%, #1b1b22 0%, #0b0b10 100%);
+    color: #f1f5f9; /* Tailwind slate-100 */
 }
 
 .notification-sound {
@@ -134,4 +136,29 @@ input[type="number"]::-webkit-outer-spin-button {
     #tableGrid {
         grid-template-columns: repeat(10, minmax(0, 1fr));
     }
+}
+
+/* ==================== Futuristic Glassmorphism & Neon Styles ==================== */
+.glass-card {
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(0, 230, 255, 0.25);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.glass-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 6px 30px rgba(0, 230, 255, 0.45);
+}
+
+.neon-border {
+    box-shadow: 0 0 6px rgba(0, 230, 255, 0.6) inset, 0 0 12px rgba(0, 230, 255, 0.5);
+}
+
+/* Grid tweaks for menu items */
+#menuItemsContainer.grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
 } 
