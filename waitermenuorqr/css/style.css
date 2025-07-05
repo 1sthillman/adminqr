@@ -161,4 +161,24 @@ input[type="number"]::-webkit-outer-spin-button {
 /* Grid tweaks for menu items */
 #menuItemsContainer.grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+/* === Overrides to eliminate pure white/light patches === */
+.bg-white, .bg-gray-50, .bg-gray-100 {
+    background-color: rgba(255, 255, 255, 0.04) !important;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.border-gray-300 {
+    border-color: rgba(255, 255, 255, 0.18) !important;
+}
+
+.text-gray-500 {
+    color: #94a3b8 !important; /* slate-400 */
+}
+
+.text-gray-600 {
+    color: #cbd5e1 !important; /* slate-300 */
 } 
