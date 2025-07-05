@@ -50,14 +50,9 @@
         <div class="mt-20 p-4">
             <!-- Kategori Seçimi -->
             <div class="mb-4 overflow-x-auto">
-                <div class="flex space-x-2 pb-2">
-                    <button class="menu-category-button flex-shrink-0 px-4 py-2 rounded-full bg-primary text-white" data-category="all">Tümü</button>
-                    <button class="menu-category-button flex-shrink-0 px-4 py-2 rounded-full bg-gray-200 text-gray-700" data-category="starters">Başlangıçlar</button>
-                    <button class="menu-category-button flex-shrink-0 px-4 py-2 rounded-full bg-gray-200 text-gray-700" data-category="mains">Ana Yemekler</button>
-                    <button class="menu-category-button flex-shrink-0 px-4 py-2 rounded-full bg-gray-200 text-gray-700" data-category="drinks">İçecekler</button>
-                    <button class="menu-category-button flex-shrink-0 px-4 py-2 rounded-full bg-gray-200 text-gray-700" data-category="desserts">Tatlılar</button>
-                    </div>
-                </div>
+                <!-- Dinamik kategori butonlarının ekleneceği alan -->
+                <div id="categoryButtons" class="flex space-x-2 pb-2"></div>
+            </div>
 
             <!-- Menü Öğeleri -->
             <div id="menuItemsContainer" class="space-y-3 mb-24">
@@ -84,6 +79,12 @@
             <button id="placeOrderButton" class="w-full bg-primary text-white py-3 rounded-button font-medium hover:bg-opacity-90 transition-all disabled:opacity-50 disabled:cursor-not-allowed">
                 Sipariş Ver
             </button>
+        </div>
+
+        <!-- Toast Bildirim -->
+        <div id="toast" class="fixed bottom-8 left-1/2 -translate-x-1/2 transform bg-green-500 text-white px-4 py-2 rounded-lg shadow-lg hidden flex items-center space-x-2 z-50">
+            <span id="toastIcon"></span>
+            <span id="toastMessage" class="font-medium"></span>
         </div>
 
         <!-- Sepete Ekle Butonu -->
