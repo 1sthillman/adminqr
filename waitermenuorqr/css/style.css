@@ -1,0 +1,137 @@
+:where([class^="ri-"])::before { content: "\f3c2"; }
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: #f9f9f9;
+    min-height: 100vh;
+}
+
+.notification-sound {
+    display: none;
+}
+
+.table-card {
+    transition: all 0.3s ease;
+}
+
+.table-card:hover {
+    transform: translateY(-2px);
+}
+
+.table-empty {
+    border-color: #e5e7eb;
+}
+
+.table-active {
+    border-color: #3A86FF;
+}
+
+.table-ready {
+    border-color: #10B981;
+}
+
+.table-delivered {
+    border-color: #FBBF24;
+}
+
+.table-served {
+    border-color: #8B5CF6;
+}
+
+.fade-in {
+    animation: fadeIn 0.3s ease-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.slide-up {
+    animation: slideUp 0.3s ease-out;
+}
+
+@keyframes slideUp {
+    from { transform: translateY(30px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+.shake {
+    animation: shake 0.5s ease-in-out;
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+    20%, 40%, 60%, 80% { transform: translateX(5px); }
+}
+
+/* QR kod sayfası için özel stiller */
+#qrPage {
+    animation: fadeIn 0.5s ease-out;
+}
+
+#callWaiterButton {
+    transition: all 0.3s ease;
+}
+
+#callWaiterButton:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+#callWaiterButton:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
+#errorAlert, #successAlert, #waiterResponseAlert {
+    animation: slideUp 0.3s ease-out;
+}
+
+/* Yükleme animasyonu */
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+.animate-spin {
+    animation: spin 1s linear infinite;
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Responsive grid */
+@media (min-width: 640px) {
+    #tableGrid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+}
+
+@media (min-width: 768px) {
+    #tableGrid {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+}
+
+@media (min-width: 1024px) {
+    #tableGrid {
+        grid-template-columns: repeat(5, minmax(0, 1fr));
+    }
+}
+
+@media (min-width: 1280px) {
+    #tableGrid {
+        grid-template-columns: repeat(8, minmax(0, 1fr));
+    }
+}
+
+@media (min-width: 1536px) {
+    #tableGrid {
+        grid-template-columns: repeat(10, minmax(0, 1fr));
+    }
+} 

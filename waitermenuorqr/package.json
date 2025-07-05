@@ -1,0 +1,35 @@
+{
+  "name": "restoran-app",
+  "version": "1.0.0",
+  "description": "Restoran Yönetim Sistemi - Adisyon Uygulaması",
+  "main": "index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "npx cap sync",
+    "android": "npx cap open android",
+    "add-android": "npx cap add android",
+    "sync": "npx cap sync"
+  },
+  "keywords": [
+    "restoran",
+    "adisyon",
+    "yönetim",
+    "sipariş",
+    "mobil"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@capacitor/android": "^5.7.0",
+    "@capacitor/app": "^5.0.7",
+    "@capacitor/cli": "^5.7.0",
+    "@capacitor/core": "^5.7.0",
+    "@capacitor/device": "^5.0.7",
+    "@capacitor/local-notifications": "^5.0.7",
+    "@capacitor/splash-screen": "^5.0.7",
+    "@supabase/supabase-js": "^2.50.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.8.3"
+  }
+}
