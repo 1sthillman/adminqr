@@ -192,4 +192,37 @@ textarea, input, select {
 
 textarea::placeholder, input::placeholder {
     color: #94a3b8 !important;
+}
+
+/* === Glass Buttons === */
+.glass-btn {
+    background: rgba(255, 255, 255, 0.08) !important;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    box-shadow: 0 0 8px rgba(0, 230, 255, 0.6);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    color: #00E6FF !important;
+}
+.glass-btn:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 0 12px rgba(0, 230, 255, 0.9);
+}
+.glass-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+/* === Category Buttons Smaller & Glass === */
+.menu-category-button {
+    padding: 4px 12px !important;
+    font-size: 0.75rem !important; /* text-xs */
+    background: rgba(255, 255, 255, 0.05) !important;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    color: #cbd5e1 !important;
+}
+.menu-category-button.bg-primary {
+    background: rgba(0, 230, 255, 0.25) !important;
+    color: #ffffff !important;
+    box-shadow: 0 0 6px rgba(0, 230, 255, 0.8);
 } 
