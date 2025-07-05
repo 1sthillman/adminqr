@@ -356,7 +356,9 @@ async function placeOrder() {
 
     try {
         const totalAmount = cart.reduce((sum, item) => sum + item.fiyat * item.quantity, 0);
-        const orderNote = document.getElementById('orderNoteInput').value || null;
+        // Not girişi kutusu her zaman mevcut olmayabilir. Güvenli tarafta kalarak null kontrolü yapalım.
+        const orderNoteInputEl = document.getElementById('orderNoteInput');
+        const orderNote = orderNoteInputEl ? orderNoteInputEl.value : null;
 
         // 1. "orders" tablosuna ana sipariş kaydını oluştur
         const { data: orderData, error: orderError } = await supabase
@@ -397,7 +399,9 @@ async function placeOrder() {
 
         // Sipariş sonrası arayüzü temizle
         cart = [];
-        document.getElementById('orderNoteInput').value = '';
+        if (orderNoteInputEl) {
+            orderNoteInputEl.value = '';
+        }
         updateCartUI();
         toggleCartPanel();
         renderMenuItems(document.querySelector('.menu-category-button.bg-primary')?.dataset.category || 'all');
