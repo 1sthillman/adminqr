@@ -88,24 +88,30 @@ async function loadAndRenderMenu() {
         const kategoriler = kategorilerRes.data;
         const urunler = urunlerRes.data;
 
+        // 1) Kategorileri belirle (eğer tablo boşsa ürünlerden türet)
+        let categoryNames = kategoriler.length > 0
+            ? kategoriler.map(k => k.ad)
+            : [...new Set(urunler.map(u => u.kategori))];
+
         // Menüyü yapılandır
         menu = {};
-        kategoriler.forEach(k => {
-            menu[k.ad] = [];
+        categoryNames.forEach(name => {
+            menu[name] = [];
         });
 
         urunler.forEach(urun => {
             if (menu[urun.kategori]) {
                 menu[urun.kategori].push(urun);
             } else {
-                // Eğer ürünün kategorisi tanımlı değilse, "Diğer" gibi bir kategoriye eklenebilir
                 if (!menu['Diğer']) menu['Diğer'] = [];
                 menu['Diğer'].push(urun);
             }
         });
 
-        renderCategoryButtons(kategoriler.map(k => k.ad));
-        renderMenuItems(kategoriler[0]?.ad || 'all');
+        // 2) Kategori butonlarını "Tümü" + diğerleri şeklinde çiz
+        renderCategoryButtons(['all', ...categoryNames]);
+        // 3) Başlangıçta tüm ürünleri göster
+        renderMenuItems('all');
 
     } catch (error) {
         console.error('Menü yüklenirken hata:', error);
@@ -119,7 +125,7 @@ function renderCategoryButtons(categories) {
     categories.forEach(categoryName => {
         const button = document.createElement('button');
         button.className = 'menu-category-button flex-shrink-0 px-4 py-2 text-sm font-medium rounded-full mr-2 bg-gray-200 text-gray-700 transition-colors duration-200';
-        button.textContent = categoryName;
+        button.textContent = categoryName === 'all' ? 'Tümü' : categoryName;
         button.dataset.category = categoryName;
         button.addEventListener('click', () => {
             document.querySelectorAll('.menu-category-button').forEach(btn => btn.classList.remove('bg-primary', 'text-white'));
@@ -138,7 +144,9 @@ function renderCategoryButtons(categories) {
 function renderMenuItems(categoryName) {
     const container = document.getElementById('menuItemsContainer');
     container.innerHTML = '';
-    const itemsToShow = menu[categoryName] || [];
+    const itemsToShow = categoryName === 'all'
+        ? Object.values(menu).flat()
+        : (menu[categoryName] || []);
 
     if (itemsToShow.length === 0) {
         container.innerHTML = `<p class="text-center p-4 text-gray-500">Bu kategoride ürün bulunmuyor.</p>`;
