@@ -56,32 +56,22 @@ async function initQrPage() {
 }
 
 async function getOrCreateTable() {
+    // Masa numarasına göre kayıt varsa getirir, yoksa oluşturur
     const { data, error } = await supabase
         .from('masalar')
+        .upsert({ masa_no: parseInt(tableNumber, 10), durum: 'bos' }, {
+            onConflict: 'masa_no', // masa_no benzersiz
+            ignoreDuplicates: false
+        })
         .select('id')
-        .eq('masa_no', tableNumber)
         .single();
 
-    if (error && error.code !== 'PGRST116') { // PGRST116: "single" sorguda sonuç bulunamadı hatası
-        throw new Error('Masa bilgisi alınamadı: ' + error.message);
+    if (error) {
+        throw new Error('Masa oluşturulamadı/çekilemedi: ' + error.message);
     }
 
-    if (data) {
-        tableId = data.id;
-        console.log(`Masa ${tableNumber} bulundu. ID: ${tableId}`);
-    } else {
-        const { data: newTable, error: insertError } = await supabase
-            .from('masalar')
-            .insert({ masa_no: tableNumber, durum: 'bos' })
-            .select('id')
-            .single();
-
-        if (insertError) {
-            throw new Error('Yeni masa oluşturulamadı: ' + insertError.message);
-        }
-        tableId = newTable.id;
-        console.log(`Masa ${tableNumber} oluşturuldu. ID: ${tableId}`);
-    }
+    tableId = data.id;
+    console.log(`Masa ${tableNumber} hazır. ID: ${tableId}`);
 }
 
 async function loadAndRenderMenu() {
