@@ -79,7 +79,7 @@ async function loadAndRenderMenu() {
         // Kategorileri ve ürünleri aynı anda çek
         const [kategorilerRes, urunlerRes] = await Promise.all([
             supabase.from('kategoriler').select('ad, sira').order('sira'),
-            supabase.from('urunler').select('*').eq('mevcut', true).order('ad')
+            supabase.from('urunler').select('*').order('ad')
         ]);
 
         if (kategorilerRes.error) throw kategorilerRes.error;
