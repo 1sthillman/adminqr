@@ -368,6 +368,7 @@ async function placeOrder() {
                 status: 'pending_approval', // Garson onayı bekliyor
                 total_price: totalAmount,
                 note: orderNote,
+                siparis_notu: orderNote, // Eski panel uyumluluğu için
                 source: 'qr'
             })
             .select('id')
