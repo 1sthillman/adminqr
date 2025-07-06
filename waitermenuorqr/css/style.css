@@ -344,4 +344,63 @@ textarea::placeholder, input::placeholder {
         bottom: 80px !important;
         transform: translateX(-50%) !important;
     }
+}
+
+/* Sticky kategori barı */
+.sticky.top-20 {
+    position: sticky;
+    top: 5.5rem;
+    z-index: 20;
+    background: rgba(0, 0, 0, 0.10);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+}
+
+/* Sepet paneli ve sepete git butonu sabit ve üstte */
+#orderCartPanel {
+    z-index: 50 !important;
+    position: fixed !important;
+    bottom: 5.5rem !important;
+    right: 1rem !important;
+    left: 1rem !important;
+    max-width: 400px;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 18px;
+    box-shadow: 0 0 24px 2px rgba(0,255,255,0.25), 0 2px 32px 0 rgba(0,255,255,0.10);
+}
+@media (min-width: 640px) {
+    #orderCartPanel {
+        left: 50% !important;
+        transform: translateX(-50%);
+        right: auto !important;
+    }
+}
+#viewCartButton {
+    z-index: 50 !important;
+    position: fixed !important;
+    bottom: 1.5rem !important;
+    right: 1.5rem !important;
+    box-shadow: 0 0 16px 2px rgba(0,255,255,0.45), 0 2px 24px 0 rgba(0,255,255,0.18);
+}
+
+/* Kategori butonları taşma ve kaydırma */
+.flex.space-x-2.pb-2 {
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
+    scrollbar-color: #67e8f9 #22292f;
+}
+.flex.space-x-2.pb-2::-webkit-scrollbar {
+    height: 6px;
+    background: #22292f;
+}
+.flex.space-x-2.pb-2::-webkit-scrollbar-thumb {
+    background: #67e8f9;
+    border-radius: 8px;
+}
+
+/* Garson çağırma ve köz butonları üstte ve çakışmasın */
+#callWaiterButton, #hookahButton {
+    z-index: 40 !important;
 } 

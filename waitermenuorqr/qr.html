@@ -14,18 +14,18 @@
 </head>
 <body class="bg-gray-50 min-h-screen">
     <div id="qrPage" class="hidden pb-24 max-w-screen-md mx-auto w-full">
-        <div class="glass-card neon-border shadow-md p-4 fixed top-0 left-0 right-0 z-10 max-w-screen-md mx-auto w-full">
+        <div class="glass-card neon-border shadow-md p-4 fixed top-0 left-0 right-0 z-30 max-w-screen-md mx-auto w-full">
             <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2">
                 <div>
                     <h1 class="text-xl font-semibold text-cyan-300 drop-shadow">Masa <span id="tableNumber">0</span></h1>
                     <p class="text-sm text-cyan-200 opacity-80">Hoş geldiniz!</p>
                 </div>
                 <div class="flex gap-2 w-full sm:w-auto">
-                    <button id="callWaiterButton" class="glass-btn neon-border text-cyan-100 px-4 py-2 rounded-button font-medium hover:bg-opacity-90 transition-all w-full sm:w-auto flex items-center">
+                    <button id="callWaiterButton" class="glass-btn neon-border text-cyan-100 px-4 py-2 rounded-button font-medium hover:bg-opacity-90 transition-all w-full sm:w-auto flex items-center z-40">
                         <i class="ri-user-voice-line mr-1"></i>
                         Garsonu Çağır
                     </button>
-                    <button id="hookahButton" class="glass-btn neon-border text-cyan-100 px-4 py-2 rounded-button font-medium hover:bg-opacity-90 transition-all w-full sm:w-auto flex items-center">
+                    <button id="hookahButton" class="glass-btn neon-border text-cyan-100 px-4 py-2 rounded-button font-medium hover:bg-opacity-90 transition-all w-full sm:w-auto flex items-center z-40">
                         <i class="ri-fire-line mr-1"></i>
                         Köz İstiyorum
                     </button>
@@ -61,15 +61,15 @@
         <!-- Menü ve Sipariş Bölümü -->
         <div class="mt-24 px-2 sm:px-4">
             <!-- Kategori Seçimi -->
-            <div class="mb-4 overflow-x-auto">
-                <div class="flex space-x-2 pb-2">
+            <div class="mb-4 overflow-x-auto sticky top-20 z-20 bg-transparent backdrop-blur-md rounded-b-lg">
+                <div class="flex space-x-2 pb-2" style="overflow-x:auto;">
                     <button class="menu-category-button flex-shrink-0 px-4 py-2 rounded-full bg-primary text-white" data-category="all">Tümü</button>
                     <button class="menu-category-button flex-shrink-0 px-4 py-2 rounded-full bg-gray-200 text-gray-700" data-category="starters">Başlangıçlar</button>
                     <button class="menu-category-button flex-shrink-0 px-4 py-2 rounded-full bg-gray-200 text-gray-700" data-category="mains">Ana Yemekler</button>
                     <button class="menu-category-button flex-shrink-0 px-4 py-2 rounded-full bg-gray-200 text-gray-700" data-category="drinks">İçecekler</button>
                     <button class="menu-category-button flex-shrink-0 px-4 py-2 rounded-full bg-gray-200 text-gray-700" data-category="desserts">Tatlılar</button>
-                    </div>
                 </div>
+            </div>
 
             <!-- Menü Öğeleri -->
             <div id="menuItemsContainer" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mb-28">
@@ -82,7 +82,7 @@
         </div>
 
         <!-- Sipariş Özeti -->
-        <div id="orderCartPanel" class="glass-card neon-border shadow p-4 z-50 rounded-lg max-w-screen-md mx-auto w-full mt-4 mb-4 fixed bottom-4 right-4 left-4 sm:left-1/2 sm:-translate-x-1/2 sm:w-[400px] hidden" style="backdrop-filter: blur(16px);">
+        <div id="orderCartPanel" class="glass-card neon-border shadow p-4 z-50 rounded-lg max-w-screen-md mx-auto w-full fixed bottom-20 right-4 left-4 sm:left-1/2 sm:-translate-x-1/2 sm:w-[400px] hidden" style="backdrop-filter: blur(16px);">
             <div class="flex justify-between items-center mb-2">
                 <h3 class="font-medium text-cyan-200">Sipariş Özeti</h3>
                 <span class="text-cyan-300 font-semibold" id="cartTotal">0₺</span>
@@ -93,7 +93,7 @@
             </div>
             <textarea id="orderNoteInput" class="w-full border border-cyan-400 rounded p-2 mb-2 text-sm focus:outline-none focus:ring-2 focus:ring-cyan-400 bg-white bg-opacity-10 text-cyan-100" rows="2" placeholder="Sipariş notu (isteğe bağlı)"></textarea>
             <button id="placeOrderButton" class="w-full glass-btn neon-border text-cyan-100 py-3 rounded-button font-medium hover:bg-opacity-90 transition-all disabled:opacity-50 disabled:cursor-not-allowed">
-                Sipariş Ver
+                Siparişi Onayla
             </button>
         </div>
 

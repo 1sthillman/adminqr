@@ -368,61 +368,53 @@ function toggleCartPanel() {
 
 async function placeOrder() {
     const placeOrderButton = document.getElementById('placeOrderButton');
-        if (cart.length === 0) {
+    if (cart.length === 0) {
         return showError('Sipariş vermek için sepetinizde ürün olmalı.');
-        }
-        
-        placeOrderButton.disabled = true;
+    }
+    placeOrderButton.disabled = true;
     placeOrderButton.innerHTML = `<i class="ri-loader-2-line animate-spin mr-2"></i> Gönderiliyor...`;
-
     try {
-        const totalAmount = cart.reduce((sum, item) => sum + item.fiyat * item.quantity, 0);
         const orderNote = document.getElementById('orderNoteInput').value || null;
-
         // 1. "orders" tablosuna ana sipariş kaydını oluştur
         const { data: orderData, error: orderError } = await supabase
             .from('orders')
             .insert({
                 table_id: tableId,
-                status: 'pending_approval', // Garson onayı bekliyor
-                total_price: totalAmount,
+                status: 'pending_approval',
                 note: orderNote,
-                source: 'qr'
+                items: cart.map(item => ({
+                    id: item.id,
+                    ad: item.ad,
+                    fiyat: item.fiyat,
+                    quantity: item.quantity
+                }))
             })
-                .select('id')
-                .single();
-                
+            .select('id')
+            .single();
         if (orderError) throw orderError;
-
         const newOrderId = orderData.id;
-
         // 2. "order_items" tablosuna sepetteki her bir ürünü ekle
         const orderItems = cart.map(item => ({
             order_id: newOrderId,
-                menu_item_id: item.id,
-                quantity: item.quantity,
+            menu_item_id: item.id,
+            quantity: item.quantity,
             price: item.fiyat,
             name: item.ad,
         }));
-
         const { error: itemsError } = await supabase.from('order_items').insert(orderItems);
-
         if (itemsError) {
             // Eğer ürünleri eklerken hata olursa, oluşturulan ana siparişi silerek işlemi geri al.
             console.error('Sipariş kalemleri eklenemedi, sipariş siliniyor.', itemsError);
             await supabase.from('orders').delete().eq('id', newOrderId);
             throw itemsError;
         }
-
         showSuccess('Siparişiniz alındı! Garson onayladıktan sonra hazırlanacaktır.');
-
         // Sipariş sonrası arayüzü temizle
         cart = [];
         document.getElementById('orderNoteInput').value = '';
         updateCartUI();
         toggleCartPanel();
-        renderAllMenuItems(Object.values(menu).flat());
-
+        renderAllMenuItems(window.lastUrunlerList || []);
     } catch (error) {
         console.error('Sipariş oluşturma hatası:', error);
         showError('Sipariş gönderilemedi. Lütfen tekrar deneyin.');
