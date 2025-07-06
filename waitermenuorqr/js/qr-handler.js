@@ -167,7 +167,7 @@ function renderAllMenuItems(urunler) {
     }
     filtered.forEach(item => {
         const itemInCart = cart.find(cartItem => cartItem.id === item.id);
-        const imageUrl = item.image_url || DEFAULT_IMAGES.default;
+        const imageUrl = (item.image_url && item.image_url.startsWith('data:image/')) ? item.image_url : DEFAULT_IMAGES.default;
         const itemElement = document.createElement('div');
         itemElement.className = 'menu-item-card bg-white rounded-lg shadow-sm p-3 flex flex-col items-center mb-2 relative';
         itemElement.innerHTML = `
@@ -299,11 +299,6 @@ function addToCart(item) {
     }
     updateCartUI();
     renderAllMenuItems(window.lastUrunlerList || []);
-    // Sepet panelini aç
-    const panel = document.getElementById('orderCartPanel');
-    if (panel && !panel.classList.contains('open')) {
-        panel.classList.add('open');
-    }
 }
 
 function decreaseQuantity(itemId) {
@@ -344,7 +339,7 @@ function updateCartUI() {
         cart.forEach(item => {
             const itemElement = document.createElement('div');
             itemElement.className = 'flex justify-between items-center py-2 border-b border-gray-100';
-            const imageUrl = item.image_url || DEFAULT_IMAGES.default;
+            const imageUrl = (item.image_url && item.image_url.startsWith('data:image/')) ? item.image_url : DEFAULT_IMAGES.default;
             itemElement.innerHTML = `
                 <div class="flex items-center flex-1">
                     <div class="w-10 h-10 mr-2 rounded overflow-hidden flex-shrink-0">
@@ -376,22 +371,29 @@ function updateCartUI() {
 
 function toggleCartPanel() {
     const panel = document.getElementById('orderCartPanel');
-    if (!panel.classList.contains('open')) {
-        panel.classList.add('open');
-        updateCartUI(); // Panel açılırken içeriği güncelle
-    } else {
-        panel.classList.remove('open');
+    if (panel) {
+        if (panel.classList.contains('open')) {
+            closeCartModal();
+        } else {
+            openCartModal();
+        }
     }
 }
 
 function openCartModal() {
-    const overlay = document.querySelector('.cart-modal-overlay');
-    overlay.classList.add('active');
+    const panel = document.getElementById('orderCartPanel');
+    if (panel) {
+        panel.classList.add('open');
+        panel.classList.remove('hidden');
+    }
 }
 
 function closeCartModal() {
-    const overlay = document.querySelector('.cart-modal-overlay');
-    overlay.classList.remove('active');
+    const panel = document.getElementById('orderCartPanel');
+    if (panel) {
+        panel.classList.remove('open');
+        panel.classList.add('hidden');
+    }
 }
 
 async function placeOrder() {
