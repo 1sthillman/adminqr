@@ -27,20 +27,17 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('closeCartModal').addEventListener('click', () => {
         document.getElementById('orderCartPanel').classList.remove('open');
     });
-    // Sepet butonuna tıklama
-    document.getElementById('viewCartButton').style.display = 'flex';
-    document.getElementById('viewCartButton').style.opacity = '1';
-    document.getElementById('viewCartButton').addEventListener('click', () => {
-        const panel = document.getElementById('orderCartPanel');
-        if (!panel.classList.contains('open')) {
-            panel.classList.add('open');
-            updateCartUI();
-        } else {
-            panel.classList.remove('open');
-        }
-    });
+    // Sepet butonuna tıklama (en sade ve hatasız)
+    const cartBtn = document.getElementById('viewCartButton');
+    const cartPanel = document.getElementById('orderCartPanel');
+    cartBtn.style.display = 'flex';
+    cartBtn.style.opacity = '1';
+    cartBtn.onclick = () => {
+        cartPanel.classList.add('open');
+        updateCartUI();
+    };
     // Sayfa ilk açıldığında panel kapalı olsun
-    document.getElementById('orderCartPanel').classList.remove('open');
+    cartPanel.classList.remove('open');
 });
 
 async function initQrPage() {
@@ -302,8 +299,11 @@ function addToCart(item) {
     }
     updateCartUI();
     renderAllMenuItems(window.lastUrunlerList || []);
-    // Sepet popup modalı aç
-    openCartModal();
+    // Sepet panelini aç
+    const panel = document.getElementById('orderCartPanel');
+    if (panel && !panel.classList.contains('open')) {
+        panel.classList.add('open');
+    }
 }
 
 function decreaseQuantity(itemId) {
