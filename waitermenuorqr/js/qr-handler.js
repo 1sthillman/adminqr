@@ -384,8 +384,7 @@ function openCartModal() {
     const panel = document.getElementById('orderCartPanel');
     if (panel) {
         panel.classList.add('open');
-        panel.classList.remove('hidden');
-        panel.style.display = 'flex'; // Sepeti göster
+        panel.classList.remove('hidden'); // hidden sınıfını koru, CSS ile visibility: hidden kontrolü için
     }
 }
 
@@ -393,8 +392,7 @@ function closeCartModal() {
     const panel = document.getElementById('orderCartPanel');
     if (panel) {
         panel.classList.remove('open');
-        panel.classList.add('hidden');
-        panel.style.display = 'none'; // Sepeti gizle
+        panel.classList.add('hidden'); // hidden sınıfını koru
     }
 }
 
