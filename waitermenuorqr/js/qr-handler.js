@@ -324,6 +324,7 @@ function updateCartUI() {
     const cartItemsList = document.getElementById('cartItemsList');
     const cartTotal = document.getElementById('cartTotal');
     const placeOrderButton = document.getElementById('placeOrderButton');
+    const orderNoteInput = document.getElementById('orderNoteInput');
     const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
     if (totalItems > 0) {
         cartButton.style.transform = 'scale(1)';
@@ -349,12 +350,16 @@ function updateCartUI() {
         });
         const total = cart.reduce((sum, item) => sum + (item.fiyat * item.quantity), 0);
         cartTotal.textContent = `${total.toLocaleString('tr-TR')}₺`;
+        // Not ekleme alanı ve siparişi onayla butonu her zaman görünür
+        if (orderNoteInput) orderNoteInput.style.display = '';
+        if (placeOrderButton) placeOrderButton.style.display = '';
     } else {
         cartButton.style.transform = 'scale(0)';
         placeOrderButton.disabled = true;
         cartItemsList.innerHTML = '<p class="text-gray-500 text-center text-sm py-2">Sepetiniz boş</p>';
         cartTotal.textContent = '0₺';
-        // Sepet panelini de gizle
+        if (orderNoteInput) orderNoteInput.style.display = '';
+        if (placeOrderButton) placeOrderButton.style.display = '';
         document.getElementById('orderCartPanel').classList.remove('open');
     }
 }
@@ -363,6 +368,7 @@ function toggleCartPanel() {
     const panel = document.getElementById('orderCartPanel');
     if (!panel.classList.contains('open')) {
         panel.classList.add('open');
+        updateCartUI(); // Panel açılırken içeriği güncelle
     } else {
         panel.classList.remove('open');
     }
