@@ -71,6 +71,9 @@ body {
 /* QR kod sayfası için özel stiller */
 #qrPage {
     animation: fadeIn 0.5s ease-out;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    box-sizing: border-box;
 }
 
 #callWaiterButton {
@@ -160,7 +163,19 @@ input[type="number"]::-webkit-outer-spin-button {
 
 /* Grid tweaks for menu items */
 #menuItemsContainer.grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+}
+
+@media (min-width: 640px) {
+    #menuItemsContainer.grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (min-width: 768px) {
+    #menuItemsContainer.grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
 }
 
 /* === Overrides to eliminate pure white/light patches === */
@@ -269,6 +284,8 @@ textarea::placeholder, input::placeholder {
 #orderCartPanel {
   border-radius: 1rem 1rem 0 0;
   max-width: 100vw;
+  padding: 1rem 0.75rem;
+  box-sizing: border-box;
 }
 #viewCartButton {
   min-width: 56px;
@@ -289,9 +306,9 @@ textarea::placeholder, input::placeholder {
 #orderCartPanel h3, #orderCartPanel span, #orderCartPanel textarea, #orderCartPanel button {
     color: #67e8f9 !important;
 }
-#orderCartPanel textarea {
-    background: rgba(0,255,255,0.08) !important;
-    border: 1.5px solid rgba(0,255,255,0.25) !important;
+#orderCartPanel textarea, #orderCartPanel button {
+    box-sizing: border-box;
+    width: 100%;
 }
 #orderCartPanel button:active, #viewCartButton:active, #callWaiterButton:active, #hookahButton:active {
     box-shadow: 0 0 32px 4px #67e8f9, 0 2px 24px 0 #0ff;
@@ -416,6 +433,7 @@ textarea::placeholder, input::placeholder {
     min-width: 0;
     max-width: 100%;
     box-sizing: border-box;
+    padding: 0.75rem;
 }
 .menu-item-card:active {
     transform: scale(0.96);
@@ -456,6 +474,12 @@ textarea::placeholder, input::placeholder {
     color: #0891b2;
     font-weight: 600;
     box-sizing: border-box;
+}
+.menu-item-card .w-20.h-20 {
+    width: 5rem !important;
+    height: 5rem !important;
+    min-width: 5rem !important;
+    min-height: 5rem !important;
 }
 
 /* Sepette adet seçimi küçük ve yatay */
@@ -675,4 +699,107 @@ textarea::placeholder, input::placeholder {
 }
 
 .no-scrollbar::-webkit-scrollbar { display: none; }
-.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; } 
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+/* ==================== Responsive Düzen İyileştirmeleri ==================== */
+
+/* Üstteki sabit başlık ve kategori barı arasındaki boşluğu ayarla */
+.glass-card.fixed {
+    padding-bottom: 0.5rem;
+}
+
+.fixed.top-0 {
+    height: auto;
+    padding-bottom: 0.5rem;
+}
+
+/* Kategori barının üstteki sabit başlığın altına tam oturmasını sağla */
+.w-full.max-w-screen-md.mx-auto.px-2.sm\:px-4.mt-16.mb-4 {
+    margin-top: 5rem;
+}
+
+/* Menü öğeleri gridini mobil için tek sütun yap, tablet ve üzeri için iki sütun */
+#menuItemsContainer.grid {
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+}
+
+@media (min-width: 640px) {
+    #menuItemsContainer.grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (min-width: 768px) {
+    #menuItemsContainer.grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+}
+
+/* Ürün kartlarındaki dolguyu ve içeriği optimize et */
+.menu-item-card {
+    padding: 0.75rem;
+    box-sizing: border-box;
+}
+
+.menu-item-card .w-20.h-20 {
+    width: 5rem !important;
+    height: 5rem !important;
+    min-width: 5rem !important;
+    min-height: 5rem !important;
+}
+
+/* Sepet paneli (bottom-sheet) için mobil optimizasyonlar */
+#orderCartPanel {
+    padding: 1rem 0.75rem;
+    box-sizing: border-box;
+}
+
+#orderCartPanel textarea, #orderCartPanel button {
+    box-sizing: border-box;
+    width: 100%;
+}
+
+@media (max-width: 480px) {
+    #orderCartPanel {
+        left: 0.5rem !important;
+        right: 0.5rem !important;
+        width: auto !important;
+        max-width: none !important;
+        margin: 0 auto;
+        transform: translateX(0%) translateY(100%);
+    }
+    .cart-modal-overlay.active #orderCartPanel {
+        transform: translateX(0%) translateY(0%);
+    }
+    #viewCartButton {
+        right: 1rem !important;
+        bottom: 1rem !important;
+    }
+
+    #toast {
+        left: 0.5rem !important;
+        right: 0.5rem !important;
+        width: auto !important;
+        transform: translateX(0%) !important;
+        min-width: unset !important;
+    }
+
+    .menu-category-button {
+        font-size: 0.7rem !important;
+        padding: 0.2rem 0.6rem !important;
+    }
+}
+
+/* Sabit üst barın z-index'ini artır, kategori barının z-index'ini de ayarla */
+.glass-card.neon-border.shadow-md.p-2.fixed.top-0.left-0.right-0 {
+    z-index: 50;
+}
+
+.w-full.max-w-screen-md.mx-auto.px-2.sm\:px-4.mt-16.mb-4 {
+    position: sticky;
+    top: 5rem;
+    z-index: 40;
+    background: rgba(0, 0, 0, 0.2);
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+} 
