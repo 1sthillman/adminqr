@@ -189,30 +189,39 @@ function renderAllMenuItems(urunler) {
 }
 
 function setupEventListeners() {
-    document.getElementById('callWaiterButton').addEventListener('click', callWaiter);
-    document.getElementById('viewCartButton').addEventListener('click', toggleCartPanel);
-    document.getElementById('placeOrderButton').addEventListener('click', placeOrder);
-    // Köz İstiyorum butonu
-    document.getElementById('hookahButton').addEventListener('click', callHookah);
+    const callWaiterBtn = document.getElementById('callWaiterButton');
+    if (callWaiterBtn) callWaiterBtn.addEventListener('click', callWaiter);
+
+    const viewCartBtn = document.getElementById('viewCartButton');
+    if (viewCartBtn) viewCartBtn.addEventListener('click', toggleCartPanel);
+
+    const placeOrderBtn = document.getElementById('placeOrderButton');
+    if (placeOrderBtn) placeOrderBtn.addEventListener('click', placeOrder);
+
+    const hookahBtn = document.getElementById('hookahButton');
+    if (hookahBtn) hookahBtn.addEventListener('click', callHookah);
+
     // Menü container'ı için olay delegasyonu (event delegation)
     const menuContainer = document.getElementById('menuItemsContainer');
-    menuContainer.addEventListener('click', (e) => {
-        const target = e.target.closest('button');
-        if (!target) return;
-        const itemId = target.dataset.id;
-        if (target.classList.contains('add-to-cart-btn')) {
-            // Ürünü doğrudan urunler listesinden bul
-            const item = window.lastUrunlerList?.find(p => p.id == itemId);
-            if (item) addToCart(item);
-        } else if (target.classList.contains('quantity-btn')) {
-            const action = target.dataset.action;
-            if (action === 'increase') {
-                increaseQuantity(itemId);
-            } else if (action === 'decrease') {
-                decreaseQuantity(itemId);
+    if (menuContainer) {
+        menuContainer.addEventListener('click', (e) => {
+            const target = e.target.closest('button');
+            if (!target) return;
+            const itemId = target.dataset.id;
+            if (target.classList.contains('add-to-cart-btn')) {
+                // Ürünü doğrudan urunler listesinden bul
+                const item = window.lastUrunlerList?.find(p => p.id == itemId);
+                if (item) addToCart(item);
+            } else if (target.classList.contains('quantity-btn')) {
+                const action = target.dataset.action;
+                if (action === 'increase') {
+                    increaseQuantity(itemId);
+                } else if (action === 'decrease') {
+                    decreaseQuantity(itemId);
+                }
             }
-        }
-    });
+        });
+    }
 }
 
 function setupRealtimeSubscriptions() {
