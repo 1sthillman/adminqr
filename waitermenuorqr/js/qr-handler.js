@@ -32,7 +32,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
     // Sayfa ilk açıldığında overlay kapalı olsun
-    document.getElementById('cartModalOverlay').classList.add('hidden');
+    document.getElementById('cartModalOverlay').classList.remove('active');
 });
 
 async function initQrPage() {
@@ -368,7 +368,7 @@ function updateCartUI() {
 
 function toggleCartPanel() {
     const overlay = document.getElementById('cartModalOverlay');
-    if (overlay.classList.contains('hidden')) {
+    if (!overlay.classList.contains('active')) {
         openCartModal();
     } else {
         closeCartModal();
@@ -377,12 +377,12 @@ function toggleCartPanel() {
 
 function openCartModal() {
     const overlay = document.getElementById('cartModalOverlay');
-    overlay.classList.remove('hidden');
+    overlay.classList.add('active');
 }
 
 function closeCartModal() {
     const overlay = document.getElementById('cartModalOverlay');
-    overlay.classList.add('hidden');
+    overlay.classList.remove('active');
 }
 
 async function placeOrder() {

@@ -414,20 +414,24 @@ textarea::placeholder, input::placeholder {
     margin-right: 0.5rem;
 }
 
-/* Sepet popup modal overlay ve bokeh */
+/* Sepet popup overlay tam ekran ve sadece açıkken görünür */
 #cartModalOverlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 50;
+    align-items: center;
+    justify-content: center;
     background: rgba(0,0,0,0.40) !important;
     backdrop-filter: blur(8px) !important;
     -webkit-backdrop-filter: blur(8px) !important;
-    z-index: 50 !important;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+}
+#cartModalOverlay.active {
+    display: flex !important;
 }
 
 /* Sepet popup panel küçük ve ortada */
 #orderCartPanel {
-    width: 100vw;
     max-width: 320px;
     min-width: 0;
     margin: 0 auto;
