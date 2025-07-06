@@ -87,15 +87,12 @@ async function getOrCreateTable() {
 
 async function loadAndRenderMenu() {
     try {
-        // Sadece urunler tablosundan mevcut=true olan ürünleri çek
         const { data: urunler, error } = await supabase
             .from('urunler')
             .select('*')
             .eq('mevcut', true);
-
         if (error) throw error;
-
-        // Menü kategorisi olmadan, tüm ürünleri doğrudan göster
+        window.lastUrunlerList = urunler;
         renderAllMenuItems(urunler);
     } catch (error) {
         console.error('Menü yüklenirken hata:', error);
@@ -111,6 +108,7 @@ function renderAllMenuItems(urunler) {
         return;
     }
     urunler.forEach(item => {
+        const itemInCart = cart.find(cartItem => cartItem.id === item.id);
         const imageUrl = item.image_url || DEFAULT_IMAGES.default;
         const itemElement = document.createElement('div');
         itemElement.className = 'bg-white rounded-lg shadow-sm p-3 flex justify-between items-center';
@@ -125,9 +123,17 @@ function renderAllMenuItems(urunler) {
                 </div>
             </div>
             <div class="flex items-center">
-                <button class="add-to-cart-btn bg-primary text-white px-3 py-1 rounded-full" data-id="${item.id}">
-                    <i class="ri-add-line"></i>
-                </button>
+                ${itemInCart ? `
+                    <div class="flex items-center border border-gray-300 rounded-lg overflow-hidden">
+                        <button class="quantity-btn px-2 py-1 bg-gray-100" data-id="${item.id}" data-action="decrease">-</button>
+                        <span class="px-3">${itemInCart.quantity}</span>
+                        <button class="quantity-btn px-2 py-1 bg-gray-100" data-id="${item.id}" data-action="increase">+</button>
+                    </div>
+                ` : `
+                    <button class="add-to-cart-btn bg-primary text-white px-3 py-1 rounded-full" data-id="${item.id}">
+                        <i class="ri-add-line"></i>
+                    </button>
+                `}
             </div>
         `;
         container.appendChild(itemElement);
@@ -138,16 +144,15 @@ function setupEventListeners() {
     document.getElementById('callWaiterButton').addEventListener('click', callWaiter);
     document.getElementById('viewCartButton').addEventListener('click', toggleCartPanel);
     document.getElementById('placeOrderButton').addEventListener('click', placeOrder);
-    
     // Menü container'ı için olay delegasyonu (event delegation)
     const menuContainer = document.getElementById('menuItemsContainer');
     menuContainer.addEventListener('click', (e) => {
         const target = e.target.closest('button');
         if (!target) return;
-
         const itemId = target.dataset.id;
         if (target.classList.contains('add-to-cart-btn')) {
-            const item = Object.values(menu).flat().find(p => p.id == itemId);
+            // Ürünü doğrudan urunler listesinden bul
+            const item = window.lastUrunlerList?.find(p => p.id == itemId);
             if (item) addToCart(item);
         } else if (target.classList.contains('quantity-btn')) {
             const action = target.dataset.action;
