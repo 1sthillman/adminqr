@@ -24,15 +24,11 @@ const DEFAULT_IMAGES = {
 document.addEventListener('DOMContentLoaded', () => {
     initQrPage();
     // Modal kapatma butonu
-    document.getElementById('closeCartModal').addEventListener('click', closeCartModal);
-    // Overlay'e tıklayınca kapansın (sadece dışarı tıklama)
-    document.querySelector('.cart-modal-overlay').addEventListener('mousedown', function(e) {
-        if (e.target === this) {
-            closeCartModal();
-        }
+    document.getElementById('closeCartModal').addEventListener('click', () => {
+        document.getElementById('orderCartPanel').classList.add('hidden');
     });
-    // Sayfa ilk açıldığında overlay kapalı olsun
-    document.querySelector('.cart-modal-overlay').classList.remove('active');
+    // Sayfa ilk açıldığında panel kapalı olsun
+    document.getElementById('orderCartPanel').classList.add('hidden');
 });
 
 async function initQrPage() {
@@ -364,11 +360,11 @@ function updateCartUI() {
 }
 
 function toggleCartPanel() {
-    const overlay = document.querySelector('.cart-modal-overlay');
-    if (!overlay.classList.contains('active')) {
-        openCartModal();
+    const panel = document.getElementById('orderCartPanel');
+    if (panel.classList.contains('hidden')) {
+        panel.classList.remove('hidden');
     } else {
-        closeCartModal();
+        panel.classList.add('hidden');
     }
 }
 

@@ -69,24 +69,15 @@
                 </div>
             </div>
             <!-- Menü Öğeleri -->
-            <div id="menuItemsContainer" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mb-28 pt-16">
+            <div id="menuItemsContainer" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mb-8 pt-16">
                 <!-- Menü öğeleri buraya dinamik olarak eklenecek -->
                 <div class="animate-pulse flex justify-center items-center p-4">
                     <i class="ri-loader-2-line text-primary text-3xl animate-spin"></i>
                     <span class="ml-2">Menü yükleniyor...</span>
                 </div>
             </div>
-        </div>
-
-        <!-- Sepete Ekle Butonu -->
-        <div id="viewCartButton" class="fixed bottom-4 right-4 glass-btn neon-border text-cyan-100 flex items-center justify-center rounded-full p-4 shadow-lg cursor-pointer z-50 transition-transform" title="Sepeti Aç">
-            <i class="ri-shopping-cart-2-line text-xl"></i>
-            <span id="cartItemCount" class="absolute -top-1 -right-1 w-5 h-5 bg-cyan-300 text-cyan-900 text-xs rounded-full flex items-center justify-center font-bold">0</span>
-        </div>
-
-        <!-- Sepet Popup Modal ve Overlay (bottom sheet) -->
-        <div class="cart-modal-overlay">
-            <div id="orderCartPanel" class="order-cart-panel bottom-sheet">
+            <!-- Sepet Paneli (normal DOM akışında, sticky/fixed değil) -->
+            <div id="orderCartPanel" class="order-cart-panel mx-auto my-4 max-w-xs w-full hidden">
                 <button id="closeCartModal" class="absolute top-2 right-2 text-cyan-200 text-xl"><i class="ri-close-line"></i></button>
                 <div class="flex items-center justify-center mb-2">
                     <i class="ri-shopping-cart-2-line text-2xl text-cyan-300 mr-2"></i>
@@ -103,6 +94,11 @@
                     Siparişi Onayla
                 </button>
             </div>
+        </div>
+        <!-- Sepete Ekle Butonu -->
+        <div id="viewCartButton" class="fixed bottom-4 right-4 glass-btn neon-border text-cyan-100 flex items-center justify-center rounded-full p-4 shadow-lg cursor-pointer z-50 transition-transform" title="Sepeti Aç">
+            <i class="ri-shopping-cart-2-line text-xl"></i>
+            <span id="cartItemCount" class="absolute -top-1 -right-1 w-5 h-5 bg-cyan-300 text-cyan-900 text-xs rounded-full flex items-center justify-center font-bold">0</span>
         </div>
     </div>
 

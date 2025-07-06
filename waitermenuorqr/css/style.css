@@ -472,22 +472,23 @@ textarea::placeholder, input::placeholder {
 
 /* Sepet popup panel küçük ve ortada */
 .order-cart-panel {
-    max-width: 320px;
-    min-width: 0;
-    margin: 0 auto;
-    border-radius: 18px;
-    box-shadow: 0 0 24px 2px rgba(0,255,255,0.25), 0 2px 32px 0 rgba(0,255,255,0.10);
-    background: rgba(0, 20, 30, 0.92) !important;
     position: relative;
+    max-width: 320px;
+    width: 100%;
+    margin: 1.5rem auto 1rem auto;
+    border-radius: 18px;
+    box-shadow: 0 0 24px 2px rgba(0,255,255,0.18), 0 2px 32px 0 rgba(0,255,255,0.08);
+    background: rgba(10, 20, 30, 0.93) !important;
     padding: 1.25rem 1rem 1rem 1rem !important;
     font-size: 0.97rem;
     display: flex;
     flex-direction: column;
     align-items: center;
+    transition: none;
 }
 @media (max-width: 480px) {
     .order-cart-panel {
-        max-width: 95vw;
+        max-width: 98vw;
         padding: 1rem 0.25rem 0.75rem 0.25rem !important;
     }
 }
