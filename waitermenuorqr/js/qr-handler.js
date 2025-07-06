@@ -90,23 +90,14 @@ async function loadAndRenderMenu() {
         // Kategorileri ve ürünleri aynı anda çek
         const [kategorilerRes, urunlerRes] = await Promise.all([
             supabase.from('kategoriler').select('ad, sira').order('sira'),
-            // Ürünler artık users tablosundan geliyor
-            supabase.from('users').select('id, full_name, username, email, image_url, role').order('full_name')
+            supabase.from('urunler').select('*').eq('mevcut', true).order('ad')
         ]);
 
         if (kategorilerRes.error) throw kategorilerRes.error;
         if (urunlerRes.error) throw urunlerRes.error;
 
         const kategoriler = kategorilerRes.data;
-        // users tablosundan gelen verileri ürün formatına dönüştür
-        const urunler = (urunlerRes.data || []).map(user => ({
-            id: user.id,
-            ad: user.full_name || user.username || user.email,
-            fiyat: null, // users tablosunda fiyat yok
-            kategori: null, // users tablosunda kategori yok
-            image_url: user.image_url || null,
-            aciklama: user.role ? `Kullanıcı rolü: ${user.role}` : ''
-        }));
+        const urunler = urunlerRes.data;
 
         // Menüyü yapılandır
         menu = {};
