@@ -215,13 +215,17 @@ textarea::placeholder, input::placeholder {
 
 /* === Category Buttons Smaller & Glass === */
 .menu-category-button {
-    font-size: 0.95rem !important;
-    padding: 0.35rem 1.1rem !important;
-    border-radius: 1.5rem !important;
+    font-size: 0.92rem !important;
+    padding: 0.25rem 0.9rem !important;
+    border-radius: 1.2rem !important;
     margin-top: 0.1rem !important;
     margin-bottom: 0.1rem !important;
-    min-width: 70px;
+    min-width: 60px;
     white-space: nowrap;
+    background: #f3f4f6 !important;
+    color: #222 !important;
+    border: none;
+    box-shadow: none;
 }
 .menu-category-button.bg-primary {
     background: rgba(0, 230, 255, 0.25) !important;
@@ -554,6 +558,8 @@ textarea::placeholder, input::placeholder {
     z-index: 9999 !important;
     display: flex !important;
     opacity: 1 !important;
+    background: rgba(0,255,255,0.12) !important;
+    box-shadow: 0 0 24px 2px #00fff5a0, 0 2px 32px 0 #00fff515;
 }
 #cartItemCount {
     font-size: 0.95rem;
@@ -579,13 +585,22 @@ textarea::placeholder, input::placeholder {
     display: flex;
     flex-direction: column;
     align-items: center;
-    z-index: 100;
+    z-index: 10000;
     transition: transform 0.35s cubic-bezier(.4,2,.6,1);
 }
 .order-cart-panel-bottom-sheet.open {
     transform: translateX(-50%) translateY(0);
 }
 @media (max-width: 480px) {
+    .menu-category-button {
+        font-size: 0.82rem !important;
+        padding: 0.18rem 0.6rem !important;
+        min-width: 48px;
+    }
+    #viewCartButton {
+        bottom: 0.7rem !important;
+        right: 0.7rem !important;
+    }
     .order-cart-panel-bottom-sheet {
         max-width: 98vw;
         padding: 1rem 0.25rem 0.75rem 0.25rem !important;
@@ -621,13 +636,17 @@ textarea::placeholder, input::placeholder {
 
 /* Kategori barı daha aşağıda ve büyük */
 .menu-category-button {
-    font-size: 0.95rem !important;
-    padding: 0.35rem 1.1rem !important;
-    border-radius: 1.5rem !important;
+    font-size: 0.92rem !important;
+    padding: 0.25rem 0.9rem !important;
+    border-radius: 1.2rem !important;
     margin-top: 0.1rem !important;
     margin-bottom: 0.1rem !important;
-    min-width: 70px;
+    min-width: 60px;
     white-space: nowrap;
+    background: #f3f4f6 !important;
+    color: #222 !important;
+    border: none;
+    box-shadow: none;
 }
 .fixed.top-12 {
     top: 3.2rem !important;
@@ -653,4 +672,7 @@ textarea::placeholder, input::placeholder {
     #qrPage .flex.flex-col.items-start {
         margin-bottom: 0.7rem;
     }
-} 
+}
+
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; } 
