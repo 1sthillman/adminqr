@@ -72,25 +72,26 @@
                 </div>
             </div>
         </div>
-        <!-- Sağda sabit sepet butonu -->
-        <button id="sideCartButton">
-            <i class="ri-shopping-cart-2-line text-xl"></i>
+        <!-- Sağda sabit, dikey ortalanmış sepet butonu (tasarımı bozmadan ekleniyor) -->
+        <button id="sideCartButton" class="fixed top-1/2 right-2 -translate-y-1/2 z-50 bg-gradient-to-l from-cyan-400 to-blue-600 text-white rounded-l-full px-4 py-3 flex items-center shadow-lg">
+            <i class="ri-shopping-cart-2-line text-xl mr-2"></i>
             <span>Sepet</span>
-            <span id="sideCartCount" class="cart-count">0</span>
+            <span id="sideCartCount" class="ml-2 bg-white text-blue-600 rounded-full px-2 py-1 text-xs font-bold">0</span>
         </button>
         <!-- Sağdan açılan küçük sepet paneli (drawer) -->
-        <div id="sideCartPanel">
-            <button class="close-btn" id="closeSideCart"><i class="ri-close-line"></i></button>
-            <div class="flex items-center justify-center mb-2">
-                <i class="ri-shopping-cart-2-line text-2xl text-cyan-300 mr-2"></i>
-                <h3 class="font-medium text-cyan-200 text-lg">Sepet</h3>
+        <div id="sideCartPanel" class="fixed top-0 right-0 h-full w-80 max-w-full bg-white shadow-2xl z-50 transform translate-x-full transition-transform duration-300 ease-in-out flex flex-col p-4
+            sm:w-80 sm:max-w-full w-[92vw] max-w-[98vw] p-2">
+            <button id="closeSideCart" class="absolute top-3 right-3 text-2xl text-cyan-500 hover:text-blue-600"><i class="ri-close-line"></i></button>
+            <div class="flex items-center justify-center mb-2 mt-6">
+                <i class="ri-shopping-cart-2-line text-2xl text-cyan-400 mr-2"></i>
+                <h3 class="font-medium text-cyan-700 text-lg">Sepet</h3>
             </div>
             <div id="sideCartItemsList" class="max-h-48 overflow-y-auto mb-2 w-full">
                 <p class="text-gray-500 text-center text-sm py-2">Sepetiniz boş</p>
             </div>
-            <span class="text-cyan-300 font-semibold mb-1" id="sideCartTotal">0₺</span>
-            <textarea id="sideOrderNoteInput" class="w-full border border-cyan-400 rounded p-2 mb-2 text-sm focus:outline-none focus:ring-2 focus:ring-cyan-400 bg-white bg-opacity-10 text-cyan-100" rows="2" placeholder="Sipariş notu (isteğe bağlı)"></textarea>
-            <button id="sidePlaceOrderButton" class="w-full glass-btn neon-border text-cyan-100 py-2 rounded-button font-medium hover:bg-opacity-90 transition-all disabled:opacity-50 disabled:cursor-not-allowed mt-1">
+            <span class="text-cyan-700 font-semibold mb-1" id="sideCartTotal">0₺</span>
+            <textarea id="sideOrderNoteInput" class="w-full border border-cyan-400 rounded p-2 mb-2 text-sm focus:outline-none focus:ring-2 focus:ring-cyan-400 bg-white bg-opacity-10 text-cyan-700" rows="2" placeholder="Sipariş notu (isteğe bağlı)"></textarea>
+            <button id="sidePlaceOrderButton" class="w-full bg-cyan-500 text-white py-2 rounded font-medium hover:bg-cyan-600 transition-all disabled:opacity-50 disabled:cursor-not-allowed mt-1">
                 Siparişi Onayla
             </button>
         </div>
@@ -103,5 +104,13 @@
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.38.5/dist/umd/supabase.js"></script>
     <script src="js/qr-handler.js"></script>
+    <script>
+    document.getElementById('sideCartButton').onclick = function() {
+        document.getElementById('sideCartPanel').classList.remove('translate-x-full');
+    };
+    document.getElementById('closeSideCart').onclick = function() {
+        document.getElementById('sideCartPanel').classList.add('translate-x-full');
+    };
+    </script>
 </body>
 </html> 
