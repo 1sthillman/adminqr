@@ -81,25 +81,26 @@
 
         <!-- Sepet Popup Modal -->
         <div id="cartModalOverlay" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-40 backdrop-blur-sm hidden">
-            <div id="orderCartPanel" class="glass-card neon-border shadow p-4 rounded-lg w-full max-w-xs mx-auto relative">
+            <div id="orderCartPanel" class="glass-card neon-border shadow p-4 rounded-lg w-full max-w-xs mx-auto relative flex flex-col items-center">
                 <button id="closeCartModal" class="absolute top-2 right-2 text-cyan-200 text-xl"><i class="ri-close-line"></i></button>
-                <div class="flex justify-between items-center mb-2">
-                    <h3 class="font-medium text-cyan-200">Sipariş Özeti</h3>
-                    <span class="text-cyan-300 font-semibold" id="cartTotal">0₺</span>
+                <div class="flex items-center justify-center mb-2">
+                    <i class="ri-shopping-cart-2-line text-2xl text-cyan-300 mr-2"></i>
+                    <h3 class="font-medium text-cyan-200 text-lg">Sepet</h3>
                 </div>
-                <div id="cartItemsList" class="max-h-64 overflow-y-auto mb-2">
+                <div id="cartItemsList" class="max-h-48 overflow-y-auto mb-2 w-full">
                     <!-- Sepet öğeleri buraya dinamik olarak eklenecek -->
                     <p class="text-gray-500 text-center text-sm py-2">Sepetiniz boş</p>
                 </div>
+                <span class="text-cyan-300 font-semibold mb-2" id="cartTotal">0₺</span>
                 <textarea id="orderNoteInput" class="w-full border border-cyan-400 rounded p-2 mb-2 text-sm focus:outline-none focus:ring-2 focus:ring-cyan-400 bg-white bg-opacity-10 text-cyan-100" rows="2" placeholder="Sipariş notu (isteğe bağlı)"></textarea>
-                <button id="placeOrderButton" class="w-full glass-btn neon-border text-cyan-100 py-3 rounded-button font-medium hover:bg-opacity-90 transition-all disabled:opacity-50 disabled:cursor-not-allowed">
+                <button id="placeOrderButton" class="w-full glass-btn neon-border text-cyan-100 py-2 rounded-button font-medium hover:bg-opacity-90 transition-all disabled:opacity-50 disabled:cursor-not-allowed mt-1">
                     Siparişi Onayla
                 </button>
             </div>
         </div>
 
         <!-- Sepete Ekle Butonu -->
-        <div id="viewCartButton" class="fixed bottom-4 right-4 glass-btn neon-border text-cyan-100 flex items-center justify-center rounded-full p-4 shadow-lg cursor-pointer z-50 transition-transform">
+        <div id="viewCartButton" class="fixed bottom-4 right-4 glass-btn neon-border text-cyan-100 flex items-center justify-center rounded-full p-4 shadow-lg cursor-pointer z-50 transition-transform" title="Sepeti Aç">
             <i class="ri-shopping-cart-2-line text-xl"></i>
             <span id="cartItemCount" class="absolute -top-1 -right-1 w-5 h-5 bg-cyan-300 text-cyan-900 text-xs rounded-full flex items-center justify-center font-bold">0</span>
         </div>
