@@ -87,79 +87,31 @@ async function getOrCreateTable() {
 
 async function loadAndRenderMenu() {
     try {
-        // Kategorileri ve ürünleri aynı anda çek
-        const [kategorilerRes, urunlerRes] = await Promise.all([
-            supabase.from('kategoriler').select('ad, sira').order('sira'),
-            supabase.from('urunler').select('*').eq('mevcut', true).order('ad')
-        ]);
+        // Sadece urunler tablosundan mevcut=true olan ürünleri çek
+        const { data: urunler, error } = await supabase
+            .from('urunler')
+            .select('*')
+            .eq('mevcut', true);
 
-        if (kategorilerRes.error) throw kategorilerRes.error;
-        if (urunlerRes.error) throw urunlerRes.error;
+        if (error) throw error;
 
-        const kategoriler = kategorilerRes.data;
-        const urunler = urunlerRes.data;
-
-        // Menüyü yapılandır
-        menu = {};
-        kategoriler.forEach(k => {
-            menu[k.ad] = [];
-        });
-
-        urunler.forEach(urun => {
-            if (menu[urun.kategori]) {
-                menu[urun.kategori].push(urun);
-            } else {
-                // Eğer ürünün kategorisi tanımlı değilse, "Diğer" gibi bir kategoriye eklenebilir
-                if (!menu['Diğer']) menu['Diğer'] = [];
-                menu['Diğer'].push(urun);
-            }
-        });
-
-        renderCategoryButtons(kategoriler.map(k => k.ad));
-        renderMenuItems(kategoriler[0]?.ad || 'all');
-
+        // Menü kategorisi olmadan, tüm ürünleri doğrudan göster
+        renderAllMenuItems(urunler);
     } catch (error) {
         console.error('Menü yüklenirken hata:', error);
         showError('Menü yüklenemedi.');
     }
 }
 
-function renderCategoryButtons(categories) {
-    const container = document.getElementById('categoryButtons');
-    container.innerHTML = '';
-    categories.forEach(categoryName => {
-        const button = document.createElement('button');
-        button.className = 'menu-category-button flex-shrink-0 px-4 py-2 text-sm font-medium rounded-full mr-2 bg-gray-200 text-gray-700 transition-colors duration-200';
-        button.textContent = categoryName;
-        button.dataset.category = categoryName;
-        button.addEventListener('click', () => {
-            document.querySelectorAll('.menu-category-button').forEach(btn => btn.classList.remove('bg-primary', 'text-white'));
-            button.classList.add('bg-primary', 'text-white');
-            renderMenuItems(categoryName);
-        });
-        container.appendChild(button);
-    });
-
-    // İlk butonu aktif yap
-    if (container.firstChild) {
-        container.firstChild.classList.add('bg-primary', 'text-white');
-    }
-}
-
-function renderMenuItems(categoryName) {
+function renderAllMenuItems(urunler) {
     const container = document.getElementById('menuItemsContainer');
     container.innerHTML = '';
-    const itemsToShow = menu[categoryName] || [];
-    
-    if (itemsToShow.length === 0) {
-        container.innerHTML = `<p class="text-center p-4 text-gray-500">Bu kategoride ürün bulunmuyor.</p>`;
+    if (!urunler || urunler.length === 0) {
+        container.innerHTML = `<p class="text-center p-4 text-gray-500">Hiç ürün bulunmuyor.</p>`;
         return;
     }
-    
-    itemsToShow.forEach(item => {
-        const itemInCart = cart.find(cartItem => cartItem.id === item.id);
-        const imageUrl = item.image_url || DEFAULT_IMAGES[item.kategori.toLowerCase()] || DEFAULT_IMAGES.default;
-
+    urunler.forEach(item => {
+        const imageUrl = item.image_url || DEFAULT_IMAGES.default;
         const itemElement = document.createElement('div');
         itemElement.className = 'bg-white rounded-lg shadow-sm p-3 flex justify-between items-center';
         itemElement.innerHTML = `
@@ -169,22 +121,13 @@ function renderMenuItems(categoryName) {
                 </div>
                 <div class="flex-1">
                     <div class="font-medium">${item.ad}</div>
-                    <div class="text-gray-500 text-sm">${item.aciklama || ''}</div>
-                    <div class="text-primary font-semibold mt-1">${item.fiyat.toLocaleString('tr-TR')}₺</div>
+                    <div class="text-primary font-semibold mt-1">${item.fiyat ? item.fiyat.toLocaleString('tr-TR') + '₺' : ''}</div>
                 </div>
             </div>
             <div class="flex items-center">
-                ${itemInCart ? `
-                    <div class="flex items-center border border-gray-300 rounded-lg overflow-hidden">
-                        <button class="quantity-btn px-2 py-1 bg-gray-100" data-id="${item.id}" data-action="decrease">-</button>
-                        <span class="px-3">${itemInCart.quantity}</span>
-                        <button class="quantity-btn px-2 py-1 bg-gray-100" data-id="${item.id}" data-action="increase">+</button>
-                    </div>
-                ` : `
-                    <button class="add-to-cart-btn bg-primary text-white px-3 py-1 rounded-full" data-id="${item.id}">
-                        <i class="ri-add-line"></i>
-                    </button>
-                `}
+                <button class="add-to-cart-btn bg-primary text-white px-3 py-1 rounded-full" data-id="${item.id}">
+                    <i class="ri-add-line"></i>
+                </button>
             </div>
         `;
         container.appendChild(itemElement);
@@ -270,7 +213,7 @@ function addToCart(item) {
         cart.push({ ...item, quantity: 1 });
     }
     updateCartUI();
-    renderMenuItems(document.querySelector('.menu-category-button.bg-primary')?.dataset.category || 'all');
+    renderAllMenuItems(Object.values(menu).flat());
 }
 
 function decreaseQuantity(itemId) {
@@ -283,7 +226,7 @@ function decreaseQuantity(itemId) {
         }
     }
     updateCartUI();
-    renderMenuItems(document.querySelector('.menu-category-button.bg-primary')?.dataset.category || 'all');
+    renderAllMenuItems(Object.values(menu).flat());
 }
 
 function increaseQuantity(itemId) {
@@ -292,7 +235,7 @@ function increaseQuantity(itemId) {
         item.quantity++;
     }
     updateCartUI();
-    renderMenuItems(document.querySelector('.menu-category-button.bg-primary')?.dataset.category || 'all');
+    renderAllMenuItems(Object.values(menu).flat());
 }
 
 function updateCartUI() {
@@ -398,7 +341,7 @@ async function placeOrder() {
         document.getElementById('orderNoteInput').value = '';
         updateCartUI();
         toggleCartPanel();
-        renderMenuItems(document.querySelector('.menu-category-button.bg-primary')?.dataset.category || 'all');
+        renderAllMenuItems(Object.values(menu).flat());
 
     } catch (error) {
         console.error('Sipariş oluşturma hatası:', error);
