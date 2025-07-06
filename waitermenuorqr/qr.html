@@ -70,17 +70,16 @@
         </div>
 
         <!-- Sipariş Özeti -->
-        <div id="orderCartPanel" class="fixed bottom-0 left-0 right-0 bg-white shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.1)] p-4 z-50 rounded-t-lg max-w-screen-md mx-auto w-full hidden">
+        <div id="orderCartPanel" class="bg-white shadow p-4 z-50 rounded-lg max-w-screen-md mx-auto w-full mt-4 mb-4 hidden" style="position: static;">
             <div class="flex justify-between items-center mb-2">
                 <h3 class="font-medium">Sipariş Özeti</h3>
                 <span class="text-primary font-semibold" id="cartTotal">0₺</span>
             </div>
-            
             <div id="cartItemsList" class="max-h-32 overflow-y-auto mb-2">
                 <!-- Sepet öğeleri buraya dinamik olarak eklenecek -->
                 <p class="text-gray-500 text-center text-sm py-2">Sepetiniz boş</p>
             </div>
-
+            <textarea id="orderNoteInput" class="w-full border border-gray-300 rounded p-2 mb-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary" rows="2" placeholder="Sipariş notu (isteğe bağlı)"></textarea>
             <button id="placeOrderButton" class="w-full bg-primary text-white py-3 rounded-button font-medium hover:bg-opacity-90 transition-all disabled:opacity-50 disabled:cursor-not-allowed">
                 Sipariş Ver
             </button>
