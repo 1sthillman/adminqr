@@ -59,7 +59,7 @@
         <!-- Menü ve Sipariş Bölümü -->
         <div class="mt-20 px-2 sm:px-4">
             <!-- Kategori Seçimi -->
-            <div class="mb-4 overflow-x-auto sticky top-14 z-20 bg-transparent backdrop-blur-md rounded-b-lg">
+            <div class="mb-4 sticky top-14 z-30 bg-transparent backdrop-blur-md rounded-b-lg">
                 <div class="flex space-x-2 pb-2" style="overflow-x:auto;">
                     <button class="menu-category-button flex-shrink-0 px-4 py-2 rounded-full bg-primary text-white" data-category="all">Tümü</button>
                     <button class="menu-category-button flex-shrink-0 px-4 py-2 rounded-full bg-gray-200 text-gray-700" data-category="starters">Başlangıçlar</button>
@@ -85,9 +85,9 @@
             <span id="cartItemCount" class="absolute -top-1 -right-1 w-5 h-5 bg-cyan-300 text-cyan-900 text-xs rounded-full flex items-center justify-center font-bold">0</span>
         </div>
 
-        <!-- Sepet Popup Modal ve Overlay (en sonda, her şeyin üstünde) -->
-        <div id="cartModalOverlay" class="cart-modal-overlay">
-            <div id="orderCartPanel" class="order-cart-panel">
+        <!-- Sepet Popup Modal ve Overlay (bottom sheet) -->
+        <div class="cart-modal-overlay">
+            <div id="orderCartPanel" class="order-cart-panel bottom-sheet">
                 <button id="closeCartModal" class="absolute top-2 right-2 text-cyan-200 text-xl"><i class="ri-close-line"></i></button>
                 <div class="flex items-center justify-center mb-2">
                     <i class="ri-shopping-cart-2-line text-2xl text-cyan-300 mr-2"></i>
@@ -97,7 +97,8 @@
                     <!-- Sepet öğeleri buraya dinamik olarak eklenecek -->
                     <p class="text-gray-500 text-center text-sm py-2">Sepetiniz boş</p>
                 </div>
-                <span class="text-cyan-300 font-semibold mb-2" id="cartTotal">0₺</span>
+                <span class="text-cyan-300 font-semibold mb-1" id="cartTotal">0₺</span>
+                <div id="cartQuantityControls" class="flex items-center justify-center gap-2 mb-2"></div>
                 <textarea id="orderNoteInput" class="w-full border border-cyan-400 rounded p-2 mb-2 text-sm focus:outline-none focus:ring-2 focus:ring-cyan-400 bg-white bg-opacity-10 text-cyan-100" rows="2" placeholder="Sipariş notu (isteğe bağlı)"></textarea>
                 <button id="placeOrderButton" class="w-full glass-btn neon-border text-cyan-100 py-2 rounded-button font-medium hover:bg-opacity-90 transition-all disabled:opacity-50 disabled:cursor-not-allowed mt-1">
                     Siparişi Onayla

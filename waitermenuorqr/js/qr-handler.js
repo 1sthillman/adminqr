@@ -164,7 +164,7 @@ function renderAllMenuItems(urunler) {
         const itemInCart = cart.find(cartItem => cartItem.id === item.id);
         const imageUrl = item.image_url || DEFAULT_IMAGES.default;
         const itemElement = document.createElement('div');
-        itemElement.className = 'bg-white rounded-lg shadow-sm p-3 flex justify-between items-center';
+        itemElement.className = 'menu-item-card bg-white rounded-lg shadow-sm p-3 flex justify-between items-center mb-2';
         itemElement.innerHTML = `
             <div class="flex items-center flex-1">
                 <div class="w-16 h-16 mr-3 rounded-lg overflow-hidden flex-shrink-0">
@@ -176,20 +176,17 @@ function renderAllMenuItems(urunler) {
                     <div class="text-primary font-semibold mt-1">${item.fiyat ? item.fiyat.toLocaleString('tr-TR') + '₺' : ''}</div>
                 </div>
             </div>
-            <div class="flex items-center">
-                ${itemInCart ? `
-                    <div class="flex items-center border border-gray-300 rounded-lg overflow-hidden">
-                        <button class="quantity-btn px-2 py-1 bg-gray-100" data-id="${item.id}" data-action="decrease">-</button>
-                        <span class="px-3">${itemInCart.quantity}</span>
-                        <button class="quantity-btn px-2 py-1 bg-gray-100" data-id="${item.id}" data-action="increase">+</button>
-                    </div>
-                ` : `
-                    <button class="add-to-cart-btn bg-primary text-white px-3 py-1 rounded-full" data-id="${item.id}">
-                        <i class="ri-add-line"></i>
-                    </button>
-                `}
-            </div>
+            ${itemInCart ? `<div class='flex items-center gap-2'><button class='quantity-btn px-2 py-1 bg-gray-100' data-id='${item.id}' data-action='decrease'>-</button><span class='px-2'>${itemInCart.quantity}</span><button class='quantity-btn px-2 py-1 bg-gray-100' data-id='${item.id}' data-action='increase'>+</button></div>` : ''}
         `;
+        // Kartın tamamı tıklanabilir, + butonu yok
+        itemElement.addEventListener('click', (e) => {
+            // Eğer -+ butonlarına tıklanıyorsa kartı tetikleme
+            if (e.target.classList.contains('quantity-btn')) return;
+            // Geri tepme animasyonu
+            itemElement.style.transform = 'scale(0.96)';
+            setTimeout(() => { itemElement.style.transform = ''; }, 120);
+            addToCart(item);
+        });
         container.appendChild(itemElement);
     });
 }
