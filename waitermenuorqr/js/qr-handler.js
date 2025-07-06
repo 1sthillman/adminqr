@@ -218,7 +218,9 @@ function addToCart(item) {
         cart.push({ ...item, quantity: 1 });
     }
     updateCartUI();
-    renderAllMenuItems(Object.values(menu).flat());
+    renderAllMenuItems(window.lastUrunlerList || []);
+    // Sepet butonunu ve panelini göster
+    document.getElementById('viewCartButton').style.transform = 'scale(1)';
 }
 
 function decreaseQuantity(itemId) {
@@ -231,7 +233,7 @@ function decreaseQuantity(itemId) {
         }
     }
     updateCartUI();
-    renderAllMenuItems(Object.values(menu).flat());
+    renderAllMenuItems(window.lastUrunlerList || []);
 }
 
 function increaseQuantity(itemId) {
@@ -240,7 +242,7 @@ function increaseQuantity(itemId) {
         item.quantity++;
     }
     updateCartUI();
-    renderAllMenuItems(Object.values(menu).flat());
+    renderAllMenuItems(window.lastUrunlerList || []);
 }
 
 function updateCartUI() {
@@ -249,19 +251,16 @@ function updateCartUI() {
     const cartItemsList = document.getElementById('cartItemsList');
     const cartTotal = document.getElementById('cartTotal');
     const placeOrderButton = document.getElementById('placeOrderButton');
-    
     const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
-
     if (totalItems > 0) {
         cartButton.style.transform = 'scale(1)';
         cartItemCount.textContent = totalItems;
         placeOrderButton.disabled = false;
-
         cartItemsList.innerHTML = '';
         cart.forEach(item => {
             const itemElement = document.createElement('div');
             itemElement.className = 'flex justify-between items-center py-2 border-b border-gray-100';
-            const imageUrl = item.image_url || DEFAULT_IMAGES[item.kategori.toLowerCase()] || DEFAULT_IMAGES.default;
+            const imageUrl = item.image_url || DEFAULT_IMAGES.default;
             itemElement.innerHTML = `
                 <div class="flex items-center flex-1">
                     <div class="w-10 h-10 mr-2 rounded overflow-hidden flex-shrink-0">
@@ -275,20 +274,21 @@ function updateCartUI() {
             `;
             cartItemsList.appendChild(itemElement);
         });
-        
         const total = cart.reduce((sum, item) => sum + (item.fiyat * item.quantity), 0);
         cartTotal.textContent = `${total.toLocaleString('tr-TR')}₺`;
-        
     } else {
         cartButton.style.transform = 'scale(0)';
         placeOrderButton.disabled = true;
         cartItemsList.innerHTML = '<p class="text-gray-500 text-center text-sm py-2">Sepetiniz boş</p>';
         cartTotal.textContent = '0₺';
+        // Sepet panelini de gizle
+        document.getElementById('orderCartPanel').classList.add('hidden');
     }
 }
 
 function toggleCartPanel() {
-    document.getElementById('orderCartPanel').classList.toggle('hidden');
+    const panel = document.getElementById('orderCartPanel');
+    panel.classList.toggle('hidden');
 }
 
 async function placeOrder() {
