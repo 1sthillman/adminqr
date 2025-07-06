@@ -268,4 +268,80 @@ textarea::placeholder, input::placeholder {
   min-width: 56px;
   min-height: 56px;
   font-size: 1.25rem;
+}
+
+/* Neon Glassmorphism Sepet ve Butonlar */
+#orderCartPanel, #viewCartButton, #callWaiterButton, #hookahButton, #toast {
+    background: rgba(0, 255, 255, 0.10) !important;
+    border: 1.5px solid rgba(0, 255, 255, 0.35) !important;
+    box-shadow: 0 0 16px 2px rgba(0,255,255,0.45), 0 2px 24px 0 rgba(0,255,255,0.18);
+    backdrop-filter: blur(18px) !important;
+    -webkit-backdrop-filter: blur(18px) !important;
+    color: #67e8f9 !important;
+    transition: box-shadow 0.2s, background 0.2s;
+}
+#orderCartPanel h3, #orderCartPanel span, #orderCartPanel textarea, #orderCartPanel button {
+    color: #67e8f9 !important;
+}
+#orderCartPanel textarea {
+    background: rgba(0,255,255,0.08) !important;
+    border: 1.5px solid rgba(0,255,255,0.25) !important;
+}
+#orderCartPanel button:active, #viewCartButton:active, #callWaiterButton:active, #hookahButton:active {
+    box-shadow: 0 0 32px 4px #67e8f9, 0 2px 24px 0 #0ff;
+}
+#viewCartButton {
+    color: #67e8f9 !important;
+    background: rgba(0,255,255,0.13) !important;
+    border-radius: 50% !important;
+    border-width: 2px !important;
+    font-weight: bold;
+}
+#viewCartButton span {
+    background: #67e8f9 !important;
+    color: #0e172a !important;
+    border: 2px solid #0ff !important;
+    box-shadow: 0 0 8px #0ff;
+}
+#toast {
+    background: rgba(0,255,255,0.13) !important;
+    border: 2px solid #67e8f9 !important;
+    color: #67e8f9 !important;
+    font-weight: 600;
+    box-shadow: 0 0 24px #0ff, 0 2px 24px 0 #0ff;
+}
+#toast .ri-check-line, #toast .ri-close-circle-line {
+    color: #67e8f9 !important;
+    font-size: 1.5rem;
+}
+#callWaiterButton, #hookahButton {
+    color: #67e8f9 !important;
+    background: rgba(0,255,255,0.10) !important;
+    border-radius: 12px !important;
+    border-width: 2px !important;
+    font-weight: 600;
+    box-shadow: 0 0 16px #0ff;
+}
+#callWaiterButton:disabled, #hookahButton:disabled {
+    opacity: 0.6;
+    filter: grayscale(0.3);
+    cursor: not-allowed;
+}
+@media (max-width: 640px) {
+    #orderCartPanel {
+        left: 2vw !important;
+        right: 2vw !important;
+        width: 96vw !important;
+        min-width: 0 !important;
+        max-width: 100vw !important;
+    }
+    #viewCartButton {
+        right: 4vw !important;
+        bottom: 4vw !important;
+    }
+    #toast {
+        left: 50% !important;
+        bottom: 80px !important;
+        transform: translateX(-50%) !important;
+    }
 } 

@@ -9,6 +9,8 @@ let tableId = null; // Masa ID'sini saklamak için
 let menu = {}; // Kategorilere ayrılmış menü
 let cart = []; // Müşterinin sepeti
 let realtimeChannels = []; // Gerçek zamanlı kanalları saklamak için
+let categories = [];
+let activeCategory = 'all';
 
 // Kategori görselleri için varsayılan değerler
 const DEFAULT_IMAGES = {
@@ -87,6 +89,16 @@ async function getOrCreateTable() {
 
 async function loadAndRenderMenu() {
     try {
+        // Kategorileri çek
+        const { data: kategoriler, error: kategoriError } = await supabase
+            .from('kategoriler')
+            .select('*')
+            .order('sira', { ascending: true });
+        if (kategoriError) throw kategoriError;
+        categories = kategoriler || [];
+        renderCategoryButtons();
+
+        // Ürünleri çek
         const { data: urunler, error } = await supabase
             .from('urunler')
             .select('*')
@@ -100,6 +112,28 @@ async function loadAndRenderMenu() {
     }
 }
 
+function renderCategoryButtons() {
+    const container = document.querySelector('.flex.space-x-2.pb-2');
+    if (!container) return;
+    container.innerHTML = '';
+    // Tümü butonu
+    const allBtn = document.createElement('button');
+    allBtn.className = `menu-category-button flex-shrink-0 px-4 py-2 rounded-full ${activeCategory==='all' ? 'bg-primary text-white' : 'bg-gray-200 text-gray-700'}`;
+    allBtn.dataset.category = 'all';
+    allBtn.textContent = 'Tümü';
+    allBtn.onclick = () => { activeCategory = 'all'; renderCategoryButtons(); renderAllMenuItems(window.lastUrunlerList); };
+    container.appendChild(allBtn);
+    // Diğer kategoriler
+    categories.forEach(cat => {
+        const btn = document.createElement('button');
+        btn.className = `menu-category-button flex-shrink-0 px-4 py-2 rounded-full ${activeCategory===cat.ad ? 'bg-primary text-white' : 'bg-gray-200 text-gray-700'}`;
+        btn.dataset.category = cat.ad;
+        btn.textContent = cat.ad;
+        btn.onclick = () => { activeCategory = cat.ad; renderCategoryButtons(); renderAllMenuItems(window.lastUrunlerList); };
+        container.appendChild(btn);
+    });
+}
+
 function renderAllMenuItems(urunler) {
     const container = document.getElementById('menuItemsContainer');
     container.innerHTML = '';
@@ -107,7 +141,16 @@ function renderAllMenuItems(urunler) {
         container.innerHTML = `<p class="text-center p-4 text-gray-500">Hiç ürün bulunmuyor.</p>`;
         return;
     }
-    urunler.forEach(item => {
+    // Kategoriye göre filtrele
+    let filtered = urunler;
+    if (activeCategory !== 'all') {
+        filtered = urunler.filter(u => u.kategori === activeCategory);
+    }
+    if (filtered.length === 0) {
+        container.innerHTML = `<p class="text-center p-4 text-gray-500">Bu kategoride ürün yok.</p>`;
+        return;
+    }
+    filtered.forEach(item => {
         const itemInCart = cart.find(cartItem => cartItem.id === item.id);
         const imageUrl = item.image_url || DEFAULT_IMAGES.default;
         const itemElement = document.createElement('div');
@@ -119,6 +162,7 @@ function renderAllMenuItems(urunler) {
                 </div>
                 <div class="flex-1">
                     <div class="font-medium">${item.ad}</div>
+                    <div class="text-xs text-cyan-400 font-semibold mt-1">${item.kategori || ''}</div>
                     <div class="text-primary font-semibold mt-1">${item.fiyat ? item.fiyat.toLocaleString('tr-TR') + '₺' : ''}</div>
                 </div>
             </div>
@@ -144,6 +188,8 @@ function setupEventListeners() {
     document.getElementById('callWaiterButton').addEventListener('click', callWaiter);
     document.getElementById('viewCartButton').addEventListener('click', toggleCartPanel);
     document.getElementById('placeOrderButton').addEventListener('click', placeOrder);
+    // Köz İstiyorum butonu
+    document.getElementById('hookahButton').addEventListener('click', callHookah);
     // Menü container'ı için olay delegasyonu (event delegation)
     const menuContainer = document.getElementById('menuItemsContainer');
     menuContainer.addEventListener('click', (e) => {
@@ -210,6 +256,30 @@ async function callWaiter() {
     }
 }
 
+async function callHookah() {
+    const hookahButton = document.getElementById('hookahButton');
+    hookahButton.disabled = true;
+    hookahButton.innerHTML = `<i class="ri-loader-2-line animate-spin mr-2"></i> Gönderiliyor...`;
+    try {
+        const { error } = await supabase.from('waiter_calls').insert({
+            table_id: tableId,
+            table_number: tableNumber,
+            status: 'hookah'
+        });
+        if (error) throw error;
+        showSuccess('Köz isteğiniz alındı. Garson en kısa sürede getirecek.');
+        setTimeout(() => {
+            hookahButton.disabled = false;
+            hookahButton.innerHTML = `<i class="ri-fire-line mr-1"></i> Köz İstiyorum`;
+        }, 20000);
+    } catch (error) {
+        console.error('Köz isteği hatası:', error);
+        showError('Köz isteği gönderilemedi. Lütfen tekrar deneyin.');
+        hookahButton.disabled = false;
+        hookahButton.innerHTML = `<i class="ri-fire-line mr-1"></i> Köz İstiyorum`;
+    }
+}
+
 function addToCart(item) {
     const existingItem = cart.find(cartItem => cartItem.id === item.id);
     if (existingItem) {
@@ -221,6 +291,7 @@ function addToCart(item) {
     renderAllMenuItems(window.lastUrunlerList || []);
     // Sepet butonunu ve panelini göster
     document.getElementById('viewCartButton').style.transform = 'scale(1)';
+    document.getElementById('orderCartPanel').classList.remove('hidden');
 }
 
 function decreaseQuantity(itemId) {
@@ -288,7 +359,11 @@ function updateCartUI() {
 
 function toggleCartPanel() {
     const panel = document.getElementById('orderCartPanel');
-    panel.classList.toggle('hidden');
+    if (panel.classList.contains('hidden')) {
+        panel.classList.remove('hidden');
+    } else {
+        panel.classList.add('hidden');
+    }
 }
 
 async function placeOrder() {
