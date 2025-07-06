@@ -172,7 +172,7 @@ function renderAllMenuItems(urunler) {
         itemElement.className = 'menu-item-card bg-white rounded-lg shadow-sm p-3 flex flex-col items-center mb-2 relative';
         itemElement.innerHTML = `
             <div class="w-20 h-20 mb-2 rounded-lg overflow-hidden flex-shrink-0 mx-auto">
-                <img src="${imageUrl}" alt="${item.ad}" class="w-full h-full object-cover" onerror="this.src='${DEFAULT_IMAGES.default}'">
+                <img src="${imageUrl}" alt="${item.ad}" class="w-full h-full object-cover" onerror="this.src='${DEFAULT_IMAGES.default}'" style="display:block;visibility:visible;">
             </div>
             <div class="font-medium text-center w-full">${item.ad}</div>
             <div class="text-xs text-cyan-400 font-semibold mt-1 text-center w-full">${item.kategori || ''}</div>
@@ -343,7 +343,7 @@ function updateCartUI() {
             itemElement.innerHTML = `
                 <div class="flex items-center flex-1">
                     <div class="w-10 h-10 mr-2 rounded overflow-hidden flex-shrink-0">
-                        <img src="${imageUrl}" alt="${item.ad}" class="w-full h-full object-cover" onerror="this.src='${DEFAULT_IMAGES.default}'">
+                        <img src="${imageUrl}" alt="${item.ad}" class="w-full h-full object-cover" onerror="this.src='${DEFAULT_IMAGES.default}'" style="display:block;visibility:visible;">
                     </div>
                     <div class="flex-1">
                         <div class="text-sm font-medium">${item.ad} <span class="text-xs text-gray-500">x${item.quantity}</span></div>
@@ -385,6 +385,7 @@ function openCartModal() {
     if (panel) {
         panel.classList.add('open');
         panel.classList.remove('hidden');
+        panel.style.display = 'flex'; // Sepeti göster
     }
 }
 
@@ -393,6 +394,7 @@ function closeCartModal() {
     if (panel) {
         panel.classList.remove('open');
         panel.classList.add('hidden');
+        panel.style.display = 'none'; // Sepeti gizle
     }
 }
 
