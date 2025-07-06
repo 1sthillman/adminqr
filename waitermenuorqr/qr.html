@@ -15,16 +15,18 @@
 <body class="bg-gray-50 min-h-screen">
     <div id="qrPage" class="hidden pb-24 max-w-screen-md mx-auto w-full">
         <div class="glass-card neon-border shadow-md p-2 fixed top-0 left-0 right-0 z-30 max-w-screen-md mx-auto w-full flex flex-col">
-            <div class="flex justify-end gap-2 w-full mb-2">
-                <button id="callWaiterButton" class="glass-btn neon-border text-cyan-100 px-2 py-1 rounded-button font-medium hover:bg-opacity-90 transition-all flex items-center text-sm h-9 z-40">
-                    <i class="ri-user-voice-line mr-1"></i>
-                </button>
-                <button id="hookahButton" class="glass-btn neon-border text-cyan-100 px-2 py-1 rounded-button font-medium hover:bg-opacity-90 transition-all flex items-center text-sm h-9 z-40">
-                    <i class="ri-fire-line mr-1"></i>
-                </button>
+            <div class="flex justify-between items-center w-full mb-2">
+                <span class="bg-cyan-200 text-cyan-900 text-xs font-bold px-3 py-1 rounded-full shadow-sm">Masa <span id="tableNumber">0</span></span>
+                <div class="flex gap-2">
+                    <button id="callWaiterButton" class="glass-btn neon-border text-cyan-100 px-2 py-1 rounded-button font-medium hover:bg-opacity-90 transition-all flex items-center text-sm h-9 z-40">
+                        <i class="ri-user-voice-line mr-1"></i>
+                    </button>
+                    <button id="hookahButton" class="glass-btn neon-border text-cyan-100 px-2 py-1 rounded-button font-medium hover:bg-opacity-90 transition-all flex items-center text-sm h-9 z-40">
+                        <i class="ri-fire-line mr-1"></i>
+                    </button>
+                </div>
             </div>
             <div class="flex flex-col items-start">
-                <h1 class="text-lg font-semibold text-cyan-300 drop-shadow">Masa <span id="tableNumber">0</span></h1>
                 <p class="text-xs text-cyan-200 opacity-80">Hoş geldiniz!</p>
             </div>
         </div>
@@ -77,20 +79,23 @@
             </div>
         </div>
 
-        <!-- Sipariş Özeti (Sağdan açılır panel) -->
-        <div id="orderCartPanel" class="glass-card neon-border shadow p-4 z-50 rounded-lg fixed top-0 right-0 h-full w-80 max-w-full hidden transition-transform duration-300 translate-x-full" style="backdrop-filter: blur(16px);">
-            <div class="flex justify-between items-center mb-2">
-                <h3 class="font-medium text-cyan-200">Sipariş Özeti</h3>
-                <span class="text-cyan-300 font-semibold" id="cartTotal">0₺</span>
+        <!-- Sepet Popup Modal -->
+        <div id="cartModalOverlay" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-40 backdrop-blur-sm hidden">
+            <div id="orderCartPanel" class="glass-card neon-border shadow p-4 rounded-lg w-full max-w-xs mx-auto relative">
+                <button id="closeCartModal" class="absolute top-2 right-2 text-cyan-200 text-xl"><i class="ri-close-line"></i></button>
+                <div class="flex justify-between items-center mb-2">
+                    <h3 class="font-medium text-cyan-200">Sipariş Özeti</h3>
+                    <span class="text-cyan-300 font-semibold" id="cartTotal">0₺</span>
+                </div>
+                <div id="cartItemsList" class="max-h-64 overflow-y-auto mb-2">
+                    <!-- Sepet öğeleri buraya dinamik olarak eklenecek -->
+                    <p class="text-gray-500 text-center text-sm py-2">Sepetiniz boş</p>
+                </div>
+                <textarea id="orderNoteInput" class="w-full border border-cyan-400 rounded p-2 mb-2 text-sm focus:outline-none focus:ring-2 focus:ring-cyan-400 bg-white bg-opacity-10 text-cyan-100" rows="2" placeholder="Sipariş notu (isteğe bağlı)"></textarea>
+                <button id="placeOrderButton" class="w-full glass-btn neon-border text-cyan-100 py-3 rounded-button font-medium hover:bg-opacity-90 transition-all disabled:opacity-50 disabled:cursor-not-allowed">
+                    Siparişi Onayla
+                </button>
             </div>
-            <div id="cartItemsList" class="max-h-64 overflow-y-auto mb-2">
-                <!-- Sepet öğeleri buraya dinamik olarak eklenecek -->
-                <p class="text-gray-500 text-center text-sm py-2">Sepetiniz boş</p>
-            </div>
-            <textarea id="orderNoteInput" class="w-full border border-cyan-400 rounded p-2 mb-2 text-sm focus:outline-none focus:ring-2 focus:ring-cyan-400 bg-white bg-opacity-10 text-cyan-100" rows="2" placeholder="Sipariş notu (isteğe bağlı)"></textarea>
-            <button id="placeOrderButton" class="w-full glass-btn neon-border text-cyan-100 py-3 rounded-button font-medium hover:bg-opacity-90 transition-all disabled:opacity-50 disabled:cursor-not-allowed">
-                Siparişi Onayla
-            </button>
         </div>
 
         <!-- Sepete Ekle Butonu -->

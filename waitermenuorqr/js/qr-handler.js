@@ -23,6 +23,10 @@ const DEFAULT_IMAGES = {
 
 document.addEventListener('DOMContentLoaded', () => {
     initQrPage();
+    // Modal kapatma butonu
+    document.getElementById('closeCartModal').addEventListener('click', () => {
+        document.getElementById('cartModalOverlay').classList.add('hidden');
+    });
 });
 
 async function initQrPage() {
@@ -289,10 +293,8 @@ function addToCart(item) {
     }
     updateCartUI();
     renderAllMenuItems(window.lastUrunlerList || []);
-    // Sepet panelini sağdan açılır şekilde göster
-    document.getElementById('orderCartPanel').classList.add('open');
-    document.getElementById('orderCartPanel').classList.remove('hidden');
-    document.getElementById('viewCartButton').style.transform = 'scale(1)';
+    // Sepet popup modalı aç
+    document.getElementById('cartModalOverlay').classList.remove('hidden');
 }
 
 function decreaseQuantity(itemId) {
@@ -359,13 +361,11 @@ function updateCartUI() {
 }
 
 function toggleCartPanel() {
-    const panel = document.getElementById('orderCartPanel');
-    if (panel.classList.contains('open')) {
-        panel.classList.remove('open');
-        setTimeout(() => panel.classList.add('hidden'), 300);
+    const overlay = document.getElementById('cartModalOverlay');
+    if (overlay.classList.contains('hidden')) {
+        overlay.classList.remove('hidden');
     } else {
-        panel.classList.remove('hidden');
-        setTimeout(() => panel.classList.add('open'), 10);
+        overlay.classList.add('hidden');
     }
 }
 

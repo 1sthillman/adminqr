@@ -403,4 +403,58 @@ textarea::placeholder, input::placeholder {
 /* Garson çağırma ve köz butonları üstte ve çakışmasın */
 #callWaiterButton, #hookahButton {
     z-index: 40 !important;
+}
+
+/* Masa numarası badge */
+.bg-cyan-200.text-cyan-900.text-xs.font-bold {
+    font-size: 0.85rem !important;
+    padding: 0.25rem 0.75rem !important;
+    border-radius: 9999px !important;
+    box-shadow: 0 2px 8px rgba(0,255,255,0.10);
+    margin-right: 0.5rem;
+}
+
+/* Sepet popup modal overlay ve bokeh */
+#cartModalOverlay {
+    background: rgba(0,0,0,0.40) !important;
+    backdrop-filter: blur(8px) !important;
+    -webkit-backdrop-filter: blur(8px) !important;
+    z-index: 50 !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Sepet popup panel */
+#orderCartPanel {
+    width: 100vw;
+    max-width: 22rem;
+    margin: 0 auto;
+    border-radius: 18px;
+    box-shadow: 0 0 24px 2px rgba(0,255,255,0.25), 0 2px 32px 0 rgba(0,255,255,0.10);
+    background: rgba(0, 20, 30, 0.85) !important;
+    position: relative;
+    padding-top: 2.5rem !important;
+}
+@media (max-width: 480px) {
+    #orderCartPanel {
+        max-width: 98vw;
+        min-width: 0;
+        padding: 1.5rem 0.5rem 1rem 0.5rem !important;
+    }
+}
+#closeCartModal {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    background: none;
+    border: none;
+    color: #67e8f9;
+    font-size: 1.5rem;
+    z-index: 60;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+#closeCartModal:hover {
+    color: #3A86FF;
 } 
