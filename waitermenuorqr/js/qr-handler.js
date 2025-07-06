@@ -104,13 +104,12 @@ async function loadAndRenderMenu() {
         kategoriler.forEach(k => {
             menu[k.ad] = [];
         });
+        menu['Diğer'] = [];
 
         urunler.forEach(urun => {
-            if (menu[urun.kategori]) {
+            if (urun.kategori && menu[urun.kategori]) {
                 menu[urun.kategori].push(urun);
             } else {
-                // Eğer ürünün kategorisi tanımlı değilse, "Diğer" gibi bir kategoriye eklenebilir
-                if (!menu['Diğer']) menu['Diğer'] = [];
                 menu['Diğer'].push(urun);
             }
         });
