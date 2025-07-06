@@ -215,11 +215,13 @@ textarea::placeholder, input::placeholder {
 
 /* === Category Buttons Smaller & Glass === */
 .menu-category-button {
-    font-size: 1.25rem !important;
-    padding: 0.8rem 1.7rem !important;
-    border-radius: 2.2rem !important;
-    margin-top: 0.7rem !important;
-    margin-bottom: 0.7rem !important;
+    font-size: 0.95rem !important;
+    padding: 0.35rem 1.1rem !important;
+    border-radius: 1.5rem !important;
+    margin-top: 0.1rem !important;
+    margin-bottom: 0.1rem !important;
+    min-width: 70px;
+    white-space: nowrap;
 }
 .menu-category-button.bg-primary {
     background: rgba(0, 230, 255, 0.25) !important;
@@ -349,7 +351,7 @@ textarea::placeholder, input::placeholder {
 /* Kategori barı fixed ve üstte sabit */
 .fixed.top-12 {
     position: fixed;
-    top: 5.2rem !important;
+    top: 3.2rem !important;
     left: 0;
     right: 0;
     z-index: 40;
@@ -547,10 +549,11 @@ textarea::placeholder, input::placeholder {
 }
 #viewCartButton {
     position: fixed !important;
-    bottom: 1.5rem !important;
-    right: 1.5rem !important;
+    bottom: 1.2rem !important;
+    right: 1.2rem !important;
     z-index: 9999 !important;
-    box-shadow: 0 0 24px 2px #00fff5a0, 0 2px 32px 0 #00fff515;
+    display: flex !important;
+    opacity: 1 !important;
 }
 #cartItemCount {
     font-size: 0.95rem;
@@ -618,26 +621,29 @@ textarea::placeholder, input::placeholder {
 
 /* Kategori barı daha aşağıda ve büyük */
 .menu-category-button {
-    font-size: 1.25rem !important;
-    padding: 0.8rem 1.7rem !important;
-    border-radius: 2.2rem !important;
-    margin-top: 0.7rem !important;
-    margin-bottom: 0.7rem !important;
+    font-size: 0.95rem !important;
+    padding: 0.35rem 1.1rem !important;
+    border-radius: 1.5rem !important;
+    margin-top: 0.1rem !important;
+    margin-bottom: 0.1rem !important;
+    min-width: 70px;
+    white-space: nowrap;
 }
 .fixed.top-12 {
-    top: 5.2rem !important;
+    top: 3.2rem !important;
 }
 @media (max-width: 480px) {
     .menu-category-button {
-        font-size: 1.1rem !important;
-        padding: 0.6rem 1.1rem !important;
+        font-size: 0.85rem !important;
+        padding: 0.25rem 0.7rem !important;
+        min-width: 60px;
     }
     .fixed.top-12 {
-        top: 4.2rem !important;
+        top: 2.7rem !important;
     }
 }
 #qrPage .flex.flex-col.items-start {
-    margin-bottom: 2.5rem;
+    margin-bottom: 1.1rem;
 }
 @media (max-width: 480px) {
     #viewCartButton {
@@ -645,6 +651,6 @@ textarea::placeholder, input::placeholder {
         right: 1rem !important;
     }
     #qrPage .flex.flex-col.items-start {
-        margin-bottom: 1.5rem;
+        margin-bottom: 0.7rem;
     }
 } 

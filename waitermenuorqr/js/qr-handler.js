@@ -28,6 +28,8 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('orderCartPanel').classList.remove('open');
     });
     // Sepet butonuna tıklama
+    document.getElementById('viewCartButton').style.display = 'flex';
+    document.getElementById('viewCartButton').style.opacity = '1';
     document.getElementById('viewCartButton').addEventListener('click', toggleCartPanel);
     // Sayfa ilk açıldığında panel kapalı olsun
     document.getElementById('orderCartPanel').classList.remove('open');
