@@ -527,4 +527,60 @@ textarea::placeholder, input::placeholder {
     height: 1.5rem;
     right: -0.5rem;
     top: -0.5rem;
+}
+
+.order-cart-panel-bottom-sheet {
+    position: fixed;
+    left: 50%;
+    bottom: 0;
+    transform: translateX(-50%) translateY(100%);
+    width: 100vw;
+    max-width: 360px;
+    min-width: 0;
+    border-radius: 18px 18px 0 0;
+    box-shadow: 0 0 24px 2px rgba(0,255,255,0.18), 0 2px 32px 0 rgba(0,255,255,0.08);
+    background: rgba(10, 20, 30, 0.96) !important;
+    padding: 1.25rem 1rem 1rem 1rem !important;
+    font-size: 0.97rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    z-index: 100;
+    transition: transform 0.35s cubic-bezier(.4,2,.6,1);
+}
+.order-cart-panel-bottom-sheet.open {
+    transform: translateX(-50%) translateY(0);
+}
+@media (max-width: 480px) {
+    .order-cart-panel-bottom-sheet {
+        max-width: 98vw;
+        padding: 1rem 0.25rem 0.75rem 0.25rem !important;
+    }
+}
+#cartQuantityControls {
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+}
+#cartQuantityControls button {
+    background: rgba(0,255,255,0.10);
+    border: 1px solid #67e8f9;
+    color: #67e8f9;
+    border-radius: 8px;
+    width: 2rem;
+    height: 2rem;
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin: 0 0.25rem;
+    transition: background 0.15s, color 0.15s;
+}
+#cartQuantityControls button:active {
+    background: #67e8f9;
+    color: #0e1726;
+}
+#cartQuantityControls span {
+    min-width: 2rem;
+    display: inline-block;
+    text-align: center;
+    font-weight: 600;
+    color: #67e8f9;
 } 

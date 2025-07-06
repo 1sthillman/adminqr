@@ -25,10 +25,12 @@ document.addEventListener('DOMContentLoaded', () => {
     initQrPage();
     // Modal kapatma butonu
     document.getElementById('closeCartModal').addEventListener('click', () => {
-        document.getElementById('orderCartPanel').classList.add('hidden');
+        document.getElementById('orderCartPanel').classList.remove('open');
     });
+    // Sepet butonuna tıklama
+    document.getElementById('viewCartButton').addEventListener('click', toggleCartPanel);
     // Sayfa ilk açıldığında panel kapalı olsun
-    document.getElementById('orderCartPanel').classList.add('hidden');
+    document.getElementById('orderCartPanel').classList.remove('open');
 });
 
 async function initQrPage() {
@@ -355,16 +357,16 @@ function updateCartUI() {
         cartItemsList.innerHTML = '<p class="text-gray-500 text-center text-sm py-2">Sepetiniz boş</p>';
         cartTotal.textContent = '0₺';
         // Sepet panelini de gizle
-        document.getElementById('orderCartPanel').classList.add('hidden');
+        document.getElementById('orderCartPanel').classList.remove('open');
     }
 }
 
 function toggleCartPanel() {
     const panel = document.getElementById('orderCartPanel');
-    if (panel.classList.contains('hidden')) {
-        panel.classList.remove('hidden');
+    if (!panel.classList.contains('open')) {
+        panel.classList.add('open');
     } else {
-        panel.classList.add('hidden');
+        panel.classList.remove('open');
     }
 }
 
@@ -464,4 +466,48 @@ function showToast(message, type = 'success') {
     setTimeout(() => {
         toast.classList.add('hidden');
     }, 4000);
+}
+
+function updateCartPanel() {
+    const cartItemsList = document.getElementById('cartItemsList');
+    const cartTotal = document.getElementById('cartTotal');
+    const cartQuantityControls = document.getElementById('cartQuantityControls');
+    cartItemsList.innerHTML = '';
+    let total = 0;
+    let totalQuantity = 0;
+    for (const item of cart) {
+        const itemDiv = document.createElement('div');
+        itemDiv.className = 'flex justify-between items-center mb-1';
+        itemDiv.innerHTML = `<span class="text-cyan-100">${item.name}</span><span class="text-cyan-300 font-semibold">${item.price * item.quantity}₺</span>`;
+        cartItemsList.appendChild(itemDiv);
+        total += item.price * item.quantity;
+        totalQuantity += item.quantity;
+    }
+    cartTotal.textContent = total + '₺';
+    // Adet kontrolü -+ ve miktar toplam fiyatın hemen altında küçük ve yatay
+    cartQuantityControls.innerHTML = `
+        <button onclick="decreaseCartQuantity()">-</button>
+        <span>${totalQuantity}</span>
+        <button onclick="increaseCartQuantity()">+</button>
+    `;
+    if (cart.length === 0) {
+        cartItemsList.innerHTML = '<p class="text-gray-500 text-center text-sm py-2">Sepetiniz boş</p>';
+        cartQuantityControls.innerHTML = '';
+        cartTotal.textContent = '0₺';
+        document.getElementById('orderCartPanel').classList.remove('open');
+    }
+}
+
+function decreaseCartQuantity() {
+    // Sepetteki ilk ürünün adedini azalt (örnek mantık, çoklu ürün için özelleştirilebilir)
+    if (cart.length > 0 && cart[0].quantity > 1) {
+        cart[0].quantity--;
+        updateCartPanel();
+    }
+}
+function increaseCartQuantity() {
+    if (cart.length > 0) {
+        cart[0].quantity++;
+        updateCartPanel();
+    }
 } 
