@@ -72,28 +72,27 @@
                 </div>
             </div>
         </div>
-        <!-- Sepet Bottom Sheet Popup (fixed, mobil uyumlu) -->
-        <div id="orderCartPanel" class="order-cart-panel-bottom-sheet">
-            <button id="closeCartModal" class="absolute top-2 right-2 text-cyan-200 text-xl"><i class="ri-close-line"></i></button>
+        <!-- Sağda sabit sepet butonu -->
+        <button id="sideCartButton">
+            <i class="ri-shopping-cart-2-line text-xl"></i>
+            <span>Sepet</span>
+            <span id="sideCartCount" class="cart-count">0</span>
+        </button>
+        <!-- Sağdan açılan küçük sepet paneli (drawer) -->
+        <div id="sideCartPanel">
+            <button class="close-btn" id="closeSideCart"><i class="ri-close-line"></i></button>
             <div class="flex items-center justify-center mb-2">
                 <i class="ri-shopping-cart-2-line text-2xl text-cyan-300 mr-2"></i>
                 <h3 class="font-medium text-cyan-200 text-lg">Sepet</h3>
             </div>
-            <div id="cartItemsList" class="max-h-48 overflow-y-auto mb-2 w-full">
-                <!-- Sepet öğeleri buraya dinamik olarak eklenecek -->
+            <div id="sideCartItemsList" class="max-h-48 overflow-y-auto mb-2 w-full">
                 <p class="text-gray-500 text-center text-sm py-2">Sepetiniz boş</p>
             </div>
-            <span class="text-cyan-300 font-semibold mb-1" id="cartTotal">0₺</span>
-            <div id="cartQuantityControls" class="flex items-center justify-center gap-2 mb-2"></div>
-            <textarea id="orderNoteInput" class="w-full border border-cyan-400 rounded p-2 mb-2 text-sm focus:outline-none focus:ring-2 focus:ring-cyan-400 bg-white bg-opacity-10 text-cyan-100" rows="2" placeholder="Sipariş notu (isteğe bağlı)"></textarea>
-            <button id="placeOrderButton" class="w-full glass-btn neon-border text-cyan-100 py-2 rounded-button font-medium hover:bg-opacity-90 transition-all disabled:opacity-50 disabled:cursor-not-allowed mt-1">
+            <span class="text-cyan-300 font-semibold mb-1" id="sideCartTotal">0₺</span>
+            <textarea id="sideOrderNoteInput" class="w-full border border-cyan-400 rounded p-2 mb-2 text-sm focus:outline-none focus:ring-2 focus:ring-cyan-400 bg-white bg-opacity-10 text-cyan-100" rows="2" placeholder="Sipariş notu (isteğe bağlı)"></textarea>
+            <button id="sidePlaceOrderButton" class="w-full glass-btn neon-border text-cyan-100 py-2 rounded-button font-medium hover:bg-opacity-90 transition-all disabled:opacity-50 disabled:cursor-not-allowed mt-1">
                 Siparişi Onayla
             </button>
-        </div>
-        <!-- Sepete Ekle Butonu -->
-        <div id="viewCartButton" class="fixed bottom-4 right-4 glass-btn neon-border text-cyan-100 flex items-center justify-center rounded-full p-4 shadow-lg cursor-pointer z-50 transition-transform" title="Sepeti Aç">
-            <i class="ri-shopping-cart-2-line text-xl"></i>
-            <span id="cartItemCount" class="absolute -top-1 -right-1 w-5 h-5 bg-cyan-300 text-cyan-900 text-xs rounded-full flex items-center justify-center font-bold">0</span>
         </div>
     </div>
 

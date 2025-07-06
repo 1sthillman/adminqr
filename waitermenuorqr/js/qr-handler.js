@@ -23,21 +23,15 @@ const DEFAULT_IMAGES = {
 
 document.addEventListener('DOMContentLoaded', () => {
     initQrPage();
-    // Modal kapatma butonu
-    document.getElementById('closeCartModal').addEventListener('click', () => {
-        document.getElementById('orderCartPanel').classList.remove('open');
-    });
-    // Sepet butonuna tıklama (en sade ve hatasız)
-    const cartBtn = document.getElementById('viewCartButton');
-    const cartPanel = document.getElementById('orderCartPanel');
-    cartBtn.style.display = 'flex';
-    cartBtn.style.opacity = '1';
-    cartBtn.onclick = () => {
-        cartPanel.classList.add('open');
-        updateCartUI();
-    };
+    // Yeni sağda sabit sepet butonu ve paneli için event atamaları
+    const sideCartBtn = document.getElementById('sideCartButton');
+    const sideCartPanel = document.getElementById('sideCartPanel');
+    const closeSideCartBtn = document.getElementById('closeSideCart');
+    sideCartBtn.addEventListener('click', openSideCartPanel);
+    closeSideCartBtn.addEventListener('click', closeSideCartPanel);
     // Sayfa ilk açıldığında panel kapalı olsun
-    cartPanel.classList.remove('open');
+    sideCartPanel.classList.remove('open');
+    updateSideCartUI();
 });
 
 async function initQrPage() {
@@ -297,7 +291,8 @@ function addToCart(item) {
     } else {
         cart.push({ ...item, quantity: 1 });
     }
-    updateCartUI();
+    updateSideCartUI();
+    updateCartUI && updateCartUI();
     renderAllMenuItems(window.lastUrunlerList || []);
 }
 
@@ -307,10 +302,11 @@ function decreaseQuantity(itemId) {
         if (cart[itemIndex].quantity > 1) {
             cart[itemIndex].quantity--;
         } else {
-            cart.splice(itemIndex, 1); // Miktar 1 ise sepetten çıkar
+            cart.splice(itemIndex, 1);
         }
     }
-    updateCartUI();
+    updateSideCartUI();
+    updateCartUI && updateCartUI();
     renderAllMenuItems(window.lastUrunlerList || []);
 }
 
@@ -319,7 +315,8 @@ function increaseQuantity(itemId) {
     if (item) {
         item.quantity++;
     }
-    updateCartUI();
+    updateSideCartUI();
+    updateCartUI && updateCartUI();
     renderAllMenuItems(window.lastUrunlerList || []);
 }
 
@@ -525,5 +522,55 @@ function increaseCartQuantity() {
     if (cart.length > 0) {
         cart[0].quantity++;
         updateCartPanel();
+    }
+}
+
+function openSideCartPanel() {
+    document.getElementById('sideCartPanel').classList.add('open');
+    updateSideCartUI();
+}
+function closeSideCartPanel() {
+    document.getElementById('sideCartPanel').classList.remove('open');
+}
+
+function updateSideCartUI() {
+    const cartCount = document.getElementById('sideCartCount');
+    const cartItemsList = document.getElementById('sideCartItemsList');
+    const cartTotal = document.getElementById('sideCartTotal');
+    const placeOrderButton = document.getElementById('sidePlaceOrderButton');
+    const orderNoteInput = document.getElementById('sideOrderNoteInput');
+    const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+    cartCount.textContent = totalItems;
+    if (totalItems > 0) {
+        placeOrderButton.disabled = false;
+        cartItemsList.innerHTML = '';
+        cart.forEach(item => {
+            const itemElement = document.createElement('div');
+            itemElement.className = 'flex justify-between items-center py-2 border-b border-gray-100';
+            const imageUrl = (item.image_url && item.image_url.startsWith('data:image/')) ? item.image_url : DEFAULT_IMAGES.default;
+            itemElement.innerHTML = `
+                <div class="flex items-center flex-1">
+                    <div class="w-10 h-10 mr-2 rounded overflow-hidden flex-shrink-0">
+                        <img src="${imageUrl}" alt="${item.ad}" class="w-full h-full object-cover" onerror="this.src='${DEFAULT_IMAGES.default}'" style="display:block;visibility:visible;">
+                    </div>
+                    <div class="flex-1">
+                        <div class="text-sm font-medium">${item.ad} <span class="text-xs text-gray-500">x${item.quantity}</span></div>
+                    </div>
+                </div>
+                <div class="text-sm font-medium">${(item.fiyat * item.quantity).toLocaleString('tr-TR')}₺</div>
+            `;
+            cartItemsList.appendChild(itemElement);
+        });
+        const total = cart.reduce((sum, item) => sum + (item.fiyat * item.quantity), 0);
+        cartTotal.textContent = `${total.toLocaleString('tr-TR')}₺`;
+        if (orderNoteInput) orderNoteInput.style.display = '';
+        if (placeOrderButton) placeOrderButton.style.display = '';
+    } else {
+        placeOrderButton.disabled = true;
+        cartItemsList.innerHTML = '<p class="text-gray-500 text-center text-sm py-2">Sepetiniz boş</p>';
+        cartTotal.textContent = '0₺';
+        if (orderNoteInput) orderNoteInput.style.display = '';
+        if (placeOrderButton) placeOrderButton.style.display = '';
+        document.getElementById('sideCartPanel').classList.remove('open');
     }
 } 
