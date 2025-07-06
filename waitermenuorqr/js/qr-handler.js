@@ -196,12 +196,17 @@ function renderMenuItems(categoryName) {
 
 function setupEventListeners() {
     document.getElementById('callWaiterButton').addEventListener('click', callWaiter);
-    document.getElementById('viewCartButton').addEventListener('click', toggleCartPanel);
+    document.getElementById('viewCartButton').addEventListener('click', openCartModal);
     document.getElementById('placeOrderButton').addEventListener('click', placeOrder);
     // Köz İstiyorum butonu için event listener
     const coalBtn = document.getElementById('requestCoalButton');
     if (coalBtn) {
         coalBtn.addEventListener('click', requestCoal);
+    }
+    // Sepet popup kapatma
+    const closeCartBtn = document.getElementById('closeCartModal');
+    if (closeCartBtn) {
+        closeCartBtn.addEventListener('click', closeCartModal);
     }
     // Menü container'ı için olay delegasyonu (event delegation)
     const menuContainer = document.getElementById('menuItemsContainer');
@@ -301,25 +306,30 @@ function increaseQuantity(itemId) {
     renderMenuItems(document.querySelector('.menu-category-button.bg-primary')?.dataset.category || 'all');
 }
 
+function openCartModal() {
+    document.getElementById('cartModal').classList.remove('hidden');
+}
+
+function closeCartModal() {
+    document.getElementById('cartModal').classList.add('hidden');
+}
+
 function updateCartUI() {
     const cartButton = document.getElementById('viewCartButton');
     const cartItemCount = document.getElementById('cartItemCount');
     const cartItemsList = document.getElementById('cartItemsList');
     const cartTotal = document.getElementById('cartTotal');
     const placeOrderButton = document.getElementById('placeOrderButton');
-    
     const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
-
     if (totalItems > 0) {
         cartButton.style.transform = 'scale(1)';
         cartItemCount.textContent = totalItems;
         placeOrderButton.disabled = false;
-
         cartItemsList.innerHTML = '';
         cart.forEach(item => {
             const itemElement = document.createElement('div');
             itemElement.className = 'flex justify-between items-center py-2 border-b border-gray-100';
-            const imageUrl = item.image_url || DEFAULT_IMAGES[item.kategori.toLowerCase()] || DEFAULT_IMAGES.default;
+            const imageUrl = item.image_url || DEFAULT_IMAGES[item.kategori?.toLowerCase()] || DEFAULT_IMAGES.default;
             itemElement.innerHTML = `
                 <div class="flex items-center flex-1">
                     <div class="w-10 h-10 mr-2 rounded overflow-hidden flex-shrink-0">
@@ -333,20 +343,14 @@ function updateCartUI() {
             `;
             cartItemsList.appendChild(itemElement);
         });
-        
         const total = cart.reduce((sum, item) => sum + (item.fiyat * item.quantity), 0);
         cartTotal.textContent = `${total.toLocaleString('tr-TR')}₺`;
-        
     } else {
         cartButton.style.transform = 'scale(0)';
         placeOrderButton.disabled = true;
         cartItemsList.innerHTML = '<p class="text-gray-500 text-center text-sm py-2">Sepetiniz boş</p>';
         cartTotal.textContent = '0₺';
     }
-}
-
-function toggleCartPanel() {
-    document.getElementById('orderCartPanel').classList.toggle('hidden');
 }
 
 async function placeOrder() {
@@ -403,7 +407,7 @@ async function placeOrder() {
         cart = [];
         document.getElementById('orderNoteInput').value = '';
         updateCartUI();
-        toggleCartPanel();
+        openCartModal();
         renderMenuItems(document.querySelector('.menu-category-button.bg-primary')?.dataset.category || 'all');
 
     } catch (error) {
