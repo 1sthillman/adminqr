@@ -198,13 +198,16 @@ function setupEventListeners() {
     document.getElementById('callWaiterButton').addEventListener('click', callWaiter);
     document.getElementById('viewCartButton').addEventListener('click', toggleCartPanel);
     document.getElementById('placeOrderButton').addEventListener('click', placeOrder);
-    
+    // Köz İstiyorum butonu için event listener
+    const coalBtn = document.getElementById('requestCoalButton');
+    if (coalBtn) {
+        coalBtn.addEventListener('click', requestCoal);
+    }
     // Menü container'ı için olay delegasyonu (event delegation)
     const menuContainer = document.getElementById('menuItemsContainer');
     menuContainer.addEventListener('click', (e) => {
         const target = e.target.closest('button');
         if (!target) return;
-
         const itemId = target.dataset.id;
         if (target.classList.contains('add-to-cart-btn')) {
             const item = Object.values(menu).flat().find(p => p.id == itemId);
@@ -409,6 +412,29 @@ async function placeOrder() {
     } finally {
         placeOrderButton.disabled = false;
         placeOrderButton.innerHTML = 'Siparişi Onayla';
+    }
+}
+
+async function requestCoal() {
+    const coalBtn = document.getElementById('requestCoalButton');
+    coalBtn.disabled = true;
+    coalBtn.innerHTML = `<i class="ri-loader-2-line animate-spin mr-2"></i> Gönderiliyor...`;
+    try {
+        const { error } = await supabase.from('waiter_calls').insert({
+            table_id: tableId,
+            table_number: tableNumber,
+            status: 'coal'
+        });
+        if (error) throw error;
+        showToast('Köz isteğiniz alındı.', 'success');
+        setTimeout(() => {
+            coalBtn.disabled = false;
+            coalBtn.innerHTML = `<i class='ri-fire-line mr-1'></i> Köz İstiyorum`;
+        }, 10000);
+    } catch (error) {
+        showError('Köz isteği gönderilemedi.');
+        coalBtn.disabled = false;
+        coalBtn.innerHTML = `<i class='ri-fire-line mr-1'></i> Köz İstiyorum`;
     }
 }
 
