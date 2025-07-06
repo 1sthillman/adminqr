@@ -162,19 +162,17 @@ function renderAllMenuItems(urunler) {
         const itemInCart = cart.find(cartItem => cartItem.id === item.id);
         const imageUrl = item.image_url || DEFAULT_IMAGES.default;
         const itemElement = document.createElement('div');
-        itemElement.className = 'menu-item-card bg-white rounded-lg shadow-sm p-3 flex justify-between items-center mb-2';
+        itemElement.className = 'menu-item-card bg-white rounded-lg shadow-sm p-3 flex flex-col items-center mb-2 relative';
         itemElement.innerHTML = `
-            <div class="flex items-center flex-1">
-                <div class="w-16 h-16 mr-3 rounded-lg overflow-hidden flex-shrink-0">
-                    <img src="${imageUrl}" alt="${item.ad}" class="w-full h-full object-cover" onerror="this.src='${DEFAULT_IMAGES.default}'">
-                </div>
-                <div class="flex-1">
-                    <div class="font-medium">${item.ad}</div>
-                    <div class="text-xs text-cyan-400 font-semibold mt-1">${item.kategori || ''}</div>
-                    <div class="text-primary font-semibold mt-1">${item.fiyat ? item.fiyat.toLocaleString('tr-TR') + '₺' : ''}</div>
-                </div>
+            <div class="w-20 h-20 mb-2 rounded-lg overflow-hidden flex-shrink-0 mx-auto">
+                <img src="${imageUrl}" alt="${item.ad}" class="w-full h-full object-cover" onerror="this.src='${DEFAULT_IMAGES.default}'">
             </div>
-            ${itemInCart ? `<div class='flex items-center gap-2'><button class='quantity-btn px-2 py-1 bg-gray-100' data-id='${item.id}' data-action='decrease'>-</button><span class='px-2'>${itemInCart.quantity}</span><button class='quantity-btn px-2 py-1 bg-gray-100' data-id='${item.id}' data-action='increase'>+</button></div>` : ''}
+            <div class="font-medium text-center w-full">${item.ad}</div>
+            <div class="text-xs text-cyan-400 font-semibold mt-1 text-center w-full">${item.kategori || ''}</div>
+            <div class="text-primary font-semibold mt-1 text-center w-full">${item.fiyat ? item.fiyat.toLocaleString('tr-TR') + '₺' : ''}</div>
+            <div class="flex items-center justify-center gap-1 mt-2 w-full">
+                ${itemInCart ? `<button class='quantity-btn px-2 py-1 bg-gray-100 text-xs rounded' data-id='${item.id}' data-action='decrease'>-</button><span class='px-1 text-xs font-semibold'>${itemInCart.quantity}</span><button class='quantity-btn px-2 py-1 bg-gray-100 text-xs rounded' data-id='${item.id}' data-action='increase'>+</button>` : ''}
+            </div>
         `;
         // Kartın tamamı tıklanabilir, + butonu yok
         itemElement.addEventListener('click', (e) => {

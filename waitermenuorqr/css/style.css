@@ -215,11 +215,11 @@ textarea::placeholder, input::placeholder {
 
 /* === Category Buttons Smaller & Glass === */
 .menu-category-button {
-    padding: 2px 10px !important;
-    font-size: 0.7rem !important; /* slightly smaller */
-    background: rgba(255, 255, 255, 0.05) !important;
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    color: #cbd5e1 !important;
+    font-size: 1.15rem !important;
+    padding: 0.7rem 1.5rem !important;
+    border-radius: 2rem !important;
+    margin-top: 0.5rem !important;
+    margin-bottom: 0.5rem !important;
 }
 .menu-category-button.bg-primary {
     background: rgba(0, 230, 255, 0.25) !important;
@@ -349,7 +349,7 @@ textarea::placeholder, input::placeholder {
 /* Kategori barı fixed ve üstte sabit */
 .fixed.top-12 {
     position: fixed;
-    top: 3rem;
+    top: 3.8rem !important;
     left: 0;
     right: 0;
     z-index: 40;
@@ -407,6 +407,9 @@ textarea::placeholder, input::placeholder {
     transition: transform 0.08s cubic-bezier(.4,2,.6,1), box-shadow 0.15s;
     will-change: transform;
     user-select: none;
+    min-width: 0;
+    max-width: 100%;
+    box-sizing: border-box;
 }
 .menu-item-card:active {
     transform: scale(0.96);
@@ -414,6 +417,33 @@ textarea::placeholder, input::placeholder {
 }
 .menu-item-card:hover {
     box-shadow: 0 0 0 2px #67e8f9, 0 2px 24px 0 rgba(0,255,255,0.10);
+}
+.menu-item-card .quantity-btn {
+    font-size: 0.95rem;
+    padding: 0.15rem 0.6rem;
+    min-width: 1.7rem;
+    min-height: 1.7rem;
+    border-radius: 8px;
+    background: #e0f7fa;
+    color: #0891b2;
+    border: none;
+    font-weight: 600;
+    transition: background 0.15s, color 0.15s;
+}
+.menu-item-card .quantity-btn:active {
+    background: #67e8f9;
+    color: #0e1726;
+}
+.menu-item-card span {
+    font-size: 0.95rem;
+    min-width: 1.5rem;
+    text-align: center;
+    color: #0891b2;
+    font-weight: 600;
+}
+.menu-item-card .flex.items-center.justify-center {
+    margin-top: 0.2rem;
+    margin-bottom: 0.1rem;
 }
 
 /* Sepette adet seçimi küçük ve yatay */
@@ -583,4 +613,31 @@ textarea::placeholder, input::placeholder {
     text-align: center;
     font-weight: 600;
     color: #67e8f9;
+}
+
+/* Kategori barı daha aşağıda ve büyük */
+.menu-category-button {
+    font-size: 1.15rem !important;
+    padding: 0.7rem 1.5rem !important;
+    border-radius: 2rem !important;
+    margin-top: 0.5rem !important;
+    margin-bottom: 0.5rem !important;
+}
+.fixed.top-12 {
+    top: 3.8rem !important;
+}
+@media (max-width: 480px) {
+    .menu-category-button {
+        font-size: 1.05rem !important;
+        padding: 0.6rem 1.1rem !important;
+    }
+    .fixed.top-12 {
+        top: 3.2rem !important;
+    }
+}
+#viewCartButton {
+    position: fixed !important;
+    bottom: 1.2rem !important;
+    right: 1.2rem !important;
+    z-index: 120 !important;
 } 
