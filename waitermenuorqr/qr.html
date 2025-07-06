@@ -79,9 +79,15 @@
             </div>
         </div>
 
-        <!-- Sepet Popup Modal -->
-        <div id="cartModalOverlay" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-40 backdrop-blur-sm hidden">
-            <div id="orderCartPanel" class="glass-card neon-border shadow p-4 rounded-lg w-full max-w-xs mx-auto relative flex flex-col items-center">
+        <!-- Sepete Ekle Butonu -->
+        <div id="viewCartButton" class="fixed bottom-4 right-4 glass-btn neon-border text-cyan-100 flex items-center justify-center rounded-full p-4 shadow-lg cursor-pointer z-50 transition-transform" title="Sepeti Aç">
+            <i class="ri-shopping-cart-2-line text-xl"></i>
+            <span id="cartItemCount" class="absolute -top-1 -right-1 w-5 h-5 bg-cyan-300 text-cyan-900 text-xs rounded-full flex items-center justify-center font-bold">0</span>
+        </div>
+
+        <!-- Sepet Popup Modal ve Overlay (en sonda, her şeyin üstünde) -->
+        <div id="cartModalOverlay" class="cart-modal-overlay">
+            <div id="orderCartPanel" class="order-cart-panel">
                 <button id="closeCartModal" class="absolute top-2 right-2 text-cyan-200 text-xl"><i class="ri-close-line"></i></button>
                 <div class="flex items-center justify-center mb-2">
                     <i class="ri-shopping-cart-2-line text-2xl text-cyan-300 mr-2"></i>
@@ -97,12 +103,6 @@
                     Siparişi Onayla
                 </button>
             </div>
-        </div>
-
-        <!-- Sepete Ekle Butonu -->
-        <div id="viewCartButton" class="fixed bottom-4 right-4 glass-btn neon-border text-cyan-100 flex items-center justify-center rounded-full p-4 shadow-lg cursor-pointer z-50 transition-transform" title="Sepeti Aç">
-            <i class="ri-shopping-cart-2-line text-xl"></i>
-            <span id="cartItemCount" class="absolute -top-1 -right-1 w-5 h-5 bg-cyan-300 text-cyan-900 text-xs rounded-full flex items-center justify-center font-bold">0</span>
         </div>
     </div>
 

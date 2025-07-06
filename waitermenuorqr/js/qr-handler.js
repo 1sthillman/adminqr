@@ -26,13 +26,13 @@ document.addEventListener('DOMContentLoaded', () => {
     // Modal kapatma butonu
     document.getElementById('closeCartModal').addEventListener('click', closeCartModal);
     // Overlay'e tıklayınca kapansın (sadece dışarı tıklama)
-    document.getElementById('cartModalOverlay').addEventListener('mousedown', function(e) {
+    document.querySelector('.cart-modal-overlay').addEventListener('mousedown', function(e) {
         if (e.target === this) {
             closeCartModal();
         }
     });
     // Sayfa ilk açıldığında overlay kapalı olsun
-    document.getElementById('cartModalOverlay').classList.remove('active');
+    document.querySelector('.cart-modal-overlay').classList.remove('active');
 });
 
 async function initQrPage() {
@@ -367,7 +367,7 @@ function updateCartUI() {
 }
 
 function toggleCartPanel() {
-    const overlay = document.getElementById('cartModalOverlay');
+    const overlay = document.querySelector('.cart-modal-overlay');
     if (!overlay.classList.contains('active')) {
         openCartModal();
     } else {
@@ -376,12 +376,12 @@ function toggleCartPanel() {
 }
 
 function openCartModal() {
-    const overlay = document.getElementById('cartModalOverlay');
+    const overlay = document.querySelector('.cart-modal-overlay');
     overlay.classList.add('active');
 }
 
 function closeCartModal() {
-    const overlay = document.getElementById('cartModalOverlay');
+    const overlay = document.querySelector('.cart-modal-overlay');
     overlay.classList.remove('active');
 }
 

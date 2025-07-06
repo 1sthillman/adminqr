@@ -415,7 +415,7 @@ textarea::placeholder, input::placeholder {
 }
 
 /* Sepet popup overlay tam ekran ve sadece açıkken görünür */
-#cartModalOverlay {
+.cart-modal-overlay {
     display: none;
     position: fixed;
     inset: 0;
@@ -426,12 +426,12 @@ textarea::placeholder, input::placeholder {
     backdrop-filter: blur(8px) !important;
     -webkit-backdrop-filter: blur(8px) !important;
 }
-#cartModalOverlay.active {
+.cart-modal-overlay.active {
     display: flex !important;
 }
 
 /* Sepet popup panel küçük ve ortada */
-#orderCartPanel {
+.order-cart-panel {
     max-width: 320px;
     min-width: 0;
     margin: 0 auto;
@@ -446,7 +446,7 @@ textarea::placeholder, input::placeholder {
     align-items: center;
 }
 @media (max-width: 480px) {
-    #orderCartPanel {
+    .order-cart-panel {
         max-width: 95vw;
         padding: 1rem 0.25rem 0.75rem 0.25rem !important;
     }
