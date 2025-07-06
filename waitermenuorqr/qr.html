@@ -59,7 +59,7 @@
         <!-- Menü ve Sipariş Bölümü -->
         <div class="mt-20 px-2 sm:px-4">
             <!-- Kategori Seçimi -->
-            <div class="mb-4 sticky top-14 z-30 bg-transparent backdrop-blur-md rounded-b-lg">
+            <div class="mb-4 fixed top-12 left-0 right-0 z-40 bg-transparent backdrop-blur-md rounded-b-lg max-w-screen-md mx-auto w-full px-2 sm:px-4">
                 <div class="flex space-x-2 pb-2" style="overflow-x:auto;">
                     <button class="menu-category-button flex-shrink-0 px-4 py-2 rounded-full bg-primary text-white" data-category="all">Tümü</button>
                     <button class="menu-category-button flex-shrink-0 px-4 py-2 rounded-full bg-gray-200 text-gray-700" data-category="starters">Başlangıçlar</button>
@@ -68,9 +68,8 @@
                     <button class="menu-category-button flex-shrink-0 px-4 py-2 rounded-full bg-gray-200 text-gray-700" data-category="desserts">Tatlılar</button>
                 </div>
             </div>
-
             <!-- Menü Öğeleri -->
-            <div id="menuItemsContainer" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mb-28">
+            <div id="menuItemsContainer" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mb-28 pt-16">
                 <!-- Menü öğeleri buraya dinamik olarak eklenecek -->
                 <div class="animate-pulse flex justify-center items-center p-4">
                     <i class="ri-loader-2-line text-primary text-3xl animate-spin"></i>
