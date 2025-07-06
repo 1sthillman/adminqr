@@ -114,8 +114,10 @@ async function loadAndRenderMenu() {
             }
         });
 
-        renderCategoryButtons(kategoriler.map(k => k.ad));
-        renderMenuItems(kategoriler[0]?.ad || 'all');
+        // 'Tümü' kategorisini ekle
+        const allCategories = ['Tümü', ...kategoriler.map(k => k.ad)];
+        renderCategoryButtons(allCategories);
+        renderMenuItems('Tümü');
 
     } catch (error) {
         console.error('Menü yüklenirken hata:', error);
@@ -138,8 +140,7 @@ function renderCategoryButtons(categories) {
         });
         container.appendChild(button);
     });
-
-    // İlk butonu aktif yap
+    // İlk butonu aktif yap (Tümü)
     if (container.firstChild) {
         container.firstChild.classList.add('bg-primary', 'text-white');
     }
@@ -148,17 +149,20 @@ function renderCategoryButtons(categories) {
 function renderMenuItems(categoryName) {
     const container = document.getElementById('menuItemsContainer');
     container.innerHTML = '';
-    const itemsToShow = menu[categoryName] || [];
-    
+    let itemsToShow = [];
+    if (categoryName === 'Tümü') {
+        // Tüm kategorilerdeki ürünleri birleştir
+        itemsToShow = Object.values(menu).flat();
+    } else {
+        itemsToShow = menu[categoryName] || [];
+    }
     if (itemsToShow.length === 0) {
         container.innerHTML = `<p class="text-center p-4 text-gray-500">Bu kategoride ürün bulunmuyor.</p>`;
         return;
     }
-    
     itemsToShow.forEach(item => {
         const itemInCart = cart.find(cartItem => cartItem.id === item.id);
-        const imageUrl = item.image_url || DEFAULT_IMAGES[item.kategori.toLowerCase()] || DEFAULT_IMAGES.default;
-
+        const imageUrl = item.image_url || DEFAULT_IMAGES[item.kategori?.toLowerCase()] || DEFAULT_IMAGES.default;
         const itemElement = document.createElement('div');
         itemElement.className = 'bg-white rounded-lg shadow-sm p-3 flex justify-between items-center';
         itemElement.innerHTML = `
