@@ -13,37 +13,22 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body class="bg-gray-50 min-h-screen">
-    <div id="qrPage" class="hidden pb-24 max-w-screen-md mx-auto w-full">
-        <div class="glass-card neon-border shadow-md p-2 fixed top-0 left-0 right-0 z-30 max-w-screen-md mx-auto w-full flex flex-col">
-            <div class="flex justify-between items-center w-full mb-2">
-                <span class="bg-cyan-200 text-cyan-900 text-xs font-bold px-3 py-1 rounded-full shadow-sm">Masa <span id="tableNumber">0</span></span>
-                <div class="flex gap-2">
-                    <button id="callWaiterButton" class="glass-btn neon-border text-cyan-100 px-2 py-1 rounded-button font-medium hover:bg-opacity-90 transition-all flex items-center text-sm h-9 z-40">
-                        <i class="ri-user-voice-line mr-1"></i>
+    <div id="qrPage" class="hidden pb-20">
+        <div class="bg-white shadow-md p-4 fixed top-0 left-0 right-0 z-10">
+            <div class="flex items-center justify-between">
+                <div>
+                    <h1 class="text-xl font-semibold">Masa <span id="tableNumber">0</span></h1>
+                    <p class="text-sm text-gray-600">Hoş geldiniz!</p>
+                    </div>
+                <button id="callWaiterButton" class="bg-primary text-white px-3 py-2 rounded-button font-medium hover:bg-opacity-90 transition-all">
+                    <i class="ri-user-voice-line mr-1"></i>
+                        Garsonu Çağır
                     </button>
-                    <button id="hookahButton" class="glass-btn neon-border text-cyan-100 px-2 py-1 rounded-button font-medium hover:bg-opacity-90 transition-all flex items-center text-sm h-9 z-40">
-                        <i class="ri-fire-line mr-1"></i>
-                    </button>
-                </div>
             </div>
-            <div class="flex flex-col items-start mb-2">
-                <p class="text-xs text-cyan-200 opacity-80">Hoş geldiniz!</p>
-            </div>
-            <!-- Kategori Barı: Hoşgeldin yazısının hemen altında -->
-            <div class="w-full max-w-screen-md mx-auto px-2 sm:px-4 mb-4">
-                <div class="flex space-x-2 pb-2 overflow-x-auto no-scrollbar" style="scrollbar-width:none;">
-                    <!-- Kategori butonları dinamik olarak JS ile eklenecek -->
-                </div>
-            </div>
-        </div>
-        <!-- Toast Bildirim -->
-        <div id="toast" class="fixed bottom-24 left-1/2 transform -translate-x-1/2 z-50 px-4 py-3 rounded-xl glass-card neon-border flex items-center gap-2 hidden min-w-[220px]">
-            <span id="toastIcon"></span>
-            <span id="toastMessage" class="font-medium"></span>
         </div>
 
-        <!-- Uyarı ve bildirim alanları -->
-        <div class="fixed top-20 left-0 right-0 z-20 px-2 max-w-screen-md mx-auto w-full">
+                    <!-- Uyarı ve bildirim alanları -->
+        <div class="fixed top-16 left-0 right-0 z-20 px-4">
             <div id="errorAlert" class="mt-2 p-3 bg-red-100 text-red-700 rounded-lg hidden">
                         Bir hata oluştu. Lütfen tekrar deneyin.
                     </div>
@@ -62,9 +47,20 @@
         </div>
 
         <!-- Menü ve Sipariş Bölümü -->
-        <div class="px-2 sm:px-4">
+        <div class="mt-20 p-4">
+            <!-- Kategori Seçimi -->
+            <div class="mb-4 overflow-x-auto">
+                <div class="flex space-x-2 pb-2">
+                    <button class="menu-category-button flex-shrink-0 px-4 py-2 rounded-full bg-primary text-white" data-category="all">Tümü</button>
+                    <button class="menu-category-button flex-shrink-0 px-4 py-2 rounded-full bg-gray-200 text-gray-700" data-category="starters">Başlangıçlar</button>
+                    <button class="menu-category-button flex-shrink-0 px-4 py-2 rounded-full bg-gray-200 text-gray-700" data-category="mains">Ana Yemekler</button>
+                    <button class="menu-category-button flex-shrink-0 px-4 py-2 rounded-full bg-gray-200 text-gray-700" data-category="drinks">İçecekler</button>
+                    <button class="menu-category-button flex-shrink-0 px-4 py-2 rounded-full bg-gray-200 text-gray-700" data-category="desserts">Tatlılar</button>
+                    </div>
+                </div>
+
             <!-- Menü Öğeleri -->
-            <div id="menuItemsContainer" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mb-8 pt-4">
+            <div id="menuItemsContainer" class="space-y-3 mb-24">
                 <!-- Menü öğeleri buraya dinamik olarak eklenecek -->
                 <div class="animate-pulse flex justify-center items-center p-4">
                     <i class="ri-loader-2-line text-primary text-3xl animate-spin"></i>
@@ -72,28 +68,28 @@
                 </div>
             </div>
         </div>
-        <!-- Sağda sabit, dikey ortalanmış sepet butonu (tasarımı bozmadan ekleniyor) -->
-        <button id="sideCartButton" class="fixed top-1/2 right-2 -translate-y-1/2 z-50 bg-gradient-to-l from-cyan-400 to-blue-600 text-white rounded-l-full px-4 py-3 flex items-center shadow-lg">
-            <i class="ri-shopping-cart-2-line text-xl mr-2"></i>
-            <span>Sepet</span>
-            <span id="sideCartCount" class="ml-2 bg-white text-blue-600 rounded-full px-2 py-1 text-xs font-bold">0</span>
-        </button>
-        <!-- Sağdan açılan küçük sepet paneli (drawer) -->
-        <div id="sideCartPanel" class="fixed top-0 right-0 h-full w-80 max-w-full bg-white shadow-2xl z-50 transform translate-x-full transition-transform duration-300 ease-in-out flex flex-col p-4
-            sm:w-80 sm:max-w-full w-[92vw] max-w-[98vw] p-2">
-            <button id="closeSideCart" class="absolute top-3 right-3 text-2xl text-cyan-500 hover:text-blue-600"><i class="ri-close-line"></i></button>
-            <div class="flex items-center justify-center mb-2 mt-6">
-                <i class="ri-shopping-cart-2-line text-2xl text-cyan-400 mr-2"></i>
-                <h3 class="font-medium text-cyan-700 text-lg">Sepet</h3>
+
+        <!-- Sipariş Özeti -->
+        <div id="orderCartPanel" class="fixed bottom-0 left-0 right-0 bg-white shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.1)] p-4 z-10 hidden">
+            <div class="flex justify-between items-center mb-2">
+                <h3 class="font-medium">Sipariş Özeti</h3>
+                <span class="text-primary font-semibold" id="cartTotal">0₺</span>
             </div>
-            <div id="sideCartItemsList" class="max-h-48 overflow-y-auto mb-2 w-full">
+            
+            <div id="cartItemsList" class="max-h-32 overflow-y-auto mb-2">
+                <!-- Sepet öğeleri buraya dinamik olarak eklenecek -->
                 <p class="text-gray-500 text-center text-sm py-2">Sepetiniz boş</p>
             </div>
-            <span class="text-cyan-700 font-semibold mb-1" id="sideCartTotal">0₺</span>
-            <textarea id="sideOrderNoteInput" class="w-full border border-cyan-400 rounded p-2 mb-2 text-sm focus:outline-none focus:ring-2 focus:ring-cyan-400 bg-white bg-opacity-10 text-cyan-700" rows="2" placeholder="Sipariş notu (isteğe bağlı)"></textarea>
-            <button id="sidePlaceOrderButton" class="w-full bg-cyan-500 text-white py-2 rounded font-medium hover:bg-cyan-600 transition-all disabled:opacity-50 disabled:cursor-not-allowed mt-1">
-                Siparişi Onayla
+
+            <button id="placeOrderButton" class="w-full bg-primary text-white py-3 rounded-button font-medium hover:bg-opacity-90 transition-all disabled:opacity-50 disabled:cursor-not-allowed">
+                Sipariş Ver
             </button>
+        </div>
+
+        <!-- Sepete Ekle Butonu -->
+        <div id="viewCartButton" class="fixed bottom-4 right-4 bg-primary text-white flex items-center justify-center rounded-full p-3 shadow-lg cursor-pointer z-20 transform scale-0 transition-transform">
+            <i class="ri-shopping-cart-2-line text-xl"></i>
+            <span id="cartItemCount" class="absolute -top-1 -right-1 w-5 h-5 bg-white text-primary text-xs rounded-full flex items-center justify-center font-bold">0</span>
         </div>
     </div>
 
@@ -104,13 +100,5 @@
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.38.5/dist/umd/supabase.js"></script>
     <script src="js/qr-handler.js"></script>
-    <script>
-    document.getElementById('sideCartButton').onclick = function() {
-        document.getElementById('sideCartPanel').classList.remove('translate-x-full');
-    };
-    document.getElementById('closeSideCart').onclick = function() {
-        document.getElementById('sideCartPanel').classList.add('translate-x-full');
-    };
-    </script>
 </body>
 </html> 

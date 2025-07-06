@@ -9,8 +9,6 @@ let tableId = null; // Masa ID'sini saklamak için
 let menu = {}; // Kategorilere ayrılmış menü
 let cart = []; // Müşterinin sepeti
 let realtimeChannels = []; // Gerçek zamanlı kanalları saklamak için
-let categories = [];
-let activeCategory = 'all';
 
 // Kategori görselleri için varsayılan değerler
 const DEFAULT_IMAGES = {
@@ -23,15 +21,6 @@ const DEFAULT_IMAGES = {
 
 document.addEventListener('DOMContentLoaded', () => {
     initQrPage();
-    // Yeni sağda sabit sepet butonu ve paneli için event atamaları
-    const sideCartBtn = document.getElementById('sideCartButton');
-    const sideCartPanel = document.getElementById('sideCartPanel');
-    const closeSideCartBtn = document.getElementById('closeSideCart');
-    sideCartBtn.addEventListener('click', openSideCartPanel);
-    closeSideCartBtn.addEventListener('click', closeSideCartPanel);
-    // Sayfa ilk açıldığında panel kapalı olsun
-    sideCartPanel.classList.remove('open');
-    updateSideCartUI();
 });
 
 async function initQrPage() {
@@ -98,130 +87,134 @@ async function getOrCreateTable() {
 
 async function loadAndRenderMenu() {
     try {
-        // Kategorileri çek
-        const { data: kategoriler, error: kategoriError } = await supabase
-            .from('kategoriler')
-            .select('*')
-            .order('sira', { ascending: true });
-        if (kategoriError) throw kategoriError;
-        categories = kategoriler || [];
-        renderCategoryButtons();
+        // Kategorileri ve ürünleri aynı anda çek
+        const [kategorilerRes, urunlerRes] = await Promise.all([
+            supabase.from('kategoriler').select('ad, sira').order('sira'),
+            supabase.from('urunler').select('*').eq('mevcut', true).order('ad')
+        ]);
 
-        // Ürünleri çek
-        const { data: urunler, error } = await supabase
-            .from('urunler')
-            .select('*')
-            .eq('mevcut', true);
-        if (error) throw error;
-        window.lastUrunlerList = urunler;
-        renderAllMenuItems(urunler);
+        if (kategorilerRes.error) throw kategorilerRes.error;
+        if (urunlerRes.error) throw urunlerRes.error;
+
+        const kategoriler = kategorilerRes.data;
+        const urunler = urunlerRes.data;
+
+        // Menüyü yapılandır
+        menu = {};
+        kategoriler.forEach(k => {
+            menu[k.ad] = [];
+        });
+
+        urunler.forEach(urun => {
+            if (menu[urun.kategori]) {
+                menu[urun.kategori].push(urun);
+            } else {
+                // Eğer ürünün kategorisi tanımlı değilse, "Diğer" gibi bir kategoriye eklenebilir
+                if (!menu['Diğer']) menu['Diğer'] = [];
+                menu['Diğer'].push(urun);
+            }
+        });
+
+        renderCategoryButtons(kategoriler.map(k => k.ad));
+        renderMenuItems(kategoriler[0]?.ad || 'all');
+
     } catch (error) {
         console.error('Menü yüklenirken hata:', error);
         showError('Menü yüklenemedi.');
     }
 }
 
-function renderCategoryButtons() {
-    const container = document.querySelector('.flex.space-x-2.pb-2');
-    if (!container) return;
+function renderCategoryButtons(categories) {
+    const container = document.getElementById('categoryButtons');
     container.innerHTML = '';
-    // Tümü butonu
-    const allBtn = document.createElement('button');
-    allBtn.className = `menu-category-button flex-shrink-0 px-4 py-2 rounded-full ${activeCategory==='all' ? 'bg-primary text-white' : 'bg-gray-200 text-gray-700'}`;
-    allBtn.dataset.category = 'all';
-    allBtn.textContent = 'Tümü';
-    allBtn.onclick = () => { activeCategory = 'all'; renderCategoryButtons(); renderAllMenuItems(window.lastUrunlerList); };
-    container.appendChild(allBtn);
-    // Diğer kategoriler
-    categories.forEach(cat => {
-        const btn = document.createElement('button');
-        btn.className = `menu-category-button flex-shrink-0 px-4 py-2 rounded-full ${activeCategory===cat.ad ? 'bg-primary text-white' : 'bg-gray-200 text-gray-700'}`;
-        btn.dataset.category = cat.ad;
-        btn.textContent = cat.ad;
-        btn.onclick = () => { activeCategory = cat.ad; renderCategoryButtons(); renderAllMenuItems(window.lastUrunlerList); };
-        container.appendChild(btn);
+    categories.forEach(categoryName => {
+        const button = document.createElement('button');
+        button.className = 'menu-category-button flex-shrink-0 px-4 py-2 text-sm font-medium rounded-full mr-2 bg-gray-200 text-gray-700 transition-colors duration-200';
+        button.textContent = categoryName;
+        button.dataset.category = categoryName;
+        button.addEventListener('click', () => {
+            document.querySelectorAll('.menu-category-button').forEach(btn => btn.classList.remove('bg-primary', 'text-white'));
+            button.classList.add('bg-primary', 'text-white');
+            renderMenuItems(categoryName);
+        });
+        container.appendChild(button);
     });
+
+    // İlk butonu aktif yap
+    if (container.firstChild) {
+        container.firstChild.classList.add('bg-primary', 'text-white');
+    }
 }
 
-function renderAllMenuItems(urunler) {
+function renderMenuItems(categoryName) {
     const container = document.getElementById('menuItemsContainer');
     container.innerHTML = '';
-    if (!urunler || urunler.length === 0) {
-        container.innerHTML = `<p class="text-center p-4 text-gray-500">Hiç ürün bulunmuyor.</p>`;
+    const itemsToShow = menu[categoryName] || [];
+    
+    if (itemsToShow.length === 0) {
+        container.innerHTML = `<p class="text-center p-4 text-gray-500">Bu kategoride ürün bulunmuyor.</p>`;
         return;
     }
-    // Kategoriye göre filtrele
-    let filtered = urunler;
-    if (activeCategory !== 'all') {
-        filtered = urunler.filter(u => u.kategori === activeCategory);
-    }
-    if (filtered.length === 0) {
-        container.innerHTML = `<p class="text-center p-4 text-gray-500">Bu kategoride ürün yok.</p>`;
-        return;
-    }
-    filtered.forEach(item => {
+    
+    itemsToShow.forEach(item => {
         const itemInCart = cart.find(cartItem => cartItem.id === item.id);
-        const imageUrl = (item.image_url && item.image_url.startsWith('data:image/')) ? item.image_url : DEFAULT_IMAGES.default;
+        const imageUrl = item.image_url || DEFAULT_IMAGES[item.kategori.toLowerCase()] || DEFAULT_IMAGES.default;
+
         const itemElement = document.createElement('div');
-        itemElement.className = 'menu-item-card bg-white rounded-lg shadow-sm p-3 flex flex-col items-center mb-2 relative';
+        itemElement.className = 'bg-white rounded-lg shadow-sm p-3 flex justify-between items-center';
         itemElement.innerHTML = `
-            <div class="w-20 h-20 mb-2 rounded-lg overflow-hidden flex-shrink-0 mx-auto">
-                <img src="${imageUrl}" alt="${item.ad}" class="w-full h-full object-cover" onerror="this.src='${DEFAULT_IMAGES.default}'" style="display:block;visibility:visible;">
+            <div class="flex items-center flex-1">
+                <div class="w-16 h-16 mr-3 rounded-lg overflow-hidden flex-shrink-0">
+                    <img src="${imageUrl}" alt="${item.ad}" class="w-full h-full object-cover" onerror="this.src='${DEFAULT_IMAGES.default}'">
+                </div>
+                <div class="flex-1">
+                    <div class="font-medium">${item.ad}</div>
+                    <div class="text-gray-500 text-sm">${item.aciklama || ''}</div>
+                    <div class="text-primary font-semibold mt-1">${item.fiyat.toLocaleString('tr-TR')}₺</div>
+                </div>
             </div>
-            <div class="font-medium text-center w-full">${item.ad}</div>
-            <div class="text-xs text-cyan-400 font-semibold mt-1 text-center w-full">${item.kategori || ''}</div>
-            <div class="text-primary font-semibold mt-1 text-center w-full">${item.fiyat ? item.fiyat.toLocaleString('tr-TR') + '₺' : ''}</div>
-            <div class="flex items-center justify-center gap-1 mt-2 w-full">
-                ${itemInCart ? `<button class='quantity-btn px-2 py-1 bg-gray-100 text-xs rounded' data-id='${item.id}' data-action='decrease'>-</button><span class='px-1 text-xs font-semibold'>${itemInCart.quantity}</span><button class='quantity-btn px-2 py-1 bg-gray-100 text-xs rounded' data-id='${item.id}' data-action='increase'>+</button>` : ''}
+            <div class="flex items-center">
+                ${itemInCart ? `
+                    <div class="flex items-center border border-gray-300 rounded-lg overflow-hidden">
+                        <button class="quantity-btn px-2 py-1 bg-gray-100" data-id="${item.id}" data-action="decrease">-</button>
+                        <span class="px-3">${itemInCart.quantity}</span>
+                        <button class="quantity-btn px-2 py-1 bg-gray-100" data-id="${item.id}" data-action="increase">+</button>
+                    </div>
+                ` : `
+                    <button class="add-to-cart-btn bg-primary text-white px-3 py-1 rounded-full" data-id="${item.id}">
+                        <i class="ri-add-line"></i>
+                    </button>
+                `}
             </div>
         `;
-        // Kartın tamamı tıklanabilir, + butonu yok
-        itemElement.addEventListener('click', (e) => {
-            // Eğer -+ butonlarına tıklanıyorsa kartı tetikleme
-            if (e.target.classList.contains('quantity-btn')) return;
-            // Geri tepme animasyonu
-            itemElement.style.transform = 'scale(0.96)';
-            setTimeout(() => { itemElement.style.transform = ''; }, 120);
-            addToCart(item);
-        });
         container.appendChild(itemElement);
     });
 }
 
 function setupEventListeners() {
-    const callWaiterBtn = document.getElementById('callWaiterButton');
-    if (callWaiterBtn) callWaiterBtn.addEventListener('click', callWaiter);
-
-    const viewCartBtn = document.getElementById('viewCartButton');
-    if (viewCartBtn) viewCartBtn.addEventListener('click', toggleCartPanel);
-
-    const placeOrderBtn = document.getElementById('placeOrderButton');
-    if (placeOrderBtn) placeOrderBtn.addEventListener('click', placeOrder);
-
-    const hookahBtn = document.getElementById('hookahButton');
-    if (hookahBtn) hookahBtn.addEventListener('click', callHookah);
-
+    document.getElementById('callWaiterButton').addEventListener('click', callWaiter);
+    document.getElementById('viewCartButton').addEventListener('click', toggleCartPanel);
+    document.getElementById('placeOrderButton').addEventListener('click', placeOrder);
+    
     // Menü container'ı için olay delegasyonu (event delegation)
     const menuContainer = document.getElementById('menuItemsContainer');
-    if (menuContainer) {
-        menuContainer.addEventListener('click', (e) => {
-            const target = e.target.closest('button');
-            if (!target) return;
-            const itemId = target.dataset.id;
-            if (target.classList.contains('add-to-cart-btn')) {
-                // Ürünü doğrudan urunler listesinden bul
-                const item = window.lastUrunlerList?.find(p => p.id == itemId);
-                if (item) addToCart(item);
-            } else if (target.classList.contains('quantity-btn')) {
-                const action = target.dataset.action;
-                if (action === 'increase') {
-                    increaseQuantity(itemId);
-                } else if (action === 'decrease') {
-                    decreaseQuantity(itemId);
-                }
+    menuContainer.addEventListener('click', (e) => {
+        const target = e.target.closest('button');
+        if (!target) return;
+
+        const itemId = target.dataset.id;
+        if (target.classList.contains('add-to-cart-btn')) {
+            const item = Object.values(menu).flat().find(p => p.id == itemId);
+            if (item) addToCart(item);
+        } else if (target.classList.contains('quantity-btn')) {
+            const action = target.dataset.action;
+            if (action === 'increase') {
+                increaseQuantity(itemId);
+            } else if (action === 'decrease') {
+                decreaseQuantity(itemId);
             }
-        });
-    }
+        }
+    });
 }
 
 function setupRealtimeSubscriptions() {
@@ -269,30 +262,6 @@ async function callWaiter() {
     }
 }
 
-async function callHookah() {
-    const hookahButton = document.getElementById('hookahButton');
-    hookahButton.disabled = true;
-    hookahButton.innerHTML = `<i class="ri-loader-2-line animate-spin mr-2"></i> Gönderiliyor...`;
-    try {
-        const { error } = await supabase.from('waiter_calls').insert({
-            table_id: tableId,
-            table_number: tableNumber,
-            status: 'hookah'
-        });
-        if (error) throw error;
-        showSuccess('Köz isteğiniz alındı. Garson en kısa sürede getirecek.');
-        setTimeout(() => {
-            hookahButton.disabled = false;
-            hookahButton.innerHTML = `<i class="ri-fire-line mr-1"></i> Köz İstiyorum`;
-        }, 20000);
-    } catch (error) {
-        console.error('Köz isteği hatası:', error);
-        showError('Köz isteği gönderilemedi. Lütfen tekrar deneyin.');
-        hookahButton.disabled = false;
-        hookahButton.innerHTML = `<i class="ri-fire-line mr-1"></i> Köz İstiyorum`;
-    }
-}
-
 function addToCart(item) {
     const existingItem = cart.find(cartItem => cartItem.id === item.id);
     if (existingItem) {
@@ -300,9 +269,8 @@ function addToCart(item) {
     } else {
         cart.push({ ...item, quantity: 1 });
     }
-    updateSideCartUI();
-    updateCartUI && updateCartUI();
-    renderAllMenuItems(window.lastUrunlerList || []);
+    updateCartUI();
+    renderMenuItems(document.querySelector('.menu-category-button.bg-primary')?.dataset.category || 'all');
 }
 
 function decreaseQuantity(itemId) {
@@ -311,12 +279,11 @@ function decreaseQuantity(itemId) {
         if (cart[itemIndex].quantity > 1) {
             cart[itemIndex].quantity--;
         } else {
-            cart.splice(itemIndex, 1);
+            cart.splice(itemIndex, 1); // Miktar 1 ise sepetten çıkar
         }
     }
-    updateSideCartUI();
-    updateCartUI && updateCartUI();
-    renderAllMenuItems(window.lastUrunlerList || []);
+    updateCartUI();
+    renderMenuItems(document.querySelector('.menu-category-button.bg-primary')?.dataset.category || 'all');
 }
 
 function increaseQuantity(itemId) {
@@ -324,9 +291,8 @@ function increaseQuantity(itemId) {
     if (item) {
         item.quantity++;
     }
-    updateSideCartUI();
-    updateCartUI && updateCartUI();
-    renderAllMenuItems(window.lastUrunlerList || []);
+    updateCartUI();
+    renderMenuItems(document.querySelector('.menu-category-button.bg-primary')?.dataset.category || 'all');
 }
 
 function updateCartUI() {
@@ -335,21 +301,23 @@ function updateCartUI() {
     const cartItemsList = document.getElementById('cartItemsList');
     const cartTotal = document.getElementById('cartTotal');
     const placeOrderButton = document.getElementById('placeOrderButton');
-    const orderNoteInput = document.getElementById('orderNoteInput');
+    
     const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+
     if (totalItems > 0) {
         cartButton.style.transform = 'scale(1)';
         cartItemCount.textContent = totalItems;
         placeOrderButton.disabled = false;
+
         cartItemsList.innerHTML = '';
         cart.forEach(item => {
             const itemElement = document.createElement('div');
             itemElement.className = 'flex justify-between items-center py-2 border-b border-gray-100';
-            const imageUrl = (item.image_url && item.image_url.startsWith('data:image/')) ? item.image_url : DEFAULT_IMAGES.default;
+            const imageUrl = item.image_url || DEFAULT_IMAGES[item.kategori.toLowerCase()] || DEFAULT_IMAGES.default;
             itemElement.innerHTML = `
                 <div class="flex items-center flex-1">
                     <div class="w-10 h-10 mr-2 rounded overflow-hidden flex-shrink-0">
-                        <img src="${imageUrl}" alt="${item.ad}" class="w-full h-full object-cover" onerror="this.src='${DEFAULT_IMAGES.default}'" style="display:block;visibility:visible;">
+                        <img src="${imageUrl}" alt="${item.ad}" class="w-full h-full object-cover" onerror="this.src='${DEFAULT_IMAGES.default}'">
                     </div>
                     <div class="flex-1">
                         <div class="text-sm font-medium">${item.ad} <span class="text-xs text-gray-500">x${item.quantity}</span></div>
@@ -359,98 +327,79 @@ function updateCartUI() {
             `;
             cartItemsList.appendChild(itemElement);
         });
+        
         const total = cart.reduce((sum, item) => sum + (item.fiyat * item.quantity), 0);
         cartTotal.textContent = `${total.toLocaleString('tr-TR')}₺`;
-        // Not ekleme alanı ve siparişi onayla butonu her zaman görünür
-        if (orderNoteInput) orderNoteInput.style.display = '';
-        if (placeOrderButton) placeOrderButton.style.display = '';
+        
     } else {
         cartButton.style.transform = 'scale(0)';
         placeOrderButton.disabled = true;
         cartItemsList.innerHTML = '<p class="text-gray-500 text-center text-sm py-2">Sepetiniz boş</p>';
         cartTotal.textContent = '0₺';
-        if (orderNoteInput) orderNoteInput.style.display = '';
-        if (placeOrderButton) placeOrderButton.style.display = '';
-        document.getElementById('orderCartPanel').classList.remove('open');
     }
 }
 
 function toggleCartPanel() {
-    const panel = document.getElementById('orderCartPanel');
-    if (panel) {
-        if (panel.classList.contains('open')) {
-            closeCartModal();
-        } else {
-            openCartModal();
-        }
-    }
-}
-
-function openCartModal() {
-    const panel = document.getElementById('orderCartPanel');
-    if (panel) {
-        panel.classList.add('open');
-        panel.classList.remove('hidden'); // hidden sınıfını koru, CSS ile visibility: hidden kontrolü için
-    }
-}
-
-function closeCartModal() {
-    const panel = document.getElementById('orderCartPanel');
-    if (panel) {
-        panel.classList.remove('open');
-        panel.classList.add('hidden'); // hidden sınıfını koru
-    }
+    document.getElementById('orderCartPanel').classList.toggle('hidden');
 }
 
 async function placeOrder() {
     const placeOrderButton = document.getElementById('placeOrderButton');
-    if (cart.length === 0) {
+        if (cart.length === 0) {
         return showError('Sipariş vermek için sepetinizde ürün olmalı.');
-    }
-    placeOrderButton.disabled = true;
+        }
+        
+        placeOrderButton.disabled = true;
     placeOrderButton.innerHTML = `<i class="ri-loader-2-line animate-spin mr-2"></i> Gönderiliyor...`;
+
     try {
+        const totalAmount = cart.reduce((sum, item) => sum + item.fiyat * item.quantity, 0);
         const orderNote = document.getElementById('orderNoteInput').value || null;
+
         // 1. "orders" tablosuna ana sipariş kaydını oluştur
         const { data: orderData, error: orderError } = await supabase
             .from('orders')
             .insert({
                 table_id: tableId,
-                status: 'pending_approval',
+                status: 'pending_approval', // Garson onayı bekliyor
+                total_price: totalAmount,
                 note: orderNote,
-                items: cart.map(item => ({
-                    id: item.id,
-                    ad: item.ad,
-                    fiyat: item.fiyat,
-                    quantity: item.quantity
-                }))
+                source: 'qr'
             })
-            .select('id')
-            .single();
+                .select('id')
+                .single();
+                
         if (orderError) throw orderError;
+
         const newOrderId = orderData.id;
+
         // 2. "order_items" tablosuna sepetteki her bir ürünü ekle
         const orderItems = cart.map(item => ({
             order_id: newOrderId,
-            menu_item_id: item.id,
-            quantity: item.quantity,
+                menu_item_id: item.id,
+                quantity: item.quantity,
             price: item.fiyat,
             name: item.ad,
         }));
+
         const { error: itemsError } = await supabase.from('order_items').insert(orderItems);
+
         if (itemsError) {
             // Eğer ürünleri eklerken hata olursa, oluşturulan ana siparişi silerek işlemi geri al.
             console.error('Sipariş kalemleri eklenemedi, sipariş siliniyor.', itemsError);
             await supabase.from('orders').delete().eq('id', newOrderId);
             throw itemsError;
         }
+
         showSuccess('Siparişiniz alındı! Garson onayladıktan sonra hazırlanacaktır.');
+
         // Sipariş sonrası arayüzü temizle
         cart = [];
         document.getElementById('orderNoteInput').value = '';
         updateCartUI();
         toggleCartPanel();
-        renderAllMenuItems(window.lastUrunlerList || []);
+        renderMenuItems(document.querySelector('.menu-category-button.bg-primary')?.dataset.category || 'all');
+
     } catch (error) {
         console.error('Sipariş oluşturma hatası:', error);
         showError('Sipariş gönderilemedi. Lütfen tekrar deneyin.');
@@ -488,98 +437,4 @@ function showToast(message, type = 'success') {
     setTimeout(() => {
         toast.classList.add('hidden');
     }, 4000);
-}
-
-function updateCartPanel() {
-    const cartItemsList = document.getElementById('cartItemsList');
-    const cartTotal = document.getElementById('cartTotal');
-    const cartQuantityControls = document.getElementById('cartQuantityControls');
-    cartItemsList.innerHTML = '';
-    let total = 0;
-    let totalQuantity = 0;
-    for (const item of cart) {
-        const itemDiv = document.createElement('div');
-        itemDiv.className = 'flex justify-between items-center mb-1';
-        itemDiv.innerHTML = `<span class="text-cyan-100">${item.name}</span><span class="text-cyan-300 font-semibold">${item.price * item.quantity}₺</span>`;
-        cartItemsList.appendChild(itemDiv);
-        total += item.price * item.quantity;
-        totalQuantity += item.quantity;
-    }
-    cartTotal.textContent = total + '₺';
-    // Adet kontrolü -+ ve miktar toplam fiyatın hemen altında küçük ve yatay
-    cartQuantityControls.innerHTML = `
-        <button onclick="decreaseCartQuantity()">-</button>
-        <span>${totalQuantity}</span>
-        <button onclick="increaseCartQuantity()">+</button>
-    `;
-    if (cart.length === 0) {
-        cartItemsList.innerHTML = '<p class="text-gray-500 text-center text-sm py-2">Sepetiniz boş</p>';
-        cartQuantityControls.innerHTML = '';
-        cartTotal.textContent = '0₺';
-        document.getElementById('orderCartPanel').classList.remove('open');
-    }
-}
-
-function decreaseCartQuantity() {
-    // Sepetteki ilk ürünün adedini azalt (örnek mantık, çoklu ürün için özelleştirilebilir)
-    if (cart.length > 0 && cart[0].quantity > 1) {
-        cart[0].quantity--;
-        updateCartPanel();
-    }
-}
-function increaseCartQuantity() {
-    if (cart.length > 0) {
-        cart[0].quantity++;
-        updateCartPanel();
-    }
-}
-
-function openSideCartPanel() {
-    document.getElementById('sideCartPanel').classList.add('open');
-    updateSideCartUI();
-}
-function closeSideCartPanel() {
-    document.getElementById('sideCartPanel').classList.remove('open');
-}
-
-function updateSideCartUI() {
-    const cartCount = document.getElementById('sideCartCount');
-    const cartItemsList = document.getElementById('sideCartItemsList');
-    const cartTotal = document.getElementById('sideCartTotal');
-    const placeOrderButton = document.getElementById('sidePlaceOrderButton');
-    const orderNoteInput = document.getElementById('sideOrderNoteInput');
-    const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
-    cartCount.textContent = totalItems;
-    if (totalItems > 0) {
-        placeOrderButton.disabled = false;
-        cartItemsList.innerHTML = '';
-        cart.forEach(item => {
-            const itemElement = document.createElement('div');
-            itemElement.className = 'flex justify-between items-center py-2 border-b border-gray-100';
-            const imageUrl = (item.image_url && item.image_url.startsWith('data:image/')) ? item.image_url : DEFAULT_IMAGES.default;
-            itemElement.innerHTML = `
-                <div class="flex items-center flex-1">
-                    <div class="w-10 h-10 mr-2 rounded overflow-hidden flex-shrink-0">
-                        <img src="${imageUrl}" alt="${item.ad}" class="w-full h-full object-cover" onerror="this.src='${DEFAULT_IMAGES.default}'" style="display:block;visibility:visible;">
-                    </div>
-                    <div class="flex-1">
-                        <div class="text-sm font-medium">${item.ad} <span class="text-xs text-gray-500">x${item.quantity}</span></div>
-                    </div>
-                </div>
-                <div class="text-sm font-medium">${(item.fiyat * item.quantity).toLocaleString('tr-TR')}₺</div>
-            `;
-            cartItemsList.appendChild(itemElement);
-        });
-        const total = cart.reduce((sum, item) => sum + (item.fiyat * item.quantity), 0);
-        cartTotal.textContent = `${total.toLocaleString('tr-TR')}₺`;
-        if (orderNoteInput) orderNoteInput.style.display = '';
-        if (placeOrderButton) placeOrderButton.style.display = '';
-    } else {
-        placeOrderButton.disabled = true;
-        cartItemsList.innerHTML = '<p class="text-gray-500 text-center text-sm py-2">Sepetiniz boş</p>';
-        cartTotal.textContent = '0₺';
-        if (orderNoteInput) orderNoteInput.style.display = '';
-        if (placeOrderButton) placeOrderButton.style.display = '';
-        document.getElementById('sideCartPanel').classList.remove('open');
-    }
 } 
