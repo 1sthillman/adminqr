@@ -50,14 +50,16 @@
         <div class="mt-20 p-4">
             <!-- Kategori Seçimi -->
             <div class="mb-4 overflow-x-auto">
+                <!-- Dinamik kategori butonları için eklendi -->
+                <div id="categoryButtons" class="flex space-x-2 pb-2"></div>
                 <div class="flex space-x-2 pb-2">
                     <button class="menu-category-button flex-shrink-0 px-4 py-2 rounded-full bg-primary text-white" data-category="all">Tümü</button>
                     <button class="menu-category-button flex-shrink-0 px-4 py-2 rounded-full bg-gray-200 text-gray-700" data-category="starters">Başlangıçlar</button>
                     <button class="menu-category-button flex-shrink-0 px-4 py-2 rounded-full bg-gray-200 text-gray-700" data-category="mains">Ana Yemekler</button>
                     <button class="menu-category-button flex-shrink-0 px-4 py-2 rounded-full bg-gray-200 text-gray-700" data-category="drinks">İçecekler</button>
                     <button class="menu-category-button flex-shrink-0 px-4 py-2 rounded-full bg-gray-200 text-gray-700" data-category="desserts">Tatlılar</button>
-                    </div>
                 </div>
+            </div>
 
             <!-- Menü Öğeleri -->
             <div id="menuItemsContainer" class="space-y-3 mb-24">
@@ -96,6 +98,11 @@
     <div id="loadingPage" class="flex flex-col items-center justify-center p-6 text-center min-h-screen">
         <div class="w-16 h-16 border-t-4 border-primary border-solid rounded-full animate-spin mb-4"></div>
         <p class="text-gray-600">Yükleniyor...</p>
+    </div>
+
+    <!-- Toast mesajı için eklendi -->
+    <div id="toast" class="fixed bottom-24 left-1/2 transform -translate-x-1/2 bg-primary text-white px-4 py-2 rounded-lg shadow-lg z-50 hidden">
+        <span id="toastMessage"></span>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.38.5/dist/umd/supabase.js"></script>
