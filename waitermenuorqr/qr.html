@@ -14,22 +14,18 @@
 </head>
 <body class="bg-gray-50 min-h-screen">
     <div id="qrPage" class="hidden pb-24 max-w-screen-md mx-auto w-full">
-        <div class="glass-card neon-border shadow-md p-4 fixed top-0 left-0 right-0 z-30 max-w-screen-md mx-auto w-full">
-            <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2">
-                <div>
-                    <h1 class="text-xl font-semibold text-cyan-300 drop-shadow">Masa <span id="tableNumber">0</span></h1>
-                    <p class="text-sm text-cyan-200 opacity-80">Hoş geldiniz!</p>
-                </div>
-                <div class="flex gap-2 w-full sm:w-auto">
-                    <button id="callWaiterButton" class="glass-btn neon-border text-cyan-100 px-4 py-2 rounded-button font-medium hover:bg-opacity-90 transition-all w-full sm:w-auto flex items-center z-40">
-                        <i class="ri-user-voice-line mr-1"></i>
-                        Garsonu Çağır
-                    </button>
-                    <button id="hookahButton" class="glass-btn neon-border text-cyan-100 px-4 py-2 rounded-button font-medium hover:bg-opacity-90 transition-all w-full sm:w-auto flex items-center z-40">
-                        <i class="ri-fire-line mr-1"></i>
-                        Köz İstiyorum
-                    </button>
-                </div>
+        <div class="glass-card neon-border shadow-md p-2 fixed top-0 left-0 right-0 z-30 max-w-screen-md mx-auto w-full flex flex-col">
+            <div class="flex justify-end gap-2 w-full mb-2">
+                <button id="callWaiterButton" class="glass-btn neon-border text-cyan-100 px-2 py-1 rounded-button font-medium hover:bg-opacity-90 transition-all flex items-center text-sm h-9 z-40">
+                    <i class="ri-user-voice-line mr-1"></i>
+                </button>
+                <button id="hookahButton" class="glass-btn neon-border text-cyan-100 px-2 py-1 rounded-button font-medium hover:bg-opacity-90 transition-all flex items-center text-sm h-9 z-40">
+                    <i class="ri-fire-line mr-1"></i>
+                </button>
+            </div>
+            <div class="flex flex-col items-start">
+                <h1 class="text-lg font-semibold text-cyan-300 drop-shadow">Masa <span id="tableNumber">0</span></h1>
+                <p class="text-xs text-cyan-200 opacity-80">Hoş geldiniz!</p>
             </div>
         </div>
 
@@ -59,9 +55,9 @@
         </div>
 
         <!-- Menü ve Sipariş Bölümü -->
-        <div class="mt-24 px-2 sm:px-4">
+        <div class="mt-20 px-2 sm:px-4">
             <!-- Kategori Seçimi -->
-            <div class="mb-4 overflow-x-auto sticky top-20 z-20 bg-transparent backdrop-blur-md rounded-b-lg">
+            <div class="mb-4 overflow-x-auto sticky top-14 z-20 bg-transparent backdrop-blur-md rounded-b-lg">
                 <div class="flex space-x-2 pb-2" style="overflow-x:auto;">
                     <button class="menu-category-button flex-shrink-0 px-4 py-2 rounded-full bg-primary text-white" data-category="all">Tümü</button>
                     <button class="menu-category-button flex-shrink-0 px-4 py-2 rounded-full bg-gray-200 text-gray-700" data-category="starters">Başlangıçlar</button>
@@ -81,13 +77,13 @@
             </div>
         </div>
 
-        <!-- Sipariş Özeti -->
-        <div id="orderCartPanel" class="glass-card neon-border shadow p-4 z-50 rounded-lg max-w-screen-md mx-auto w-full fixed bottom-20 right-4 left-4 sm:left-1/2 sm:-translate-x-1/2 sm:w-[400px] hidden" style="backdrop-filter: blur(16px);">
+        <!-- Sipariş Özeti (Sağdan açılır panel) -->
+        <div id="orderCartPanel" class="glass-card neon-border shadow p-4 z-50 rounded-lg fixed top-0 right-0 h-full w-80 max-w-full hidden transition-transform duration-300 translate-x-full" style="backdrop-filter: blur(16px);">
             <div class="flex justify-between items-center mb-2">
                 <h3 class="font-medium text-cyan-200">Sipariş Özeti</h3>
                 <span class="text-cyan-300 font-semibold" id="cartTotal">0₺</span>
             </div>
-            <div id="cartItemsList" class="max-h-32 overflow-y-auto mb-2">
+            <div id="cartItemsList" class="max-h-64 overflow-y-auto mb-2">
                 <!-- Sepet öğeleri buraya dinamik olarak eklenecek -->
                 <p class="text-gray-500 text-center text-sm py-2">Sepetiniz boş</p>
             </div>

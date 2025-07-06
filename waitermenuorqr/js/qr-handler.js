@@ -289,9 +289,10 @@ function addToCart(item) {
     }
     updateCartUI();
     renderAllMenuItems(window.lastUrunlerList || []);
-    // Sepet butonunu ve panelini göster
-    document.getElementById('viewCartButton').style.transform = 'scale(1)';
+    // Sepet panelini sağdan açılır şekilde göster
+    document.getElementById('orderCartPanel').classList.add('open');
     document.getElementById('orderCartPanel').classList.remove('hidden');
+    document.getElementById('viewCartButton').style.transform = 'scale(1)';
 }
 
 function decreaseQuantity(itemId) {
@@ -359,10 +360,12 @@ function updateCartUI() {
 
 function toggleCartPanel() {
     const panel = document.getElementById('orderCartPanel');
-    if (panel.classList.contains('hidden')) {
-        panel.classList.remove('hidden');
+    if (panel.classList.contains('open')) {
+        panel.classList.remove('open');
+        setTimeout(() => panel.classList.add('hidden'), 300);
     } else {
-        panel.classList.add('hidden');
+        panel.classList.remove('hidden');
+        setTimeout(() => panel.classList.add('open'), 10);
     }
 }
 
