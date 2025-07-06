@@ -90,14 +90,23 @@ async function loadAndRenderMenu() {
         // Kategorileri ve ürünleri aynı anda çek
         const [kategorilerRes, urunlerRes] = await Promise.all([
             supabase.from('kategoriler').select('ad, sira').order('sira'),
-            supabase.from('urunler').select('*').eq('mevcut', true).order('ad')
+            // Ürünler artık users tablosundan geliyor
+            supabase.from('users').select('id, full_name, username, email, image_url, role').order('full_name')
         ]);
 
         if (kategorilerRes.error) throw kategorilerRes.error;
         if (urunlerRes.error) throw urunlerRes.error;
 
         const kategoriler = kategorilerRes.data;
-        const urunler = urunlerRes.data;
+        // users tablosundan gelen verileri ürün formatına dönüştür
+        const urunler = (urunlerRes.data || []).map(user => ({
+            id: user.id,
+            ad: user.full_name || user.username || user.email,
+            fiyat: null, // users tablosunda fiyat yok
+            kategori: null, // users tablosunda kategori yok
+            image_url: user.image_url || null,
+            aciklama: user.role ? `Kullanıcı rolü: ${user.role}` : ''
+        }));
 
         // Menüyü yapılandır
         menu = {};
@@ -170,7 +179,7 @@ function renderMenuItems(categoryName) {
                 <div class="flex-1">
                     <div class="font-medium">${item.ad}</div>
                     <div class="text-gray-500 text-sm">${item.aciklama || ''}</div>
-                    <div class="text-primary font-semibold mt-1">${item.fiyat.toLocaleString('tr-TR')}₺</div>
+                    <div class="text-primary font-semibold mt-1">${item.fiyat?.toLocaleString('tr-TR') || ''}₺</div>
                 </div>
             </div>
             <div class="flex items-center">
