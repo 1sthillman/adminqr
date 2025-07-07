@@ -583,31 +583,37 @@ async function placeOrder() {
             orderButton.textContent = 'Gönderiliyor...';
         }
         
-        // Sipariş oluştur
+        // Sipariş oluştur (orders tablosu)
         const { data: order, error: orderError } = await supabase
-            .from('siparisler')
+            .from('orders')
             .insert({
-                masa_id: tableId,
-                masa_no: tableNumber,
-                durum: 'yeni',
-                not: orderNote
+                table_id: tableId,
+                status: 'pending_approval',
+                note: orderNote,
+                items: cart.map(item => ({
+                    id: item.id,
+                    name: item.name,
+                    price: item.price,
+                    quantity: item.quantity
+                })),
+                total_price: cart.reduce((total, item) => total + item.price * item.quantity, 0)
             })
             .select()
             .single();
             
         if (orderError) throw orderError;
         
-        // Sipariş detaylarını ekle
+        // Sipariş detaylarını order_items tablosuna ekle
         const orderItems = cart.map(item => ({
-            siparis_id: order.id,
-            urun_id: item.id,
-            urun_adi: item.name,
-            fiyat: item.price,
-            miktar: item.quantity
+            order_id: order.id,
+            menu_item_id: item.id,
+            name: item.name,
+            price: item.price,
+            quantity: item.quantity
         }));
         
         const { error: itemsError } = await supabase
-            .from('siparis_urunler')
+            .from('order_items')
             .insert(orderItems);
             
         if (itemsError) {
