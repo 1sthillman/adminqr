@@ -1049,7 +1049,8 @@ async function fetchOrderDetails(orderId) {
                 waiter: orderData.waiter_name,
                 time: timeString,
                 date: dateString,
-                total: parseFloat(orderData.toplam_fiyat)
+                total: parseFloat(orderData.toplam_fiyat),
+                toplam_fiyat: parseFloat(orderData.toplam_fiyat)
             };
 
             // Siparişi uygulama durumunda güncelle
