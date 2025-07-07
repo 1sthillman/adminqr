@@ -148,14 +148,19 @@ async function loadAndRenderMenu() {
 
         // Menüyü yapılandır
         menu = {};
+        // Kategori adlarını normalize ederek menü objesi oluştur
+        const normalizedCategories = {};
         kategoriler.forEach(k => {
+            const norm = k.ad.trim().toLowerCase();
             menu[k.ad] = [];
+            normalizedCategories[norm] = k.ad;
         });
         menu['Diğer'] = [];
 
         urunler.forEach(urun => {
-            if (urun.kategori && menu[urun.kategori]) {
-                menu[urun.kategori].push(urun);
+            const urunKategoriNorm = (urun.kategori || '').trim().toLowerCase();
+            if (urunKategoriNorm && normalizedCategories[urunKategoriNorm]) {
+                menu[normalizedCategories[urunKategoriNorm]].push(urun);
             } else {
                 menu['Diğer'].push(urun);
             }
