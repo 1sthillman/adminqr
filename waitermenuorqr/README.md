@@ -41,3 +41,10 @@ Bu proje, restoran yönetim sistemine entegre QR kod sipariş sistemini içerir.
 ## Geliştirici
 
 Bu sistem, RestaurantApp projesi için özel olarak geliştirilmiştir. 
+
+<div id="viewCartButton"
+     class="fixed bottom-6 right-6 z-[9999] bg-primary text-white flex items-center justify-center rounded-full p-4 shadow-lg cursor-pointer transition-transform">
+    <i class="ri-shopping-cart-2-line text-2xl"></i>
+    <span id="cartItemCount"
+          class="absolute -top-2 -right-2 w-6 h-6 bg-white text-primary text-sm rounded-full flex items-center justify-center font-bold border-2 border-primary">0</span>
+</div> 
