@@ -9,6 +9,7 @@ let tableId = null; // Masa ID'sini saklamak için
 let menu = {}; // Kategorilere ayrılmış menü
 let cart = []; // Müşterinin sepeti
 let realtimeChannels = []; // Gerçek zamanlı kanalları saklamak için
+let tableStatus = null; // MASA DURUMU GLOBAL
 
 // Kategori görselleri için varsayılan değerler
 const DEFAULT_IMAGES = {
@@ -102,7 +103,7 @@ async function initQrPage() {
 async function getOrCreateTable() {
     const { data, error } = await supabase
             .from('masalar')
-            .select('id')
+            .select('id, durum')
             .eq('masa_no', tableNumber)
         .single();
 
@@ -112,20 +113,22 @@ async function getOrCreateTable() {
 
     if (data) {
         tableId = data.id;
-        console.log(`Masa ${tableNumber} bulundu. ID: ${tableId}`);
+        tableStatus = data.durum; // MASA DURUMU AL
+        console.log(`Masa ${tableNumber} bulundu. ID: ${tableId}, Durum: ${tableStatus}`);
     } else {
         // Sadece masa_no ve durum ile yeni masa ekle, id gönderme
         const { data: newTable, error: insertError } = await supabase
                 .from('masalar')
             .insert({ masa_no: tableNumber, durum: 'bos' })
-                .select('id')
+                .select('id, durum')
                 .single();
                 
         if (insertError) {
             throw new Error('Yeni masa oluşturulamadı: ' + insertError.message);
         }
         tableId = newTable.id;
-        console.log(`Masa ${tableNumber} oluşturuldu. ID: ${tableId}`);
+        tableStatus = newTable.durum;
+        console.log(`Masa ${tableNumber} oluşturuldu. ID: ${tableId}, Durum: ${tableStatus}`);
     }
 }
 
@@ -324,6 +327,21 @@ function setupEventListeners() {
 
 function setupRealtimeSubscriptions() {
     try {
+        // MASA DURUMU DEĞİŞİKLİĞİNİ DİNLE
+        const tableChannel = supabase
+            .channel('table-status-channel')
+            .on('postgres_changes', {
+                event: 'UPDATE',
+                schema: 'public',
+                table: 'masalar',
+                filter: `id=eq.${tableId}`
+            }, payload => {
+                tableStatus = payload.new.durum;
+                showToast(`Masa durumu: ${tableStatus}`, tableStatus === 'servis_edildi' ? 'success' : 'error');
+            })
+            .subscribe();
+        realtimeChannels.push(tableChannel);
+        
         // Sipariş durumu değişikliklerini dinle
         const orderChannel = supabase
             .channel('orders-channel')
@@ -417,8 +435,11 @@ async function requestCoal() {
 }
 
 function addToCart(item) {
+    if (tableStatus !== 'servis_edildi') {
+        showError('Masa servis edilmeden yeni ürün ekleyemezsiniz!');
+        return;
+    }
     const existingItem = cart.find(cartItem => cartItem.id === item.id);
-    
     if (existingItem) {
         existingItem.quantity += 1;
     } else {
@@ -429,7 +450,6 @@ function addToCart(item) {
             quantity: 1
         });
     }
-    
     updateCartUI();
     renderMenuItems(document.querySelector('.menu-category-button.bg-primary')?.dataset.category || 'Tümü');
 }
