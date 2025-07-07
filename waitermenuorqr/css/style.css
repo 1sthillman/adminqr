@@ -307,38 +307,81 @@ body {
 /* Ultra kompakt ürün kartı ve barlar */
 .modern-card {
     min-width: 0;
-    min-height: 90px;
+    min-height: 110px;
     max-width: 100%;
     box-sizing: border-box;
     overflow: hidden;
     word-break: break-word;
-    padding: 0.5rem 0.3rem;
-    gap: 0.3rem;
-    margin-bottom: 0.18rem;
-    border-radius: 1rem;
-    background: rgba(36,38,45,0.85);
+    padding: 1rem 1.2rem;
+    gap: 0.7rem;
+    border-radius: 1.3rem;
+    background: rgba(36,38,45,0.92);
+    box-shadow: 0 4px 24px rgba(0,0,0,0.13);
+    border: 1.5px solid rgba(255,255,255,0.10);
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
-    justify-content: center;
+    justify-content: space-between;
+    transition: box-shadow 0.18s, background 0.18s;
+}
+.modern-card:hover {
+    box-shadow: 0 8px 32px rgba(58,134,255,0.18);
+    background: rgba(36,38,45,0.98);
 }
 .modern-card img {
-    width: 38px;
-    height: 38px;
+    width: 56px;
+    height: 56px;
     object-fit: cover;
-    border-radius: 50%;
+    border-radius: 1rem;
+    margin-right: 1rem;
+    background: #23242b;
+}
+.modern-card .card-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    min-width: 0;
 }
 .modern-card .font-medium.text-lg {
-    font-size: 1rem;
+    font-size: 1.12rem;
     line-height: 1.2;
-}
-.modern-card .text-gray-500.text-sm {
-    font-size: 0.85rem;
-    line-height: 1.1;
+    text-align: left;
+    font-weight: 600;
+    color: #fff;
+    margin-bottom: 0.2rem;
 }
 .modern-card .text-primary.font-bold.mt-1.text-lg {
-    font-size: 1rem;
+    font-size: 1.08rem;
+    color: #FF6B35;
     margin-top: 0.1rem;
+    font-weight: 700;
+}
+.modern-card .text-gray-500.text-sm {
+    font-size: 0.92rem;
+    color: #b0b3c7;
+    line-height: 1.1;
+    text-align: left;
+}
+.modern-card .add-btn {
+    background: linear-gradient(90deg, #FF6B35 0%, #3A86FF 100%);
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    width: 44px;
+    height: 44px;
+    font-size: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 8px 0 rgba(58,134,255,0.10);
+    cursor: pointer;
+    transition: background 0.18s, box-shadow 0.18s;
+}
+.modern-card .add-btn:hover {
+    background: linear-gradient(90deg, #3A86FF 0%, #FF6B35 100%);
+    box-shadow: 0 4px 16px 0 rgba(58,134,255,0.18);
 }
 
 /* Eski fixed-cart-button stilini etkisiz bırak */
@@ -515,20 +558,21 @@ body {
         font-size: 1rem;
     }
     .modern-card {
-        min-height: 70px;
-        padding: 0.3rem 0.15rem;
-        gap: 0.15rem;
+        min-height: 80px;
+        padding: 0.5rem 0.3rem;
+        gap: 0.2rem;
     }
     .modern-card img {
-        width: 30px;
-        height: 30px;
+        width: 34px;
+        height: 34px;
+        margin-bottom: 0.2rem;
     }
     .modern-card .font-medium.text-lg,
     .modern-card .text-primary.font-bold.mt-1.text-lg {
-        font-size: 0.93rem;
+        font-size: 0.98rem;
     }
     .modern-card .text-gray-500.text-sm {
-        font-size: 0.7rem;
+        font-size: 0.8rem;
     }
     .menu-category-button {
         padding: 0.04rem 0.12rem;
@@ -624,141 +668,144 @@ body {
 
 /* Sepet popup üstte, ikonun hemen altında açılır */
 .cart-popup-top {
-  display: none;
-  position: absolute;
-  top: 60px;
-  right: 0;
-  min-width: 320px;
-  max-width: 95vw;
-  background: #23242b;
-  color: #fff;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(30,34,47,0.98);
+  border-radius: 1.5rem;
+  box-shadow: 0 8px 32px rgba(58,134,255,0.18);
   border: 1.5px solid rgba(255,255,255,0.10);
-  border-radius: 1.2rem;
-  box-shadow: 0 8px 32px 0 rgba(58,134,255,0.18);
-  z-index: 50;
-  padding: 0.04rem 0.04rem 0.04rem 0.04rem;
+  min-width: 90vw;
+  max-width: 420px;
+  width: 98vw;
+  z-index: 9999;
+  padding: 2rem 1.2rem 1.2rem 1.2rem;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
   animation: cartPopupIn 0.22s cubic-bezier(.4,2,.6,1);
-  gap: 0.04rem;
-  max-height: 50vh;
 }
-.cart-popup-top.open {
-  display: block;
+.cart-popup-top .cart-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1.2rem;
 }
-@media (max-width: 600px) {
-  .cart-popup-top {
-    width: 100vw !important;
-    min-width: 100vw !important;
-    max-width: 100vw !important;
-    left: 0 !important;
-    right: 0 !important;
-    margin: 0 auto !important;
-    top: 60px !important;
-    border-radius: 0.7rem !important;
-    padding: 0.02rem 0.02rem 0.02rem 0.02rem !important;
-    box-shadow: 0 8px 32px 0 rgba(58,134,255,0.18);
-    z-index: 9999;
-  }
-  .cart-popup-top textarea,
-  .cart-popup-top .note {
-    width: 100% !important;
+.cart-popup-top .close-button {
+    background: none;
+    border: none;
+    font-size: 2rem;
+    color: #fff;
+    cursor: pointer;
+    opacity: 0.7;
+    transition: opacity 0.18s;
+}
+.cart-popup-top .close-button:hover {
+    opacity: 1;
+}
+.cart-popup-top .cart-items {
+    max-height: 220px;
+    overflow-y: auto;
+    margin-bottom: 1.2rem;
+}
+.cart-popup-top .note {
+    width: 100%;
     min-width: 0;
     font-size: 1.05rem;
     padding: 0.7rem 0.5rem;
     border-radius: 0.7rem;
     margin-bottom: 0.7rem;
-  }
-  .cart-popup-top .order-button {
-    width: 100% !important;
-    font-size: 1.15rem;
-    padding: 0.9rem 0.5rem;
-    border-radius: 0.7rem;
-    margin-top: 0.3rem;
-  }
-}
-
-.cart-popup-top textarea,
-.cart-popup-top .note {
-  width: 100%;
-  min-width: 0;
-  font-size: 1.08rem;
-  padding: 0.7rem 0.7rem;
-  border-radius: 0.7rem;
-  margin-bottom: 0.7rem;
-  background: #23242b;
-  color: #fff;
-  border: 1.5px solid rgba(255,255,255,0.10);
+    background: rgba(255,255,255,0.06);
+    color: #fff;
+    border: 1px solid rgba(255,255,255,0.18);
 }
 .cart-popup-top .order-button {
-  width: 100%;
-  font-size: 1.15rem;
-  padding: 0.9rem 0.5rem;
-  border-radius: 0.7rem;
-  margin-top: 0.3rem;
-  background: linear-gradient(90deg, #3A86FF 0%, #FF6B35 100%);
-  color: #fff;
-  font-weight: 700;
-  border: none;
-  box-shadow: 0 2px 8px 0 rgba(58,134,255,0.10);
-  transition: background 0.18s, box-shadow 0.18s;
+    width: 100%;
+    font-size: 1.15rem;
+    padding: 1rem 0.5rem;
+    border-radius: 0.9rem;
+    background: linear-gradient(90deg, #FF6B35 0%, #3A86FF 100%);
+    color: #fff;
+    font-weight: 700;
+    border: none;
+    box-shadow: 0 2px 12px rgba(251,146,60,0.18);
+    margin-top: 0.3rem;
+    cursor: pointer;
+    transition: background 0.18s, box-shadow 0.18s;
 }
 .cart-popup-top .order-button:hover {
-  background: linear-gradient(90deg, #FF6B35 0%, #3A86FF 100%);
-  box-shadow: 0 8px 24px 0 rgba(255,107,53,0.13);
+    background: linear-gradient(90deg, #3A86FF 0%, #FF6B35 100%);
+    box-shadow: 0 4px 16px 0 rgba(58,134,255,0.18);
+}
+@media (max-width: 600px) {
+    #menuItemsContainer {
+        grid-template-columns: 1fr;
+        gap: 0.8rem;
+        margin-bottom: 0.1rem;
+        padding: 0.1rem 0.1rem;
+    }
+    .modern-card {
+        min-height: 90px;
+        padding: 0.7rem 0.5rem;
+        gap: 0.3rem;
+    }
+    .modern-card img {
+        width: 40px;
+        height: 40px;
+        margin-right: 0.7rem;
+    }
+    .modern-card .add-btn {
+        width: 38px;
+        height: 38px;
+        font-size: 1.5rem;
+    }
+    .cart-popup-top {
+        min-width: 98vw;
+        max-width: 98vw;
+        left: 50%;
+        right: auto;
+        transform: translateX(-50%);
+        top: 56px;
+        padding: 1.2rem 0.5rem 0.7rem 0.5rem;
+        border-radius: 1.1rem;
+    }
+    .cart-popup-top .cart-header {
+        margin-bottom: 0.7rem;
+    }
+    .cart-popup-top .cart-items {
+        max-height: 180px;
+        margin-bottom: 0.7rem;
+    }
+    .cart-popup-top .order-button {
+        font-size: 1rem;
+        padding: 0.7rem 0.5rem;
+        border-radius: 0.7rem;
+        margin-top: 0.2rem;
+    }
 }
 
 /* Ürün grid kartları */
 #menuItemsContainer {
     display: grid;
-    grid-template-columns: repeat(2, 1fr) !important;
-    gap: 0.5rem !important;
-    margin-bottom: 0.1rem !important;
-    padding: 0.1rem 0.1rem !important;
+    grid-template-columns: 1fr;
+    gap: 1.2rem;
+    margin-bottom: 0.3rem;
+    padding: 0.3rem 0.3rem;
     min-width: 0;
     max-width: 100vw;
     box-sizing: border-box;
 }
-@media (max-width: 600px) {
+@media (min-width: 600px) {
     #menuItemsContainer {
-        grid-template-columns: repeat(2, 1fr) !important;
-        gap: 0.3rem !important;
-        margin-bottom: 0.05rem !important;
-        padding: 0.05rem 0.05rem !important;
+        grid-template-columns: repeat(2, 1fr);
     }
 }
-@media (max-width: 900px) {
-  #menuItemsContainer {
-    gap: 1rem;
-  }
-  .modern-card {
-    padding: 1rem 0.6rem;
-    gap: 0.7rem;
-  }
-}
-@media (max-width: 480px) {
-  .modern-card {
-    padding: 0.3rem 0.1rem;
-    min-height: 56px;
-    max-height: 70px;
-    gap: 0.2rem;
-  }
-  .modern-card img {
-    width: 30px;
-    height: 30px;
-  }
-  .modern-card .font-medium.text-lg {
-    font-size: 0.93rem;
-  }
-  .modern-card .text-gray-500.text-sm {
-    font-size: 0.7rem;
-  }
-  .modern-card .text-primary.font-bold.mt-1.text-lg {
-    font-size: 0.93rem;
-  }
-  #menuItemsContainer {
-    gap: 0.02rem !important;
-    margin-bottom: 0.02rem !important;
-    padding: 0.02rem 0.02rem !important;
-  }
+@media (min-width: 900px) {
+    #menuItemsContainer {
+        grid-template-columns: repeat(3, 1fr);
+    }
 }
 
 /* Garson/Köz barı sticky ve üstte */
