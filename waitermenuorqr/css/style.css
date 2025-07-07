@@ -1342,4 +1342,56 @@ body {
 }
 
 #categoryNav{overflow-x:visible;}
-#categoryButtons{flex-wrap:wrap;} 
+#categoryButtons{flex-wrap:wrap;}
+
+/* Sabit üst bar */
+.topbar-fixed {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    background: rgba(24, 26, 32, 0.98);
+    z-index: 2000;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.12);
+    border-bottom: 1px solid var(--border-color);
+    padding: 0.5rem 0;
+}
+.topbar-content {
+    max-width: 900px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0 1rem;
+}
+.masa-numarasi {
+    display: flex;
+    align-items: center;
+    font-size: 1.2rem;
+}
+.topbar-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+body {
+    padding-top: 70px;
+}
+
+@media (max-width: 600px) {
+    .topbar-content {
+        flex-direction: column;
+        gap: 0.5rem;
+        align-items: flex-start;
+    }
+    .topbar-actions {
+        width: 100%;
+        justify-content: flex-start;
+        flex-wrap: wrap;
+    }
+    body {
+        padding-top: 110px;
+    }
+} 
