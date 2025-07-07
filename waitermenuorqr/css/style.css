@@ -312,6 +312,7 @@ h1 {
     -webkit-backdrop-filter: blur(10px);
     border-bottom: 1px solid rgba(255, 255, 255, 0.08);
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    z-index: 1000;
 }
 
 /* further shrink category buttons on very small screens */
@@ -1006,7 +1007,7 @@ body {
     -webkit-backdrop-filter: blur(10px);
     border-bottom: 1px solid var(--border-color);
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-    z-index: 50;
+    z-index: 1000;
 }
 
 .masa-renk {
@@ -1328,4 +1329,9 @@ body {
         max-height: 80vh;
         overflow-y: auto;
     }
+}
+
+/* Kategori bar */
+#categoryNav {
+    z-index: 900;
 } 
