@@ -294,8 +294,14 @@ function setupEventListeners() {
     document.addEventListener('click', function(e) {
         const modal = document.getElementById('cartModal');
         const viewCartBtn = document.getElementById('viewCartButton');
+        const backdrop = document.getElementById('modalBackdrop');
         
         if (modal && modal.classList.contains('open')) {
+            if (backdrop && backdrop === e.target) {
+                closeCartModal();
+                return;
+            }
+
             if (!modal.contains(e.target) && (!viewCartBtn || !viewCartBtn.contains(e.target))) {
                 closeCartModal();
             }
@@ -445,6 +451,8 @@ function openCartModal() {
     if (modal) {
         modal.classList.add('open');
     }
+    const backdrop = document.getElementById('modalBackdrop');
+    if (backdrop) backdrop.style.display = 'block';
 }
 
 function closeCartModal() {
@@ -452,6 +460,8 @@ function closeCartModal() {
     if (modal) {
         modal.classList.remove('open');
     }
+    const backdrop = document.getElementById('modalBackdrop');
+    if (backdrop) backdrop.style.display = 'none';
 }
 
 function updateCartUI() {

@@ -1299,4 +1299,29 @@ body {
 /* Menü kapsayıcısı */
 #menuItemsContainer.flex {
     width: 100%;
+}
+
+/* Modal backdrop */
+.modal-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.6);
+    z-index: 90;
+    display: none;
+}
+
+/* Mobile override */
+@media (max-width: 640px) {
+    .cart-popup-top {
+        position: fixed !important;
+        top: 50% !important;
+        left: 50% !important;
+        transform: translate(-50%, -50%) !important;
+        width: 90% !important;
+        max-height: 80vh;
+        overflow-y: auto;
+    }
 } 
