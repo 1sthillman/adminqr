@@ -347,17 +347,15 @@ function increaseQuantity(itemId) {
 
 function openCartModal() {
     const modal = document.getElementById('cartModal');
-    const bg = document.getElementById('cartPopupBg');
+    if (!modal) return;
     modal.classList.add('open');
-    bg.classList.add('open');
     updateCartUI();
 }
 
 function closeCartModal() {
     const modal = document.getElementById('cartModal');
-    const bg = document.getElementById('cartPopupBg');
+    if (!modal) return;
     modal.classList.remove('open');
-    bg.classList.remove('open');
 }
 
 function updateCartUI() {
