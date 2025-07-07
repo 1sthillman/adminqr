@@ -63,13 +63,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
 async function initQrPage() {
     try {
-        const urlParams = new URLSearchParams(window.location.search);
-        tableNumber = urlParams.get('table');
-        
-        if (!tableNumber) {
+    const urlParams = new URLSearchParams(window.location.search);
+    tableNumber = urlParams.get('table');
+    
+    if (!tableNumber) {
             return showError('Geçersiz masa numarası.');
-        }
-        
+    }
+    
         // Supabase bağlantısını oluştur
         supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
         console.log('Supabase bağlantısı kuruldu.');
@@ -341,7 +341,7 @@ function setupRealtimeSubscriptions() {
             })
             .subscribe();
         realtimeChannels.push(tableChannel);
-        
+    
         // Sipariş durumu değişikliklerini dinle
         const orderChannel = supabase
             .channel('orders-channel')
@@ -376,9 +376,9 @@ async function callWaiter() {
             table_number: tableNumber,
             type: 'garson'
         });
-        
+
         if (error) throw error;
-        
+
         showToast('Garson çağrınız iletildi.', 'success');
         
         // 30 saniye sonra butonu tekrar aktif et
@@ -387,7 +387,7 @@ async function callWaiter() {
                 callWaiterBtn.disabled = false;
             }
         }, 30000);
-        
+
     } catch (error) {
         console.error('Garson çağırma hatası:', error);
         showError('Garson çağrılamadı. Lütfen tekrar deneyin.');
@@ -435,8 +435,8 @@ async function requestCoal() {
 }
 
 function addToCart(item) {
-    if (tableStatus !== 'servis_edildi') {
-        showError('Masa servis edilmeden yeni ürün ekleyemezsiniz!');
+    if (tableStatus !== 'servis_edildi' && tableStatus !== 'bos') {
+        showError('Sadece servis edildi veya boş masada sipariş verebilirsiniz!');
         return;
     }
     const existingItem = cart.find(cartItem => cartItem.id === item.id);
@@ -474,7 +474,7 @@ function increaseQuantity(itemId) {
     
     if (item) {
         item.quantity += 1;
-        updateCartUI();
+    updateCartUI();
         renderMenuItems(document.querySelector('.menu-category-button.bg-primary')?.dataset.category || 'Tümü');
     }
 }
@@ -541,29 +541,29 @@ function updateCartUI() {
     }
     
     let totalPrice = 0;
-    cartItemsList.innerHTML = '';
+        cartItemsList.innerHTML = '';
     
-    cart.forEach(item => {
+        cart.forEach(item => {
         const itemTotal = item.price * item.quantity;
         totalPrice += itemTotal;
         
-        const itemElement = document.createElement('div');
+            const itemElement = document.createElement('div');
         itemElement.className = 'flex justify-between items-center py-1.5 border-b border-gray-700';
-        itemElement.innerHTML = `
+            itemElement.innerHTML = `
             <div class="min-w-0 flex-1">
                 <div class="font-medium text-sm truncate">${item.name}</div>
                 <div class="text-xs text-gray-400">${item.quantity} x ${item.price.toLocaleString('tr-TR')}₺</div>
-            </div>
+                    </div>
             <div class="flex items-center">
                 <div class="text-primary font-bold text-sm">${itemTotal.toLocaleString('tr-TR')}₺</div>
                 <button class="ml-2 text-gray-400 hover:text-red-500 text-sm" data-remove="${item.id}">
                     <i class="ri-delete-bin-line"></i>
                 </button>
-            </div>
-        `;
-        cartItemsList.appendChild(itemElement);
-    });
-    
+                </div>
+            `;
+            cartItemsList.appendChild(itemElement);
+        });
+        
     // Toplam tutarı ekle
     const totalElement = document.createElement('div');
     totalElement.className = 'flex justify-between items-center py-1.5 mt-1.5 border-t border-gray-700';
@@ -593,7 +593,10 @@ async function placeOrder() {
         showError('Sepetiniz boş. Lütfen sipariş vermek için ürün ekleyin.');
         return;
     }
-
+    if (tableStatus !== 'servis_edildi' && tableStatus !== 'bos') {
+        showError('Sadece servis edildi veya boş masada sipariş verebilirsiniz!');
+        return;
+    }
     try {
         const orderNote = document.getElementById('orderNoteInput')?.value || '';
         const orderButton = document.getElementById('placeOrderButton');
@@ -618,14 +621,14 @@ async function placeOrder() {
                 total_price: cart.reduce((total, item) => total + item.price * item.quantity, 0)
             })
             .select()
-            .single();
-
+                .single();
+                
         if (orderError) throw orderError;
 
         // 2. Ürünleri order_items tablosuna ekle
         const orderItems = cart.map(item => ({
             order_id: order.id,
-            menu_item_id: item.id,
+                menu_item_id: item.id,
             name: item.name,
             price: item.price,
             quantity: item.quantity
@@ -684,7 +687,7 @@ function showToast(message, type = 'success') {
     const toast = document.getElementById('toast');
     const toastMessage = document.getElementById('toastMessage');
     const toastIcon = document.getElementById('toastIcon');
-    
+
     if (!toast || !toastMessage || !toastIcon) return;
     
     // Simge ve renk ayarla
