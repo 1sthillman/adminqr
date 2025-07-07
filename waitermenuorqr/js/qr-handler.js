@@ -192,7 +192,7 @@ function renderMenuItems(categoryName) {
         itemsToShow = menu[categoryName] || [];
     }
     if (itemsToShow.length === 0) {
-        container.innerHTML = `<p class="text-center p-4 text-gray-500">Bu kategoride ürün bulunmuyor.</p>`;
+        container.innerHTML = `<p class="text-center p-3 text-gray-500 text-sm">Bu kategoride ürün bulunmuyor.</p>`;
         return;
     }
     itemsToShow.forEach(item => {
@@ -202,20 +202,20 @@ function renderMenuItems(categoryName) {
         itemElement.className = 'modern-card';
         itemElement.innerHTML = `
             <div class="flex items-center flex-1">
-                <div class="w-16 h-16 mr-3 rounded-full overflow-hidden flex-shrink-0 bg-gray-800">
+                <div class="w-12 h-12 mr-2 rounded-full overflow-hidden flex-shrink-0 bg-gray-800">
                     <img src="${imageUrl}" alt="${item.ad}" class="w-full h-full object-cover" onerror="this.src='${DEFAULT_IMAGES.default}'">
                 </div>
-                <div class="flex-1">
-                    <div class="font-medium text-lg">${item.ad}</div>
-                    <div class="text-gray-500 text-sm">${item.aciklama || ''}</div>
-                    <div class="text-primary font-bold mt-1 text-lg">${item.fiyat?.toLocaleString('tr-TR') || ''}₺</div>
+                <div class="flex-1 min-w-0">
+                    <div class="font-medium text-base truncate">${item.ad}</div>
+                    <div class="text-gray-500 text-xs truncate">${item.aciklama || ''}</div>
+                    <div class="text-primary font-bold mt-0.5 text-sm">${item.fiyat?.toLocaleString('tr-TR') || ''}₺</div>
                 </div>
             </div>
-            <div class="flex items-center">
+            <div class="flex items-center ml-1">
                 ${itemInCart ? `
                     <div class="flex items-center border border-gray-700 rounded-lg overflow-hidden">
                         <button class="quantity-btn" data-id="${item.id}" data-action="decrease">-</button>
-                        <span class="px-3">${itemInCart.quantity}</span>
+                        <span class="px-2 text-sm">${itemInCart.quantity}</span>
                         <button class="quantity-btn" data-id="${item.id}" data-action="increase">+</button>
                     </div>
                 ` : `
@@ -343,7 +343,7 @@ async function callWaiter() {
         
         if (error) throw error;
         
-        showToast('Garson çağrınız iletildi. En kısa sürede size ulaşılacak.', 'success');
+        showToast('Garson çağrınız iletildi.', 'success');
         
         // 30 saniye sonra butonu tekrar aktif et
         setTimeout(() => {
@@ -378,7 +378,7 @@ async function requestCoal() {
         
         if (error) throw error;
         
-        showToast('Köz talebiniz iletildi. En kısa sürede getirilecek.', 'success');
+        showToast('Köz talebiniz iletildi.', 'success');
         
         // 30 saniye sonra butonu tekrar aktif et
         setTimeout(() => {
@@ -474,7 +474,7 @@ function updateCartUI() {
     if (!cartItemsList) return;
     
     if (cart.length === 0) {
-        cartItemsList.innerHTML = `<p class="text-gray-500 text-center text-sm py-2">Sepetiniz boş</p>`;
+        cartItemsList.innerHTML = `<p class="text-gray-500 text-center text-xs py-2">Sepetiniz boş</p>`;
         return;
     }
     
@@ -486,15 +486,15 @@ function updateCartUI() {
         totalPrice += itemTotal;
         
         const itemElement = document.createElement('div');
-        itemElement.className = 'flex justify-between items-center py-2 border-b border-gray-700';
+        itemElement.className = 'flex justify-between items-center py-1.5 border-b border-gray-700';
         itemElement.innerHTML = `
-            <div>
-                <div class="font-medium">${item.name}</div>
-                <div class="text-sm text-gray-400">${item.quantity} x ${item.price.toLocaleString('tr-TR')}₺</div>
+            <div class="min-w-0 flex-1">
+                <div class="font-medium text-sm truncate">${item.name}</div>
+                <div class="text-xs text-gray-400">${item.quantity} x ${item.price.toLocaleString('tr-TR')}₺</div>
             </div>
             <div class="flex items-center">
-                <div class="text-primary font-bold">${itemTotal.toLocaleString('tr-TR')}₺</div>
-                <button class="ml-2 text-gray-400 hover:text-red-500" data-remove="${item.id}">
+                <div class="text-primary font-bold text-sm">${itemTotal.toLocaleString('tr-TR')}₺</div>
+                <button class="ml-2 text-gray-400 hover:text-red-500 text-sm" data-remove="${item.id}">
                     <i class="ri-delete-bin-line"></i>
                 </button>
             </div>
@@ -504,10 +504,10 @@ function updateCartUI() {
     
     // Toplam tutarı ekle
     const totalElement = document.createElement('div');
-    totalElement.className = 'flex justify-between items-center py-2 mt-2 border-t border-gray-700';
+    totalElement.className = 'flex justify-between items-center py-1.5 mt-1.5 border-t border-gray-700';
     totalElement.innerHTML = `
-        <div class="font-bold">Toplam</div>
-        <div class="text-primary font-bold text-lg">${totalPrice.toLocaleString('tr-TR')}₺</div>
+        <div class="font-bold text-sm">Toplam</div>
+        <div class="text-primary font-bold text-base">${totalPrice.toLocaleString('tr-TR')}₺</div>
     `;
     cartItemsList.appendChild(totalElement);
     
@@ -538,7 +538,7 @@ async function placeOrder() {
         
         if (orderButton) {
             orderButton.disabled = true;
-            orderButton.textContent = 'Sipariş Gönderiliyor...';
+            orderButton.textContent = 'Gönderiliyor...';
         }
         
         // Sipariş oluştur
@@ -585,7 +585,7 @@ async function placeOrder() {
         renderMenuItems(document.querySelector('.menu-category-button.bg-primary')?.dataset.category || 'Tümü');
         closeCartModal();
         
-        showToast('Siparişiniz başarıyla alındı. Hazırlanmaya başlanacak.', 'success');
+        showToast('Siparişiniz alındı!', 'success');
         
     } catch (error) {
         console.error('Sipariş verme hatası:', error);

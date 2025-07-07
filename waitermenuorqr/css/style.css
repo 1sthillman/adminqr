@@ -6,7 +6,6 @@ html, body, #qrPage, header, .garson-coal-bar, .bg-glass-category, main, footer,
     overflow-x: hidden !important;
     max-width: 100vw !important;
     font-family: 'Inter', 'Poppins', sans-serif !important;
-    min-height: 100vh;
     box-sizing: border-box !important;
 }
 
@@ -17,6 +16,7 @@ body, html {
     margin: 0;
     padding: 0;
     overflow-x: hidden;
+    font-size: 14px; /* Daha küçük varsayılan font boyutu */
 }
 
 .notification-sound {
@@ -231,13 +231,13 @@ textarea::placeholder, input::placeholder {
 /* === Category Buttons Smaller & Glass === */
 .menu-category-button {
     font-family: 'Inter', 'Poppins', sans-serif;
-    font-size: 0.95rem;
+    font-size: 0.85rem;
     font-weight: 600;
     border-radius: 9999px;
     background: rgba(36,38,45,0.85);
     color: #fff;
-    padding: 0.5rem 1.2rem;
-    margin-right: 0.5rem;
+    padding: 0.35rem 0.9rem;
+    margin-right: 0.4rem;
     margin-bottom: 0.2rem;
     box-shadow: 0 2px 8px 0 rgba(58,134,255,0.07);
     border: 1.5px solid rgba(255,255,255,0.10);
@@ -262,10 +262,10 @@ textarea::placeholder, input::placeholder {
     scrollbar-color: #FF6B35 #181A20;
     display: flex;
     flex-wrap: nowrap;
-    padding: 0.5rem 0;
+    padding: 0.3rem 0;
 }
 #categoryButtons::-webkit-scrollbar {
-    height: 4px;
+    height: 3px;
 }
 #categoryButtons::-webkit-scrollbar-track {
     background: rgba(255, 255, 255, 0.05);
@@ -278,7 +278,7 @@ textarea::placeholder, input::placeholder {
 
 /* Masa numarası için modern stil */
 #tableNumber {
-    font-size: 1.8rem;
+    font-size: 1.5rem;
     font-weight: 700;
     background: linear-gradient(90deg, #FF6B35 0%, #3A86FF 100%);
     -webkit-background-clip: text;
@@ -289,7 +289,7 @@ textarea::placeholder, input::placeholder {
 }
 
 h1 {
-    font-size: 1.5rem;
+    font-size: 1.3rem;
     font-weight: 700;
     background: linear-gradient(90deg, #FF6B35 0%, #3A86FF 100%);
     -webkit-background-clip: text;
@@ -311,8 +311,8 @@ h1 {
 /* further shrink category buttons on very small screens */
 @media (max-width: 375px) {
     .menu-category-button {
-        font-size: 0.85rem;
-        padding: 0.4rem 1rem;
+        font-size: 0.8rem;
+        padding: 0.3rem 0.8rem;
     }
 }
 
@@ -326,9 +326,9 @@ body {
 /* Modern Card */
 .modern-card {
     background: rgba(36, 38, 45, 0.85) !important;
-    border-radius: 16px;
-    padding: 1rem;
-    margin-bottom: 1rem;
+    border-radius: 12px;
+    padding: 0.6rem;
+    margin-bottom: 0.6rem;
     border: 1px solid rgba(255, 255, 255, 0.08);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
     transition: transform 0.2s ease, box-shadow 0.2s ease;
@@ -528,7 +528,7 @@ body {
 
 /* Masa numarası belirgin renk */
 .masa-renk {
-  font-size: 1.8rem;
+  font-size: 1.5rem;
   font-weight: 700;
   background: linear-gradient(90deg, #FF6B35 0%, #3A86FF 100%);
   -webkit-background-clip: text;
@@ -543,8 +543,8 @@ body {
   position: relative;
   background: rgba(255, 107, 53, 0.15);
   border-radius: 50%;
-  width: 40px;
-  height: 40px;
+  width: 36px;
+  height: 36px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -565,9 +565,9 @@ body {
   background: #FF6B35;
   color: white;
   border-radius: 50%;
-  width: 22px;
-  height: 22px;
-  font-size: 0.75rem;
+  width: 20px;
+  height: 20px;
+  font-size: 0.7rem;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -579,12 +579,12 @@ body {
 /* Sepet popup üstte, ikonun hemen altında açılır */
 .cart-popup-top {
   position: absolute;
-  top: 50px;
+  top: 45px;
   right: 0;
-  width: 320px;
+  width: 300px;
   background: #24262D !important;
   border-radius: 16px;
-  padding: 1rem;
+  padding: 0.8rem;
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2), 0 0 0 1px rgba(255, 255, 255, 0.1);
   z-index: 100;
   transform: translateY(-10px);
@@ -624,13 +624,13 @@ body {
   .cart-popup-top .order-button {
     width: 100%;
     box-sizing: border-box;
-    margin-top: 0.75rem;
+    margin-top: 0.6rem;
   }
   
   .cart-popup-top .order-button {
-    margin-bottom: 1rem;
-    padding: 0.75rem;
-    font-size: 1rem;
+    margin-bottom: 0.8rem;
+    padding: 0.6rem;
+    font-size: 0.95rem;
   }
 }
 
@@ -642,11 +642,11 @@ body {
     border: 1px solid rgba(255, 255, 255, 0.1) !important;
     border-radius: 8px;
     color: #fff !important;
-    padding: 0.5rem;
-    font-size: 0.9rem;
+    padding: 0.4rem;
+    font-size: 0.85rem;
     resize: vertical;
-    min-height: 60px;
-    margin-top: 0.75rem;
+    min-height: 50px;
+    margin-top: 0.6rem;
 }
 
 .cart-popup-top .order-button {
@@ -655,11 +655,11 @@ body {
     color: white;
     border: none;
     border-radius: 8px;
-    padding: 0.75rem;
+    padding: 0.6rem;
     font-weight: 600;
     cursor: pointer;
     transition: all 0.2s ease;
-    margin-top: 0.75rem;
+    margin-top: 0.6rem;
     box-shadow: 0 4px 10px rgba(255, 107, 53, 0.3);
 }
 
@@ -673,31 +673,31 @@ body {
 #menuItemsContainer {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 1rem;
-  padding-bottom: 5rem;
+  gap: 0.6rem;
+  padding-bottom: 3rem;
 }
 @media (max-width: 900px) {
   #menuItemsContainer {
     grid-template-columns: repeat(2, 1fr);
   }
   .modern-card {
-    padding: 0.75rem;
+    padding: 0.6rem;
   }
 }
 @media (max-width: 600px) {
   #menuItemsContainer {
     grid-template-columns: 1fr;
-    gap: 0.75rem;
+    gap: 0.5rem;
   }
   
   .modern-card {
-    margin-bottom: 0.75rem;
-    padding: 0.75rem;
+    margin-bottom: 0.5rem;
+    padding: 0.5rem;
   }
   
   .garson-coal-bar {
-    padding: 0.5rem;
-    top: 56px !important;
+    padding: 0.4rem;
+    top: 50px !important;
   }
 }
 
@@ -742,84 +742,100 @@ header {
   -webkit-backdrop-filter: blur(10px);
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
-  padding: 0.75rem 1rem;
+  padding: 0.6rem 0.8rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
   position: sticky;
   top: 0;
   z-index: 50;
+  height: 50px;
 }
 
 /* Mobil uyumluluk ve responsive düzenlemeler */
 @media (max-width: 600px) {
   header, .garson-coal-bar, .bg-glass-category, main, footer {
-    padding-left: 0.75rem;
-    padding-right: 0.75rem;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
   }
   header {
-    padding-top: 0.6rem;
-    padding-bottom: 0.6rem;
-  }
-  .garson-coal-bar {
     padding-top: 0.5rem;
     padding-bottom: 0.5rem;
+    height: 50px;
+  }
+  .garson-coal-bar {
+    padding-top: 0.4rem;
+    padding-bottom: 0.4rem;
   }
   .bg-glass-category {
-    padding-top: 0.25rem;
-    padding-bottom: 0.25rem;
+    padding-top: 0.2rem;
+    padding-bottom: 0.2rem;
+    top: 90px !important;
   }
   nav .flex.items-center, .kategori-action-btns {
     overflow-x: auto;
   }
   .menu-category-button {
-    font-size: 0.85rem;
-    padding: 0.4rem 0.9rem;
+    font-size: 0.8rem;
+    padding: 0.3rem 0.8rem;
   }
   #menuItemsContainer {
-    padding-left: 0.5rem;
-    padding-right: 0.5rem;
+    padding-left: 0.4rem;
+    padding-right: 0.4rem;
   }
   .modern-card {
-    border-radius: 12px;
-    padding: 0.75rem;
+    border-radius: 10px;
+    padding: 0.5rem;
   }
   .cart-popup-top {
     width: 100%;
     left: 0;
     right: 0;
     border-radius: 16px 16px 0 0;
-    padding: 1rem;
+    padding: 0.8rem;
   }
   .cart-popup-top textarea,
   .cart-popup-top .note {
-    font-size: 0.9rem;
-    padding: 0.5rem;
-  }
-  .cart-popup-top .order-button {
-    font-size: 1rem;
-    padding: 0.6rem;
-  }
-}
-@media (max-width: 480px) {
-  header, .garson-coal-bar, .bg-glass-category, main, footer {
-    padding-left: 0.5rem;
-    padding-right: 0.5rem;
-  }
-  .menu-category-button {
-    font-size: 0.8rem;
-    padding: 0.35rem 0.8rem;
-  }
-  .cart-popup-top {
-    padding: 0.75rem;
-  }
-  .cart-popup-top textarea,
-  .note {
     font-size: 0.85rem;
+    padding: 0.4rem;
   }
   .cart-popup-top .order-button {
     font-size: 0.95rem;
     padding: 0.5rem;
+  }
+}
+@media (max-width: 480px) {
+  header, .garson-coal-bar, .bg-glass-category, main, footer {
+    padding-left: 0.4rem;
+    padding-right: 0.4rem;
+  }
+  .menu-category-button {
+    font-size: 0.75rem;
+    padding: 0.3rem 0.7rem;
+  }
+  .cart-popup-top {
+    padding: 0.6rem;
+  }
+  .cart-popup-top textarea,
+  .note {
+    font-size: 0.8rem;
+  }
+  .cart-popup-top .order-button {
+    font-size: 0.9rem;
+    padding: 0.5rem;
+  }
+  /* Ürün kartlarını küçült */
+  .modern-card .w-16 {
+    width: 3rem !important;
+    height: 3rem !important;
+  }
+  
+  .modern-card .text-lg {
+    font-size: 0.95rem !important;
+  }
+  
+  .modern-card .text-sm {
+    font-size: 0.75rem !important;
   }
 }
 
@@ -886,8 +902,8 @@ img, svg {
 
 /* Add to cart button styling */
 .add-to-cart-btn {
-    width: 40px;
-    height: 40px;
+    width: 32px;
+    height: 32px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -907,8 +923,8 @@ img, svg {
 
 /* Quantity buttons styling */
 .quantity-btn {
-    width: 30px;
-    height: 30px;
+    width: 26px;
+    height: 26px;
     display: flex;
     align-items: center;
     justify-content: center;
