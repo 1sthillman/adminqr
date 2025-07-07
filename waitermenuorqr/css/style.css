@@ -303,14 +303,39 @@ body {
     border-radius: 1.2rem;
     box-shadow: 0 2px 16px 0 rgba(58,134,255,0.13);
     border: 1.5px solid rgba(58,134,255,0.13);
-    padding: 1.3rem 1rem;
+    padding: 0.7rem 0.7rem;
+    min-height: 90px;
+    max-height: 120px;
     transition: box-shadow 0.15s, transform 0.15s;
     display: flex;
     flex-direction: row;
     align-items: center;
-    gap: 1rem;
+    gap: 0.5rem;
     min-width: 0;
     max-width: 100vw;
+    overflow: hidden;
+}
+.modern-card img {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+.modern-card .font-medium.text-lg {
+    font-size: 1rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.modern-card .text-gray-500.text-sm {
+    font-size: 0.85rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.modern-card .text-primary.font-bold.mt-1.text-lg {
+    font-size: 1.05rem;
+    margin-top: 0.1rem;
 }
 .modern-card:hover {
     box-shadow: 0 8px 32px 0 rgba(255,107,53,0.18);
@@ -655,20 +680,57 @@ body {
 @media (max-width: 600px) {
   #menuItemsContainer {
     grid-template-columns: 1fr;
-    gap: 0.7rem;
-    padding-bottom: 1.2rem;
+    gap: 0.4rem;
+    padding-bottom: 0.7rem;
   }
   .modern-card {
-    flex-direction: column;
-    align-items: stretch;
-    gap: 0.5rem;
-    padding: 0.8rem 0.3rem;
-    font-size: 1rem;
+    padding: 0.5rem 0.3rem;
+    min-height: 70px;
+    max-height: 90px;
+    gap: 0.3rem;
+  }
+  .modern-card img {
+    width: 38px;
+    height: 38px;
+  }
+  .modern-card .font-medium.text-lg {
+    font-size: 0.98rem;
+  }
+  .modern-card .text-gray-500.text-sm {
+    font-size: 0.78rem;
+  }
+  .modern-card .text-primary.font-bold.mt-1.text-lg {
+    font-size: 0.98rem;
   }
   .garson-coal-bar {
     flex-direction: column;
     gap: 0.7rem;
     padding: 0.7rem 0.2rem;
+  }
+}
+@media (max-width: 480px) {
+  .modern-card {
+    padding: 0.3rem 0.1rem;
+    min-height: 56px;
+    max-height: 70px;
+    gap: 0.2rem;
+  }
+  .modern-card img {
+    width: 30px;
+    height: 30px;
+  }
+  .modern-card .font-medium.text-lg {
+    font-size: 0.93rem;
+  }
+  .modern-card .text-gray-500.text-sm {
+    font-size: 0.7rem;
+  }
+  .modern-card .text-primary.font-bold.mt-1.text-lg {
+    font-size: 0.93rem;
+  }
+  #menuItemsContainer {
+    gap: 0.2rem;
+    padding-bottom: 0.4rem;
   }
 }
 
