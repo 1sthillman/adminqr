@@ -47,13 +47,16 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     // Dinamik topbar yüksekliği için body padding
     const topbar = document.querySelector('.topbar-fixed');
-    if (topbar) {
+    const categoryNav = document.getElementById('categoryNav');
+    if (topbar && categoryNav) {
         const setTopbarPadding = () => {
-            document.body.style.paddingTop = topbar.offsetHeight + 'px';
+            const total = topbar.offsetHeight;
+            document.body.style.paddingTop = total + 'px';
         };
         setTopbarPadding();
         window.addEventListener('resize', setTopbarPadding);
         new ResizeObserver(setTopbarPadding).observe(topbar);
+        new ResizeObserver(setTopbarPadding).observe(categoryNav);
     }
 });
 
