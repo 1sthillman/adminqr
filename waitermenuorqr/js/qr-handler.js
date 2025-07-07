@@ -82,17 +82,14 @@ async function initQrPage() {
         
         // Dinamik kategori çubuğu konumlandırma
         const headerEl = document.querySelector('header.header-glass');
-        const categoryNav = document.getElementById('categoryNav');
-        if (headerEl && categoryNav) {
-            const updateCategoryTop = () => {
+        if (headerEl) {
+            const updateHeaderSpace = () => {
                 const h = headerEl.offsetHeight;
-                categoryNav.style.top = `${h + 6}px`;
-                document.body.style.paddingTop = `${h + 6}px`;
+                document.body.style.paddingTop = `${h}px`;
             };
-            updateCategoryTop();
-            // header yüksekliği DOM içeriği değişince değişebilir
-            setTimeout(updateCategoryTop, 500);
-            // Pencere boyutu değiştiğinde yeniden hesapla
+            updateHeaderSpace();
+            setTimeout(updateHeaderSpace, 500);
+            window.addEventListener('resize', updateHeaderSpace);
         }
         
     } catch (error) {
