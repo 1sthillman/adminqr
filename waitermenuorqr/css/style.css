@@ -1336,15 +1336,18 @@ body {
   align-items: center;
   justify-content: center;
   margin-bottom: 0.2rem;
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  transition: max-height 0.4s cubic-bezier(0.4,0,0.2,1), opacity 0.3s;
 }
-#categoryButtons[style*="display: none"] {
-  display: none !important;
-}
-#categoryButtons[style*="display: flex"] {
-  display: flex !important;
+#categoryButtons.open {
+  max-height: 400px;
+  opacity: 1;
+  margin-bottom: 0.5rem;
 }
 #menuItemsContainer {
-  margin-top: 2.5rem !important;
+  margin-top: 4.5rem !important;
 }
 
 body {

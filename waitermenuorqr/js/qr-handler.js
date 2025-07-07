@@ -51,14 +51,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const categoryButtons = document.getElementById('categoryButtons');
     if (toggleCategoriesBtn && categoryButtons) {
         toggleCategoriesBtn.addEventListener('click', () => {
-            if (categoryButtons.style.display === 'flex') {
-                categoryButtons.style.display = 'none';
-            } else {
-                categoryButtons.style.display = 'flex';
-            }
+            categoryButtons.classList.toggle('open');
         });
-        // Sayfa yüklendiğinde gizli başlat
-        categoryButtons.style.display = 'none';
+        // Sayfa yüklendiğinde kapalı başlat
+        categoryButtons.classList.remove('open');
     }
     // Dinamik topbar yüksekliği için body padding
     const topbar = document.querySelector('.topbar-fixed');
