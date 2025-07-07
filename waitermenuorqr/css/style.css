@@ -1316,3 +1316,180 @@ body {
 body.modal-open {
     overflow: hidden !important;
 } 
+
+/* --- Modern Neon Ürün Kartları ve Grid --- */
+#menuItemsContainer {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.5rem;
+}
+
+.modern-card {
+  background: rgba(24,26,32,0.95);
+  border-radius: 20px;
+  border: 2.5px solid;
+  border-image: linear-gradient(135deg, #00fff0 0%, #ff00ea 100%) 1;
+  box-shadow: 0 4px 32px 0 rgba(0,255,255,0.12), 0 1.5px 8px 0 rgba(255,0,234,0.10);
+  padding: 1.2rem 1rem;
+  transition: transform 0.15s, box-shadow 0.15s;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 180px;
+}
+.modern-card:hover {
+  transform: translateY(-4px) scale(1.03);
+  box-shadow: 0 8px 40px 0 #00fff0cc, 0 2px 16px 0 #ff00eacc;
+  border-image: linear-gradient(135deg, #ff00ea 0%, #00fff0 100%) 1;
+}
+
+.product-image {
+  width: 90px;
+  height: 90px;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 0 0 3px #00fff0, 0 0 16px #ff00ea99;
+  margin-right: 1rem;
+  background: #181A20;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.product-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 16px;
+}
+
+/* --- Modern Butonlar --- */
+button, .order-button, .call-btn, .menu-category-button {
+  border-radius: 12px !important;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  transition: background 0.15s, color 0.15s, box-shadow 0.15s;
+}
+.order-button, .call-btn {
+  background: linear-gradient(90deg, #00fff0 0%, #ff00ea 100%);
+  color: #181A20;
+  box-shadow: 0 2px 12px #00fff099, 0 1px 4px #ff00ea66;
+  border: none;
+}
+.order-button:hover, .call-btn:hover {
+  background: linear-gradient(90deg, #ff00ea 0%, #00fff0 100%);
+  color: #fff;
+}
+.menu-category-button {
+  background: #23272f;
+  color: #fff;
+  margin-right: 0.5rem;
+  padding: 0.5rem 1.1rem;
+  border: none;
+  font-size: 1rem;
+}
+.menu-category-button.bg-primary {
+  background: linear-gradient(90deg, #00fff0 0%, #ff00ea 100%);
+  color: #181A20;
+  box-shadow: 0 2px 8px #00fff099;
+}
+
+/* --- Topbar ve Kategori Barı --- */
+.topbar-fixed {
+  background: rgba(24,26,32,0.98);
+  box-shadow: 0 2px 16px #00fff033;
+  border-bottom: 2px solid #ff00ea44;
+  padding: 0.7rem 1.2rem;
+}
+.topbar-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.masa-numarasi {
+  color: #00fff0;
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+.masa-renk {
+  color: #ff00ea;
+}
+
+.bg-glass-category {
+  background: rgba(35,39,47,0.85);
+  border-radius: 0 0 18px 18px;
+  box-shadow: 0 2px 12px #00fff033;
+  border-bottom: 2px solid #00fff044;
+}
+
+/* --- Modal ve Sepet Popup --- */
+.cart-popup-top {
+  background: rgba(24,26,32,0.98);
+  border-radius: 20px 20px 0 0;
+  box-shadow: 0 -4px 32px #ff00ea33;
+  border-top: 2.5px solid #00fff0;
+  padding: 1.5rem 1.2rem 1.2rem 1.2rem;
+  max-width: 420px;
+  margin: 0 auto;
+}
+.cart-header {
+  color: #00fff0;
+}
+.close-x {
+  color: #ff00ea;
+  font-size: 1.7rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+/* --- Toast Mesajı --- */
+#toast {
+  background: linear-gradient(90deg, #00fff0 0%, #ff00ea 100%);
+  color: #181A20;
+  font-weight: 600;
+  box-shadow: 0 2px 16px #00fff099;
+}
+
+/* --- Diğer Modern Detaylar --- */
+.header-glass {
+  background: rgba(35,39,47,0.85);
+  border-radius: 18px;
+  box-shadow: 0 2px 12px #ff00ea33;
+  margin-bottom: 1.2rem;
+}
+
+.note {
+  background: #23272f;
+  color: #fff;
+  border-radius: 10px;
+  border: 1.5px solid #00fff044;
+  padding: 0.7rem 1rem;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  background: #23272f;
+}
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg, #00fff0 0%, #ff00ea 100%);
+  border-radius: 8px;
+}
+
+/* --- Responsive --- */
+@media (max-width: 600px) {
+  #menuItemsContainer {
+    grid-template-columns: 1fr;
+  }
+  .product-image {
+    width: 80px;
+    height: 80px;
+  }
+  .modern-card {
+    min-height: 140px;
+    padding: 1rem 0.7rem;
+  }
+  .cart-popup-top {
+    max-width: 98vw;
+    padding: 1.1rem 0.5rem 1rem 0.5rem;
+  }
+} 

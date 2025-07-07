@@ -217,20 +217,18 @@ function renderMenuItems(categoryName) {
         const itemElement = document.createElement('div');
         itemElement.className = 'modern-card';
         itemElement.innerHTML = `
-            <div class="flex items-center gap-3">
-                <div class="product-image">
+            <div class="flex flex-col items-center justify-center gap-2">
+                <div class="product-image mb-2">
                     <img src="${imageUrl}" alt="${item.ad}" onerror="this.src='${DEFAULT_IMAGES.default}'">
                 </div>
-                <div>
-                    <h3 class="font-semibold text-sm text-white truncate max-w-[150px]">${item.ad}</h3>
-                    <p class="price-color text-sm mt-1">${item.fiyat?.toLocaleString('tr-TR') || ''}₺</p>
-                </div>
+                <h3 class="font-semibold text-base text-white truncate max-w-[150px] text-center">${item.ad}</h3>
+                <p class="price-color text-lg mt-1 text-center">${item.fiyat?.toLocaleString('tr-TR') || ''}₺</p>
             </div>
-            <div class="flex items-center">
+            <div class="flex items-center justify-center mt-2">
                 ${itemInCart ? `
                     <div class="flex items-center border border-gray-700 rounded-lg overflow-hidden">
                         <button class="quantity-btn" data-id="${item.id}" data-action="decrease">-</button>
-                        <span class="px-2 text-sm">${itemInCart.quantity}</span>
+                        <span class="px-2 text-base">${itemInCart.quantity}</span>
                         <button class="quantity-btn" data-id="${item.id}" data-action="increase">+</button>
                     </div>
                 ` : `
