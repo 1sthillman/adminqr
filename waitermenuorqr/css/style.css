@@ -313,6 +313,7 @@ h1 {
     border-bottom: 1px solid rgba(255, 255, 255, 0.08);
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
     z-index: 1000;
+    width: 100%;
 }
 
 /* further shrink category buttons on very small screens */
@@ -1008,6 +1009,7 @@ body {
     border-bottom: 1px solid var(--border-color);
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
     z-index: 1000;
+    width: 100%;
 }
 
 .masa-renk {
