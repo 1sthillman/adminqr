@@ -307,30 +307,38 @@ body {
 /* Ultra kompakt ürün kartı ve barlar */
 .modern-card {
     min-width: 0;
-    min-height: 32px;
+    min-height: 90px;
     max-width: 100%;
     box-sizing: border-box;
     overflow: hidden;
     word-break: break-word;
-    padding: 0.08rem 0.08rem;
-    gap: 0.08rem;
-    margin-bottom: 0.08rem;
+    padding: 0.5rem 0.3rem;
+    gap: 0.3rem;
+    margin-bottom: 0.18rem;
     border-radius: 1rem;
     background: rgba(36,38,45,0.85);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 .modern-card img {
-    width: 28px;
-    height: 28px;
+    width: 38px;
+    height: 38px;
+    object-fit: cover;
+    border-radius: 50%;
 }
 .modern-card .font-medium.text-lg {
-    font-size: 0.89rem;
+    font-size: 1rem;
+    line-height: 1.2;
 }
 .modern-card .text-gray-500.text-sm {
-    font-size: 0.68rem;
+    font-size: 0.85rem;
+    line-height: 1.1;
 }
 .modern-card .text-primary.font-bold.mt-1.text-lg {
-    font-size: 0.89rem;
-    margin-top: 0.05rem;
+    font-size: 1rem;
+    margin-top: 0.1rem;
 }
 
 /* Eski fixed-cart-button stilini etkisiz bırak */
@@ -507,10 +515,20 @@ body {
         font-size: 1rem;
     }
     .modern-card {
-        min-height: 14px;
-        max-height: 18px;
-        padding: 0.02rem 0.02rem;
-        gap: 0.02rem;
+        min-height: 70px;
+        padding: 0.3rem 0.15rem;
+        gap: 0.15rem;
+    }
+    .modern-card img {
+        width: 30px;
+        height: 30px;
+    }
+    .modern-card .font-medium.text-lg,
+    .modern-card .text-primary.font-bold.mt-1.text-lg {
+        font-size: 0.93rem;
+    }
+    .modern-card .text-gray-500.text-sm {
+        font-size: 0.7rem;
     }
     .menu-category-button {
         padding: 0.04rem 0.12rem;
@@ -692,9 +710,9 @@ body {
 #menuItemsContainer {
     display: grid;
     grid-template-columns: repeat(2, 1fr) !important;
-    gap: 0.18rem !important;
-    margin-bottom: 0.05rem !important;
-    padding: 0.05rem 0.05rem !important;
+    gap: 0.5rem !important;
+    margin-bottom: 0.1rem !important;
+    padding: 0.1rem 0.1rem !important;
     min-width: 0;
     max-width: 100vw;
     box-sizing: border-box;
@@ -702,9 +720,9 @@ body {
 @media (max-width: 600px) {
     #menuItemsContainer {
         grid-template-columns: repeat(2, 1fr) !important;
-        gap: 0.12rem !important;
-        margin-bottom: 0.02rem !important;
-        padding: 0.02rem 0.02rem !important;
+        gap: 0.3rem !important;
+        margin-bottom: 0.05rem !important;
+        padding: 0.05rem 0.05rem !important;
     }
 }
 @media (max-width: 900px) {
