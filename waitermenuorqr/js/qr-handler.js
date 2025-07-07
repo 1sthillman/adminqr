@@ -20,6 +20,7 @@ const DEFAULT_IMAGES = {
 };
 
 document.addEventListener('DOMContentLoaded', () => {
+    // Tüm event listener ve başlatıcı fonksiyonlar burada
     initQrPage();
     // Garson çağırma butonu
     const callWaiterBtn = document.getElementById('callWaiterButton');
@@ -347,6 +348,7 @@ function increaseQuantity(itemId) {
 
 function openCartModal() {
     const modal = document.getElementById('cartModal');
+    console.log('openCartModal > cartModal:', modal);
     if (!modal) {
         showError('Sepet ekranı bulunamadı!');
         return;
@@ -357,6 +359,7 @@ function openCartModal() {
 
 function closeCartModal() {
     const modal = document.getElementById('cartModal');
+    console.log('closeCartModal > cartModal:', modal);
     if (!modal) {
         showError('Sepet ekranı bulunamadı!');
         return;
