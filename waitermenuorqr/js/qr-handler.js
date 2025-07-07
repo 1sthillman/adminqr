@@ -573,17 +573,16 @@ async function placeOrder() {
         showError('Sepetiniz boş. Lütfen sipariş vermek için ürün ekleyin.');
         return;
     }
-    
+
     try {
         const orderNote = document.getElementById('orderNoteInput')?.value || '';
         const orderButton = document.getElementById('placeOrderButton');
-        
         if (orderButton) {
             orderButton.disabled = true;
             orderButton.textContent = 'Gönderiliyor...';
         }
-        
-        // Sipariş oluştur (orders tablosu)
+
+        // 1. Siparişi orders tablosuna ekle
         const { data: order, error: orderError } = await supabase
             .from('orders')
             .insert({
@@ -600,10 +599,10 @@ async function placeOrder() {
             })
             .select()
             .single();
-            
+
         if (orderError) throw orderError;
-        
-        // Sipariş detaylarını order_items tablosuna ekle
+
+        // 2. Ürünleri order_items tablosuna ekle
         const orderItems = cart.map(item => ({
             order_id: order.id,
             menu_item_id: item.id,
@@ -611,24 +610,23 @@ async function placeOrder() {
             price: item.price,
             quantity: item.quantity
         }));
-        
+
         const { error: itemsError } = await supabase
             .from('order_items')
             .insert(orderItems);
-            
+
         if (itemsError) {
             console.error('Sipariş ürünleri eklenirken hata:', itemsError);
             // Ana sipariş oluşturulduğu için devam et
         }
-        
-        // Sepeti temizle
+
+        // 3. Sepeti temizle ve arayüzü güncelle
         cart = [];
         updateCartUI();
         renderMenuItems(document.querySelector('.menu-category-button.bg-primary')?.dataset.category || 'Tümü');
         closeCartModal();
-        
         showToast('Siparişiniz alındı!', 'success');
-        
+
     } catch (error) {
         console.error('Sipariş verme hatası:', error);
         showError('Sipariş verilemedi. Lütfen tekrar deneyin.');
