@@ -252,8 +252,8 @@ async function callWaiter() {
     try {
         const { error } = await supabase.from('waiter_calls').insert({
             table_id: tableId,
-            table_number: tableNumber,
-            status: 'waiting'
+            table_number: tableId,
+            type: 'garson'
         });
 
         if (error) throw error;
@@ -452,8 +452,8 @@ async function requestCoal() {
     try {
         const { error } = await supabase.from('waiter_calls').insert({
             table_id: tableId,
-            table_number: tableNumber,
-            status: 'coal'
+            table_number: tableId,
+            type: 'köz'
         });
         if (error) throw error;
         showToast('Köz isteğiniz alındı.', 'success');
