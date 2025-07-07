@@ -88,9 +88,12 @@
         </div>
 
         <!-- Sepete Ekle Butonu -->
-        <div id="viewCartButton" class="fixed bottom-4 right-4 z-50 bg-primary text-white flex items-center justify-center rounded-full p-3 shadow-lg cursor-pointer transition-transform">
-            <i class="ri-shopping-cart-2-line text-xl"></i>
-            <span id="cartItemCount" class="absolute -top-1 -right-1 w-5 h-5 bg-white text-primary text-xs rounded-full flex items-center justify-center font-bold">0</span>
+        <div id="viewCartButton"
+             class="fixed bottom-6 right-6 z-[9999] bg-primary text-white flex items-center justify-center rounded-full p-4 shadow-lg cursor-pointer"
+             style="bottom: env(safe-area-inset-bottom, 1.5rem); right: env(safe-area-inset-right, 1.5rem);">
+            <i class="ri-shopping-cart-2-line text-2xl"></i>
+            <span id="cartItemCount"
+                  class="absolute -top-2 -right-2 w-6 h-6 bg-white text-primary text-sm rounded-full flex items-center justify-center font-bold border-2 border-primary">0</span>
         </div>
 
         <!-- Sepet Popup Modalı (alt sabit) -->
