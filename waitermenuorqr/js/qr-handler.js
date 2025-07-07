@@ -21,6 +21,30 @@ const DEFAULT_IMAGES = {
 
 document.addEventListener('DOMContentLoaded', () => {
     initQrPage();
+    // Garson çağırma butonu
+    const callWaiterBtn = document.getElementById('callWaiterButton');
+    if (callWaiterBtn) {
+        callWaiterBtn.addEventListener('click', async () => {
+            await supabase.from('waiter_calls').insert({
+                table_id: tableId,
+                table_number: tableId,
+                type: 'garson'
+            });
+            // ...
+        });
+    }
+    // Köz çağırma butonu
+    const callCoalBtn = document.getElementById('requestCoalButton');
+    if (callCoalBtn) {
+        callCoalBtn.addEventListener('click', async () => {
+            await supabase.from('waiter_calls').insert({
+                table_id: tableId,
+                table_number: tableId,
+                type: 'köz'
+            });
+            // ...
+        });
+    }
 });
 
 async function initQrPage() {
