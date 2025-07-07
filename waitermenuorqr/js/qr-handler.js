@@ -463,6 +463,16 @@ function openCartModal() {
     const modal = document.getElementById('cartModal');
     if (modal) {
         modal.classList.add('open');
+        // Kategori barının hemen altına hizala
+        const categoryNav = document.getElementById('categoryNav');
+        if (categoryNav) {
+            const rect = categoryNav.getBoundingClientRect();
+            // Sayfa scroll'u dahil top değeri
+            const scrollTop = window.scrollY || window.pageYOffset;
+            modal.style.top = (rect.bottom + scrollTop + 12) + 'px';
+        } else {
+            modal.style.top = '100px';
+        }
     }
     const backdrop = document.getElementById('modalBackdrop');
     if (backdrop) backdrop.style.display = 'block';
@@ -473,6 +483,7 @@ function closeCartModal() {
     const modal = document.getElementById('cartModal');
     if (modal) {
         modal.classList.remove('open');
+        modal.style.top = '';
     }
     const backdrop = document.getElementById('modalBackdrop');
     if (backdrop) backdrop.style.display = 'none';
