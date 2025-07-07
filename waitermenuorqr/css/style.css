@@ -1403,30 +1403,72 @@ button, .order-button, .call-btn, .menu-category-button {
 
 /* --- Topbar ve Kategori Barı --- */
 .topbar-fixed {
-  background: rgba(24,26,32,0.98);
-  box-shadow: 0 2px 16px #00fff033;
-  border-bottom: 2px solid #ff00ea44;
-  padding: 0.7rem 1.2rem;
+  background: #20232a;
+  box-shadow: 0 2px 8px #00fff022;
+  border-bottom: 1.5px solid #00fff033;
+  padding: 0.5rem 1rem 0.3rem 1rem;
+  border-radius: 0 0 18px 18px;
 }
 .topbar-content {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 1.2rem;
 }
 .masa-numarasi {
   color: #00fff0;
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   font-weight: 700;
+  letter-spacing: 0.01em;
 }
 .masa-renk {
   color: #ff00ea;
 }
-
+.topbar-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+.call-btn, .order-button {
+  background: #23272f;
+  color: #fff;
+  border-radius: 10px;
+  font-weight: 500;
+  font-size: 0.97rem;
+  box-shadow: none;
+  border: 1.5px solid #23272f;
+  padding: 0.38rem 1.1rem;
+  transition: background 0.15s, color 0.15s, border 0.15s;
+}
+.call-btn:hover, .order-button:hover {
+  background: #00fff0;
+  color: #181A20;
+  border: 1.5px solid #00fff0;
+}
+.cart-icon-top {
+  background: none;
+  border: none;
+  color: #ff00ea;
+  font-size: 1.3rem;
+  position: relative;
+  margin-left: 0.2rem;
+}
+#cartItemCount {
+  background: #ff00ea;
+  color: #fff;
+  font-size: 0.85rem;
+  padding: 0.1rem 0.5rem;
+  border-radius: 10px;
+  top: -10px;
+  right: -10px;
+  position: absolute;
+}
 .bg-glass-category {
-  background: rgba(35,39,47,0.85);
+  background: #23272f;
   border-radius: 0 0 18px 18px;
-  box-shadow: 0 2px 12px #00fff033;
-  border-bottom: 2px solid #00fff044;
+  box-shadow: none;
+  border-bottom: 1.5px solid #00fff033;
+  margin-top: 0.2rem;
+  padding: 0.5rem 0.7rem 0.4rem 0.7rem;
 }
 
 /* --- Modal ve Sepet Popup --- */
