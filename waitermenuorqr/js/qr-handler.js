@@ -157,6 +157,17 @@ async function loadAndRenderMenu() {
         });
         menu['Diğer'] = [];
 
+        // Ürünlerde geçen ve kategorilerde olmayan kategorileri de ekle
+        urunler.forEach(urun => {
+            const urunKategoriNorm = (urun.kategori || '').trim().toLowerCase();
+            if (urunKategoriNorm && !normalizedCategories[urunKategoriNorm]) {
+                // Yeni kategori ekle
+                const displayName = urun.kategori.trim();
+                menu[displayName] = [];
+                normalizedCategories[urunKategoriNorm] = displayName;
+            }
+        });
+
         urunler.forEach(urun => {
             const urunKategoriNorm = (urun.kategori || '').trim().toLowerCase();
             if (urunKategoriNorm && normalizedCategories[urunKategoriNorm]) {
@@ -167,7 +178,7 @@ async function loadAndRenderMenu() {
         });
 
         // 'Tümü' kategorisini ekle
-        const allCategories = ['Tümü', ...kategoriler.map(k => k.ad)];
+        const allCategories = ['Tümü', ...Object.keys(menu).filter(k => k !== 'Diğer' && k !== 'Tümü'), 'Diğer'];
         renderCategoryButtons(allCategories);
         renderMenuItems('Tümü');
 
@@ -203,6 +214,7 @@ function renderCategoryButtons(categories) {
 function renderMenuItems(categoryName) {
     const container = document.getElementById('menuItemsContainer');
     if (!container) return;
+    container.style.marginTop = '1.5rem'; // Ürünler biraz daha aşağıdan başlasın
     
     container.innerHTML = '';
     let itemsToShow = [];
