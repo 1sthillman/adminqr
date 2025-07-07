@@ -347,14 +347,20 @@ function increaseQuantity(itemId) {
 
 function openCartModal() {
     const modal = document.getElementById('cartModal');
-    if (!modal) return;
+    if (!modal) {
+        showError('Sepet ekranı bulunamadı!');
+        return;
+    }
     modal.classList.add('open');
     updateCartUI();
 }
 
 function closeCartModal() {
     const modal = document.getElementById('cartModal');
-    if (!modal) return;
+    if (!modal) {
+        showError('Sepet ekranı bulunamadı!');
+        return;
+    }
     modal.classList.remove('open');
 }
 
@@ -441,7 +447,9 @@ async function placeOrder() {
         cart = [];
         document.getElementById('orderNoteInput').value = '';
         updateCartUI();
-        openCartModal();
+        if (document.getElementById('cartModal')) {
+            openCartModal();
+        }
         renderMenuItems(document.querySelector('.menu-category-button.bg-primary')?.dataset.category || 'all');
 
     } catch (error) {
