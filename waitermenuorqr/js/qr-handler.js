@@ -80,6 +80,19 @@ async function initQrPage() {
         setupEventListeners();
         setupRealtimeSubscriptions();
         
+        // Dinamik kategori çubuğu konumlandırma
+        const headerEl = document.querySelector('header.header-glass');
+        const categoryNav = document.getElementById('categoryNav');
+        if (headerEl && categoryNav) {
+            const updateCategoryTop = () => {
+                const h = headerEl.offsetHeight;
+                categoryNav.style.top = `${h + 6}px`;
+            };
+            updateCategoryTop();
+            // Pencere boyutu değiştiğinde yeniden hesapla
+            window.addEventListener('resize', updateCategoryTop);
+        }
+        
     } catch (error) {
         console.error('Sayfa başlatılırken hata oluştu:', error);
         showError('Sistem başlatılamadı. Lütfen sayfayı yenileyin.');
