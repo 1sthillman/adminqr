@@ -311,6 +311,7 @@ function openCartModal() {
     modal.classList.remove('hidden', 'translate-y-full');
     modal.classList.add('translate-y-0');
     showCartOverlay();
+    updateCartUI();
 }
 
 function closeCartModal() {
