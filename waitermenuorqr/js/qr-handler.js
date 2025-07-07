@@ -46,6 +46,20 @@ document.addEventListener('DOMContentLoaded', () => {
             // ...
         });
     }
+    // Kategori açılır menü butonu
+    const toggleCategoriesBtn = document.getElementById('toggleCategoriesBtn');
+    const categoryButtons = document.getElementById('categoryButtons');
+    if (toggleCategoriesBtn && categoryButtons) {
+        toggleCategoriesBtn.addEventListener('click', () => {
+            if (categoryButtons.style.display === 'flex') {
+                categoryButtons.style.display = 'none';
+            } else {
+                categoryButtons.style.display = 'flex';
+            }
+        });
+        // Sayfa yüklendiğinde gizli başlat
+        categoryButtons.style.display = 'none';
+    }
     // Dinamik topbar yüksekliği için body padding
     const topbar = document.querySelector('.topbar-fixed');
     const categoryNav = document.getElementById('categoryNav');

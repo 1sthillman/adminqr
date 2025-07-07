@@ -1291,8 +1291,60 @@ body {
 }
 .topbar-actions {
     display: flex;
+    justify-content: center;
     align-items: center;
-    gap: 1rem;
+    gap: 1.2rem;
+    width: 100%;
+}
+.call-btn {
+  background: linear-gradient(90deg, #00fff0 0%, #3A86FF 100%);
+  color: #fff;
+  border-radius: 16px;
+  font-weight: 700;
+  font-size: 1.08rem;
+  box-shadow: 0 2px 12px #00fff055;
+  border: none;
+  padding: 0.7rem 1.7rem;
+  margin: 0 0.2rem;
+  transition: background 0.15s, color 0.15s, box-shadow 0.15s;
+}
+.call-btn:hover {
+  background: linear-gradient(90deg, #3A86FF 0%, #00fff0 100%);
+  color: #181A20;
+  box-shadow: 0 4px 20px #3A86FF55;
+}
+.category-toggle-btn {
+  background: linear-gradient(90deg, #00fff0 0%, #ff00ea 100%);
+  color: #181A20;
+  font-weight: 700;
+  border-radius: 12px;
+  font-size: 1.05rem;
+  padding: 0.6rem 2.2rem;
+  margin-bottom: 0.5rem;
+  border: none;
+  box-shadow: 0 2px 8px #00fff055;
+  transition: background 0.15s, color 0.15s;
+}
+.category-toggle-btn:hover {
+  background: linear-gradient(90deg, #ff00ea 0%, #00fff0 100%);
+  color: #fff;
+}
+#categoryButtons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.2rem 0.3rem;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 0.2rem;
+}
+#categoryButtons[style*="display: none"] {
+  display: none !important;
+}
+#categoryButtons[style*="display: flex"] {
+  display: flex !important;
+}
+#menuItemsContainer {
+  margin-top: 2.5rem !important;
 }
 
 body {

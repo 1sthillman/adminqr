@@ -19,8 +19,8 @@
             <div class="masa-numarasi">
                 <span class="text-xl font-bold">Masa </span>
                 <span id="tableNumber" class="masa-renk ml-1">17</span>
-                    </div>
-            <div class="topbar-actions">
+            </div>
+            <div class="topbar-actions justify-center w-full">
                 <button id="callWaiterButton" class="call-btn">
                     <i class="ri-user-voice-line mr-1"></i> Garson Çağır
                 </button>
@@ -30,21 +30,22 @@
                 <button id="viewCartButton" class="cart-icon-top">
                     <i class="ri-shopping-cart-2-line text-lg"></i>
                     <span id="cartItemCount" class="absolute">0</span>
-                    </button>
+                </button>
             </div>
         </div>
-        <!-- KATEGORİ BAR SABİT -->
+        <!-- KATEGORİ BAR AÇILIR MENÜ -->
         <nav class="bg-glass-category w-full px-3 py-2" id="categoryNav">
-            <div class="flex items-center">
-                <div id="categoryButtons" class="flex pb-0.5"></div>
+            <div class="flex flex-col items-center">
+                <button id="toggleCategoriesBtn" class="category-toggle-btn mb-2">Kategoriler</button>
+                <div id="categoryButtons" class="flex pb-0.5 flex-wrap justify-center" style="display:none;"></div>
             </div>
         </nav>
-        </div>
+    </div>
 
     <div id="qrPage" class="min-h-screen flex flex-col">
         <!-- HEADER KALDIRILDI -->
         <!-- ÜRÜNLER -->
-        <main class="flex-1 p-3 mt-16">
+        <main class="flex-1 p-3 mt-24">
             <div id="menuItemsContainer" class="mb-4"></div>
         </main>
     </div>
