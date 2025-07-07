@@ -189,33 +189,99 @@ function renderMenuItems(categoryName) {
         const itemInCart = cart.find(cartItem => cartItem.id === item.id);
         const imageUrl = item.image_url || DEFAULT_IMAGES[item.kategori?.toLowerCase()] || DEFAULT_IMAGES.default;
         const itemElement = document.createElement('div');
-        itemElement.className = 'modern-card flex justify-between items-center mb-3';
-        itemElement.innerHTML = `
-            <div class="flex items-center flex-1">
-                <div class="w-16 h-16 mr-3 rounded-full overflow-hidden flex-shrink-0 bg-gray-800">
-                    <img src="${imageUrl}" alt="${item.ad}" class="w-full h-full object-cover" onerror="this.src='${DEFAULT_IMAGES.default}'">
-                </div>
-                <div class="flex-1">
-                    <div class="font-medium text-lg">${item.ad}</div>
-                    <div class="text-gray-500 text-sm">${item.aciklama || ''}</div>
-                    <div class="text-primary font-bold mt-1 text-lg">${item.fiyat?.toLocaleString('tr-TR') || ''}₺</div>
-                </div>
-            </div>
-            <div class="flex items-center">
-                ${itemInCart ? `
-                    <div class="flex items-center border border-gray-700 rounded-lg overflow-hidden">
-                        <button class="quantity-btn px-2 py-1 bg-gray-900" data-id="${item.id}" data-action="decrease">-</button>
-                        <span class="px-3">${itemInCart.quantity}</span>
-                        <button class="quantity-btn px-2 py-1 bg-gray-900" data-id="${item.id}" data-action="increase">+</button>
-                    </div>
-                ` : `
-                    <button class="add-to-cart-btn bg-gradient-to-r from-orange-400 to-orange-500 text-white px-4 py-2 rounded-full shadow-md" data-id="${item.id}">
-                        <i class="ri-add-line"></i>
-                    </button>
-                `}
-            </div>
-        `;
+        itemElement.className = 'modern-card';
+        
+        // Ürün resmi
+        const imgElement = document.createElement('img');
+        imgElement.src = imageUrl;
+        imgElement.alt = item.ad;
+        imgElement.onerror = function() { this.src = DEFAULT_IMAGES.default; };
+        
+        // Ürün bilgileri için div
+        const infoDiv = document.createElement('div');
+        infoDiv.className = 'card-info';
+        
+        // Ürün adı
+        const nameElement = document.createElement('div');
+        nameElement.className = 'font-medium text-lg';
+        nameElement.textContent = item.ad;
+        
+        // Ürün açıklaması (varsa)
+        if (item.aciklama) {
+            const descElement = document.createElement('div');
+            descElement.className = 'text-gray-500 text-sm';
+            descElement.textContent = item.aciklama;
+            infoDiv.appendChild(descElement);
+        }
+        
+        // Ürün fiyatı
+        const priceElement = document.createElement('div');
+        priceElement.className = 'text-primary font-bold mt-1 text-lg';
+        priceElement.textContent = `${item.fiyat?.toLocaleString('tr-TR') || ''}₺`;
+        
+        // Bilgileri info div'e ekle
+        infoDiv.appendChild(nameElement);
+        if (item.aciklama) {
+            const descElement = document.createElement('div');
+            descElement.className = 'text-gray-500 text-sm';
+            descElement.textContent = item.aciklama;
+            infoDiv.appendChild(descElement);
+        }
+        infoDiv.appendChild(priceElement);
+        
+        // Sepete ekle butonu
+        let actionButton;
+        if (itemInCart) {
+            // Ürün sepette varsa miktar artır/azalt butonları
+            actionButton = document.createElement('div');
+            actionButton.className = 'quantity-controls';
+            actionButton.innerHTML = `
+                <button class="quantity-btn decrease" data-id="${item.id}" data-action="decrease">-</button>
+                <span class="quantity">${itemInCart.quantity}</span>
+                <button class="quantity-btn increase" data-id="${item.id}" data-action="increase">+</button>
+            `;
+        } else {
+            // Ürün sepette yoksa ekle butonu
+            actionButton = document.createElement('button');
+            actionButton.className = 'add-btn';
+            actionButton.setAttribute('data-id', item.id);
+            actionButton.innerHTML = '+';
+        }
+        
+        // Tüm elementleri karta ekle
+        itemElement.appendChild(imgElement);
+        itemElement.appendChild(infoDiv);
+        itemElement.appendChild(actionButton);
+        
+        // Kartı container'a ekle
         container.appendChild(itemElement);
+    });
+
+    // Ürün kartlarına event listener'lar ekle
+    document.querySelectorAll('.add-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            const itemId = e.currentTarget.getAttribute('data-id');
+            const item = itemsToShow.find(item => item.id == itemId);
+            if (item) {
+                addToCart(item);
+                renderMenuItems(categoryName); // Kartları yeniden render et
+            }
+        });
+    });
+
+    document.querySelectorAll('.quantity-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            const itemId = e.currentTarget.getAttribute('data-id');
+            const action = e.currentTarget.getAttribute('data-action');
+            
+            if (action === 'increase') {
+                increaseQuantity(itemId);
+            } else if (action === 'decrease') {
+                decreaseQuantity(itemId);
+            }
+            
+            renderMenuItems(categoryName); // Kartları yeniden render et
+        });
     });
 }
 
