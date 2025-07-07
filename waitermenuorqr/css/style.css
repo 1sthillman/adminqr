@@ -686,4 +686,37 @@ header {
 body, html {
   overflow-x: hidden;
   max-width: 100vw;
+}
+
+/* Kategori barı aksiyon butonları */
+.kategori-action-btns {
+  flex-shrink: 0;
+  gap: 0.5rem;
+}
+@media (max-width: 900px) {
+  .kategori-action-btns {
+    flex-direction: column;
+    gap: 0.4rem;
+    margin-left: 0.5rem;
+  }
+}
+@media (max-width: 600px) {
+  .kategori-action-btns {
+    flex-direction: row;
+    width: 100%;
+    justify-content: flex-end;
+    margin-top: 0.5rem;
+    margin-left: 0;
+  }
+  nav .flex.items-center {
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+}
+.call-btn {
+  font-size: 0.98rem;
+  padding: 0.6rem 1.1rem;
+  min-width: 120px;
+  max-width: 180px;
+  white-space: nowrap;
 } 

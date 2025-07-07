@@ -43,21 +43,22 @@
         </header>
         <!-- KATEGORİ BAR -->
         <nav class="bg-glass-category sticky top-[60px] z-10 px-2 py-2 overflow-x-auto">
-            <div id="categoryButtons" class="flex space-x-2 pb-1"></div>
+            <div class="flex items-center justify-between gap-2">
+                <div id="categoryButtons" class="flex space-x-2 pb-1"></div>
+                <div class="flex gap-2 kategori-action-btns">
+                    <button id="callWaiterButton" class="call-btn bg-gradient-to-r from-orange-400 to-orange-500 text-white px-4 py-2 rounded-full font-semibold shadow-md text-sm flex items-center gap-2">
+                        <i class="ri-user-voice-line text-lg"></i> Garsonu Çağır
+                    </button>
+                    <button id="requestCoalButton" class="call-btn bg-gradient-to-r from-blue-500 to-blue-400 text-white px-4 py-2 rounded-full font-semibold shadow-md text-sm flex items-center gap-2">
+                        <i class="ri-fire-line text-lg"></i> Köz İstiyorum
+                    </button>
+                </div>
+            </div>
         </nav>
         <!-- ÜRÜNLER -->
         <main class="flex-1 p-4">
             <div id="menuItemsContainer" class="grid grid-cols-2 gap-4 mb-8"></div>
         </main>
-        <!-- GARSON/KÖZ BUTONLARI -->
-        <footer class="w-full flex flex-col items-center gap-2 py-4 bg-transparent">
-            <button id="callWaiterButton" class="call-btn bg-gradient-to-r from-orange-400 to-orange-500 text-white px-6 py-3 rounded-full font-semibold shadow-md text-base flex items-center gap-2 w-64 justify-center">
-                <i class="ri-user-voice-line text-lg"></i> Garsonu Çağır
-            </button>
-            <button id="requestCoalButton" class="call-btn bg-gradient-to-r from-blue-500 to-blue-400 text-white px-6 py-3 rounded-full font-semibold shadow-md text-base flex items-center gap-2 w-64 justify-center">
-                <i class="ri-fire-line text-lg"></i> Köz İstiyorum
-            </button>
-        </footer>
     </div>
 
     <div id="loadingPage" class="flex flex-col items-center justify-center p-6 text-center min-h-screen">
