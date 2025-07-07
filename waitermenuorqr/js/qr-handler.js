@@ -163,19 +163,19 @@ function renderCategoryButtons(categories) {
     container.innerHTML = '';
     categories.forEach(categoryName => {
         const button = document.createElement('button');
-        button.className = 'menu-category-button flex-shrink-0 px-4 py-2 text-sm font-medium rounded-full mr-2 bg-gray-200 text-gray-700 transition-colors duration-200';
+        button.className = 'menu-category-button';
         button.textContent = categoryName;
         button.dataset.category = categoryName;
         button.addEventListener('click', () => {
-            document.querySelectorAll('.menu-category-button').forEach(btn => btn.classList.remove('bg-primary', 'text-white'));
-            button.classList.add('bg-primary', 'text-white');
+            document.querySelectorAll('.menu-category-button').forEach(btn => btn.classList.remove('bg-primary'));
+            button.classList.add('bg-primary');
             renderMenuItems(categoryName);
         });
         container.appendChild(button);
     });
     // İlk butonu aktif yap (Tümü)
     if (container.firstChild) {
-        container.firstChild.classList.add('bg-primary', 'text-white');
+        container.firstChild.classList.add('bg-primary');
     }
 }
 
@@ -201,17 +201,16 @@ function renderMenuItems(categoryName) {
         const itemElement = document.createElement('div');
         itemElement.className = 'modern-card';
         itemElement.innerHTML = `
-            <div class="flex items-center flex-1">
-                <div class="w-12 h-12 mr-2 rounded-full overflow-hidden flex-shrink-0 bg-gray-800">
-                    <img src="${imageUrl}" alt="${item.ad}" class="w-full h-full object-cover" onerror="this.src='${DEFAULT_IMAGES.default}'">
+            <div class="flex items-center gap-3">
+                <div class="product-image">
+                    <img src="${imageUrl}" alt="${item.ad}" onerror="this.src='${DEFAULT_IMAGES.default}'">
                 </div>
-                <div class="flex-1 min-w-0">
-                    <div class="font-medium text-base truncate">${item.ad}</div>
-                    <div class="text-gray-500 text-xs truncate">${item.aciklama || ''}</div>
-                    <div class="text-primary font-bold mt-0.5 text-sm">${item.fiyat?.toLocaleString('tr-TR') || ''}₺</div>
+                <div>
+                    <h3 class="font-semibold text-sm text-white truncate max-w-[150px]">${item.ad}</h3>
+                    <p class="price-color text-sm mt-1">${item.fiyat?.toLocaleString('tr-TR') || ''}₺</p>
                 </div>
             </div>
-            <div class="flex items-center ml-1">
+            <div class="flex items-center">
                 ${itemInCart ? `
                     <div class="flex items-center border border-gray-700 rounded-lg overflow-hidden">
                         <button class="quantity-btn" data-id="${item.id}" data-action="decrease">-</button>

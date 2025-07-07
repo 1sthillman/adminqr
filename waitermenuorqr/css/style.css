@@ -239,19 +239,21 @@ textarea::placeholder, input::placeholder {
     padding: 0.35rem 0.9rem;
     margin-right: 0.4rem;
     margin-bottom: 0.2rem;
-    box-shadow: 0 2px 8px 0 rgba(58,134,255,0.07);
-    border: 1.5px solid rgba(255,255,255,0.10);
+    box-shadow: 0 2px 8px 0 rgba(0,0,0,0.2);
+    border: 1px solid rgba(255,255,255,0.08);
     transition: background 0.18s, color 0.18s, box-shadow 0.18s;
     cursor: pointer;
     outline: none;
 }
+
 .menu-category-button.bg-primary {
-    background: linear-gradient(90deg, #3A86FF 0%, #FF6B35 100%);
+    background: #FF6B35;
     color: #fff;
-    box-shadow: 0 4px 16px 0 rgba(58,134,255,0.13);
+    box-shadow: 0 4px 16px 0 rgba(255,107,53,0.3);
 }
+
 .menu-category-button:hover {
-    background: linear-gradient(90deg, #FF6B35 0%, #3A86FF 100%);
+    background: #FF6B35;
     color: #fff;
 }
 
@@ -301,7 +303,7 @@ h1 {
 
 /* === Header Glass === */
 .header-glass {
-    background: rgba(24, 26, 32, 0.85) !important;
+    background: rgba(24, 26, 32, 0.95) !important;
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
     border-bottom: 1px solid rgba(255, 255, 255, 0.08);
@@ -326,7 +328,7 @@ body {
 /* Modern Card */
 .modern-card {
     background: rgba(36, 38, 45, 0.85) !important;
-    border-radius: 12px;
+    border-radius: 16px;
     padding: 0.6rem;
     margin-bottom: 0.6rem;
     border: 1px solid rgba(255, 255, 255, 0.08);
@@ -338,6 +340,7 @@ body {
     align-items: center;
     position: relative;
 }
+
 .modern-card:hover {
     transform: translateY(-2px);
     box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25), 
@@ -520,7 +523,7 @@ body {
 .bg-glass-category {
   margin-bottom: 0.5rem;
   z-index: 19;
-  background: rgba(24,26,32,0.9) !important;
+  background: #181A20 !important;
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
   border-bottom: 1px solid rgba(255,255,255,0.08);
@@ -908,17 +911,17 @@ img, svg {
     align-items: center;
     justify-content: center;
     border-radius: 50%;
-    background: linear-gradient(135deg, #FF6B35 0%, #FF8F6B 100%);
+    background: #FF6B35;
     color: white;
     border: none;
-    box-shadow: 0 4px 10px rgba(255, 107, 53, 0.3);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
     cursor: pointer;
     transition: all 0.2s ease;
 }
 
 .add-to-cart-btn:hover {
     transform: scale(1.05);
-    box-shadow: 0 6px 15px rgba(255, 107, 53, 0.4);
+    background: #ff8c60;
 }
 
 /* Quantity buttons styling */
@@ -946,4 +949,351 @@ img, svg {
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
+}
+
+/* Ürün resmi için stil */
+.product-image {
+    width: 48px;
+    height: 48px;
+    border-radius: 8px;
+    background-color: #f0f0f0;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.product-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Fiyat rengi */
+.price-color {
+    color: #FF6B35;
+    font-weight: 700;
+}
+
+/* === Dark Theme Base === */
+:root {
+    --bg-dark: #181A20;
+    --bg-card: #24262D;
+    --text-primary: #FFFFFF;
+    --text-secondary: #9CA3AF;
+    --color-primary: #FF6B35;
+    --color-secondary: #3A86FF;
+    --border-color: rgba(255,255,255,0.08);
+}
+
+body {
+    background-color: var(--bg-dark);
+    color: var(--text-primary);
+    font-family: 'Inter', 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    width: 100%;
+}
+
+/* === Header Styling === */
+.header-glass {
+    background: rgba(24, 26, 32, 0.95);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--border-color);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    z-index: 50;
+}
+
+.masa-renk {
+    font-weight: 700;
+    font-size: 1.25rem;
+    color: var(--color-primary);
+}
+
+/* === Category Buttons Smaller & Glass === */
+.menu-category-button {
+    font-family: 'Inter', 'Poppins', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 600;
+    border-radius: 9999px;
+    background: rgba(36,38,45,0.85);
+    color: #fff;
+    padding: 0.35rem 0.9rem;
+    margin-right: 0.4rem;
+    margin-bottom: 0.2rem;
+    box-shadow: 0 2px 8px 0 rgba(0,0,0,0.2);
+    border: 1px solid rgba(255,255,255,0.08);
+    transition: background 0.18s, color 0.18s, box-shadow 0.18s;
+    cursor: pointer;
+    outline: none;
+}
+
+.menu-category-button.bg-primary {
+    background: #FF6B35;
+    color: #fff;
+    box-shadow: 0 4px 16px 0 rgba(255,107,53,0.3);
+}
+
+.menu-category-button:hover {
+    background: #FF6B35;
+    color: #fff;
+}
+
+/* Modern card styling for menu items */
+.modern-card {
+    background: rgba(36, 38, 45, 0.85) !important;
+    border-radius: 16px;
+    padding: 0.6rem;
+    margin-bottom: 0.6rem;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    overflow: hidden;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+}
+
+.modern-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25), 
+                0 0 0 1px rgba(255, 107, 53, 0.2);
+    border-color: rgba(255, 107, 53, 0.3);
+}
+
+/* Cart button styling */
+.cart-icon-top {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: rgba(255, 107, 53, 0.2);
+    color: #FF6B35;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.cart-icon-top:hover {
+    background: rgba(255, 107, 53, 0.3);
+}
+
+#cartItemCount {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: #FF6B35;
+    color: white;
+    font-size: 10px;
+    display: none;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Cart popup styling */
+.cart-popup-top {
+    position: absolute;
+    top: calc(100% + 10px);
+    right: 0;
+    width: 280px;
+    background: rgba(36, 38, 45, 0.95);
+    border-radius: 12px;
+    padding: 12px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    z-index: 100;
+    transform: translateY(-10px);
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+}
+
+.cart-popup-top.open {
+    transform: translateY(0);
+    opacity: 1;
+    visibility: visible;
+}
+
+.cart-items {
+    max-height: 300px;
+    overflow-y: auto;
+    margin-bottom: 8px;
+}
+
+/* Textarea styling */
+.note {
+    background: rgba(24, 26, 32, 0.8);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    padding: 8px;
+    color: white;
+    resize: none;
+    font-size: 12px;
+}
+
+.note::placeholder {
+    color: rgba(255, 255, 255, 0.5);
+}
+
+/* Order button styling */
+.order-button {
+    background: #FF6B35;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.order-button:hover {
+    background: #ff8c60;
+}
+
+.order-button:disabled {
+    background: #7d7d7d;
+    cursor: not-allowed;
+}
+
+/* Quantity buttons */
+.cart-qty-btn {
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.1);
+    border: none;
+    color: white;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.cart-qty-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.cart-qty {
+    width: 24px;
+    text-align: center;
+    font-size: 12px;
+}
+
+/* Toast message styling */
+#toast {
+    background: #FF6B35;
+    color: white;
+    font-size: 12px;
+}
+
+/* Add to cart button styling */
+.add-to-cart-btn {
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: #FF6B35;
+    color: white;
+    border: none;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.add-to-cart-btn:hover {
+    transform: scale(1.05);
+    background: #ff8c60;
+}
+
+/* Call buttons styling */
+.call-btn {
+    border-radius: 9999px;
+    padding: 0.5rem 1rem;
+    font-weight: 600;
+    transition: all 0.2s ease;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    font-size: 0.85rem;
+}
+
+#callWaiterButton {
+    background: #FF6B35;
+    color: white;
+}
+
+#requestCoalButton {
+    background: #3A86FF;
+    color: white;
+}
+
+.call-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Loading animation */
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.animate-spin {
+    animation: spin 1s linear infinite;
+}
+
+/* Kategori bar arka planı */
+.bg-glass-category {
+    background: #181A20 !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* Quantity buttons */
+.quantity-btn {
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.1);
+    border: none;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+/* Ürün resmi için stil */
+.product-image {
+    width: 48px;
+    height: 48px;
+    border-radius: 8px;
+    background-color: #f0f0f0;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.product-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Fiyat rengi */
+.price-color {
+    color: #FF6B35;
+    font-weight: 700;
 } 
