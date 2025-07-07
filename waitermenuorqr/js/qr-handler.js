@@ -188,27 +188,27 @@ function renderMenuItems(categoryName) {
         const itemInCart = cart.find(cartItem => cartItem.id === item.id);
         const imageUrl = item.image_url || DEFAULT_IMAGES[item.kategori?.toLowerCase()] || DEFAULT_IMAGES.default;
         const itemElement = document.createElement('div');
-        itemElement.className = 'bg-white rounded-lg shadow-sm p-3 flex justify-between items-center';
+        itemElement.className = 'modern-card flex justify-between items-center mb-3';
         itemElement.innerHTML = `
             <div class="flex items-center flex-1">
-                <div class="w-16 h-16 mr-3 rounded-lg overflow-hidden flex-shrink-0">
+                <div class="w-16 h-16 mr-3 rounded-full overflow-hidden flex-shrink-0 bg-gray-800">
                     <img src="${imageUrl}" alt="${item.ad}" class="w-full h-full object-cover" onerror="this.src='${DEFAULT_IMAGES.default}'">
                 </div>
                 <div class="flex-1">
-                    <div class="font-medium">${item.ad}</div>
+                    <div class="font-medium text-lg">${item.ad}</div>
                     <div class="text-gray-500 text-sm">${item.aciklama || ''}</div>
-                    <div class="text-primary font-semibold mt-1">${item.fiyat?.toLocaleString('tr-TR') || ''}₺</div>
+                    <div class="text-primary font-bold mt-1 text-lg">${item.fiyat?.toLocaleString('tr-TR') || ''}₺</div>
                 </div>
             </div>
             <div class="flex items-center">
                 ${itemInCart ? `
-                    <div class="flex items-center border border-gray-300 rounded-lg overflow-hidden">
-                        <button class="quantity-btn px-2 py-1 bg-gray-100" data-id="${item.id}" data-action="decrease">-</button>
+                    <div class="flex items-center border border-gray-700 rounded-lg overflow-hidden">
+                        <button class="quantity-btn px-2 py-1 bg-gray-900" data-id="${item.id}" data-action="decrease">-</button>
                         <span class="px-3">${itemInCart.quantity}</span>
-                        <button class="quantity-btn px-2 py-1 bg-gray-100" data-id="${item.id}" data-action="increase">+</button>
+                        <button class="quantity-btn px-2 py-1 bg-gray-900" data-id="${item.id}" data-action="increase">+</button>
                     </div>
                 ` : `
-                    <button class="add-to-cart-btn bg-primary text-white px-3 py-1 rounded-full" data-id="${item.id}">
+                    <button class="add-to-cart-btn bg-gradient-to-r from-orange-400 to-orange-500 text-white px-4 py-2 rounded-full shadow-md" data-id="${item.id}">
                         <i class="ri-add-line"></i>
                     </button>
                 `}
@@ -332,75 +332,69 @@ function increaseQuantity(itemId) {
 
 function openCartModal() {
     const modal = document.getElementById('cartModal');
-    modal.classList.remove('hidden', 'translate-y-full');
-    modal.classList.add('translate-y-0');
-    showCartOverlay();
+    const bg = document.getElementById('cartPopupBg');
+    modal.classList.add('open');
+    bg.classList.add('open');
     updateCartUI();
 }
 
 function closeCartModal() {
     const modal = document.getElementById('cartModal');
-    modal.classList.add('translate-y-full');
-    setTimeout(() => { modal.classList.add('hidden'); }, 300);
-    hideCartOverlay();
-}
-
-// Sepet popup açıldığında arka planı karartmak için overlay fonksiyonları
-function showCartOverlay() {
-    let overlay = document.getElementById('cartOverlay');
-    if (!overlay) {
-        overlay = document.createElement('div');
-        overlay.id = 'cartOverlay';
-        overlay.className = 'fixed inset-0 bg-black bg-opacity-40 z-40';
-        overlay.onclick = closeCartModal;
-        document.body.appendChild(overlay);
-    }
-    overlay.classList.remove('hidden');
-}
-
-function hideCartOverlay() {
-    const overlay = document.getElementById('cartOverlay');
-    if (overlay) overlay.classList.add('hidden');
+    const bg = document.getElementById('cartPopupBg');
+    modal.classList.remove('open');
+    bg.classList.remove('open');
 }
 
 function updateCartUI() {
     const cartButton = document.getElementById('viewCartButton');
     const cartItemCount = document.getElementById('cartItemCount');
+    const cartTotalMini = document.getElementById('cartTotalMini');
     const cartItemsList = document.getElementById('cartItemsList');
-    const cartTotal = document.getElementById('cartTotal');
     const placeOrderButton = document.getElementById('placeOrderButton');
     const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+    const total = cart.reduce((sum, item) => sum + (item.fiyat * item.quantity), 0);
+    // Sepet butonu
+    cartItemCount.textContent = totalItems;
+    cartTotalMini.textContent = total > 0 ? `${total.toLocaleString('tr-TR')}₺` : '';
+    // Sepet popup içeriği
     if (totalItems > 0) {
-        cartButton.style.transform = 'scale(1)';
-        cartItemCount.textContent = totalItems;
         placeOrderButton.disabled = false;
         cartItemsList.innerHTML = '';
         cart.forEach(item => {
             const itemElement = document.createElement('div');
-            itemElement.className = 'flex justify-between items-center py-2 border-b border-gray-100';
+            itemElement.className = 'flex justify-between items-center py-2 border-b border-gray-700';
             const imageUrl = item.image_url || DEFAULT_IMAGES[item.kategori?.toLowerCase()] || DEFAULT_IMAGES.default;
             itemElement.innerHTML = `
                 <div class="flex items-center flex-1">
-                    <div class="w-10 h-10 mr-2 rounded overflow-hidden flex-shrink-0">
+                    <div class="w-10 h-10 mr-2 rounded-lg overflow-hidden flex-shrink-0">
                         <img src="${imageUrl}" alt="${item.ad}" class="w-full h-full object-cover" onerror="this.src='${DEFAULT_IMAGES.default}'">
                     </div>
                     <div class="flex-1">
-                        <div class="text-sm font-medium">${item.ad} <span class="text-xs text-gray-500">x${item.quantity}</span></div>
+                        <div class="text-sm font-medium">${item.ad} <span class="text-xs text-gray-400">x${item.quantity}</span></div>
                     </div>
                 </div>
-                <div class="text-sm font-medium">${(item.fiyat * item.quantity).toLocaleString('tr-TR')}₺</div>
+                <div class="text-sm font-semibold">${(item.fiyat * item.quantity).toLocaleString('tr-TR')}₺</div>
             `;
             cartItemsList.appendChild(itemElement);
+            // Pulse animasyonu
+            itemElement.classList.add('pulse');
+            setTimeout(() => itemElement.classList.remove('pulse'), 500);
         });
-        const total = cart.reduce((sum, item) => sum + (item.fiyat * item.quantity), 0);
-        cartTotal.textContent = `${total.toLocaleString('tr-TR')}₺`;
     } else {
-        cartButton.style.transform = 'scale(0)';
         placeOrderButton.disabled = true;
         cartItemsList.innerHTML = '<p class="text-gray-500 text-center text-sm py-2">Sepetiniz boş</p>';
-        cartTotal.textContent = '0₺';
     }
 }
+
+// Sepet popup açma/kapama eventleri
+setTimeout(() => {
+    const cartBtn = document.getElementById('viewCartButton');
+    const closeBtn = document.getElementById('closeCartModal');
+    const popupBg = document.getElementById('cartPopupBg');
+    if (cartBtn) cartBtn.onclick = openCartModal;
+    if (closeBtn) closeBtn.onclick = closeCartModal;
+    if (popupBg) popupBg.onclick = closeCartModal;
+}, 500);
 
 async function placeOrder() {
     const placeOrderButton = document.getElementById('placeOrderButton');

@@ -74,28 +74,24 @@
         <!-- orderCartPanel tamamen kaldırıldı -->
 
         <!-- Sepete Ekle Butonu -->
-        <div id="viewCartButton"
-             class="fixed bottom-6 right-6 z-[9999] bg-primary text-white flex items-center justify-center rounded-full p-4 shadow-lg cursor-pointer"
-             style="bottom: env(safe-area-inset-bottom, 1.5rem); right: env(safe-area-inset-right, 1.5rem);">
+        <div id="viewCartButton" class="fixed-cart-button">
             <i class="ri-shopping-cart-2-line text-2xl"></i>
-            <span id="cartItemCount"
-                  class="absolute -top-2 -right-2 w-6 h-6 bg-white text-primary text-sm rounded-full flex items-center justify-center font-bold border-2 border-primary">0</span>
+            <span id="cartItemCount" class="ml-2 bg-white text-primary text-sm rounded-full flex items-center justify-center font-bold border-2 border-primary px-2 py-1" style="min-width: 28px;">0</span>
+            <span id="cartTotalMini" class="ml-2 font-semibold"></span>
         </div>
 
-        <!-- Sepet Popup Modalı (alt sabit) -->
-        <div id="cartModal" class="fixed left-0 right-0 bottom-0 z-50 bg-white rounded-t-2xl shadow-2xl p-4 max-w-lg mx-auto transition-transform translate-y-full hidden">
-            <button id="closeCartModal" class="absolute top-2 right-4 text-gray-400 hover:text-primary text-2xl">&times;</button>
-            <div class="flex justify-between items-center mb-2">
-                <h3 class="font-medium">Sipariş Özeti</h3>
-                <span class="text-primary font-semibold" id="cartTotal">0₺</span>
+        <!-- Sepet Popup Paneli ve Blur Arka Plan -->
+        <div id="cartPopupBg" class="cart-popup-bg"></div>
+        <div id="cartModal" class="cart-popup">
+            <div class="cart-header">
+                <h3>Sepetim</h3>
+                <button id="closeCartModal" class="close-button">&times;</button>
             </div>
-            <div id="cartItemsList" class="max-h-40 overflow-y-auto mb-2">
+            <div class="cart-items" id="cartItemsList">
                 <p class="text-gray-500 text-center text-sm py-2">Sepetiniz boş</p>
             </div>
-            <textarea id="orderNoteInput" class="w-full border border-gray-200 rounded-lg p-2 mb-2 text-sm resize-none" rows="2" placeholder="Sipariş notunuz (isteğe bağlı)"></textarea>
-            <button id="placeOrderButton" class="w-full bg-primary text-white py-3 rounded-button font-medium hover:bg-opacity-90 transition-all disabled:opacity-50 disabled:cursor-not-allowed">
-                Sipariş Ver
-            </button>
+            <textarea id="orderNoteInput" class="note" rows="2" placeholder="Sipariş notunuz (isteğe bağlı)"></textarea>
+            <button id="placeOrderButton" class="order-button">Sipariş Ver</button>
         </div>
     </div>
 
