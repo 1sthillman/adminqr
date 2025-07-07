@@ -307,11 +307,35 @@ function increaseQuantity(itemId) {
 }
 
 function openCartModal() {
-    document.getElementById('cartModal').classList.remove('hidden');
+    const modal = document.getElementById('cartModal');
+    modal.classList.remove('hidden', 'translate-y-full');
+    modal.classList.add('translate-y-0');
+    showCartOverlay();
 }
 
 function closeCartModal() {
-    document.getElementById('cartModal').classList.add('hidden');
+    const modal = document.getElementById('cartModal');
+    modal.classList.add('translate-y-full');
+    setTimeout(() => { modal.classList.add('hidden'); }, 300);
+    hideCartOverlay();
+}
+
+// Sepet popup açıldığında arka planı karartmak için overlay fonksiyonları
+function showCartOverlay() {
+    let overlay = document.getElementById('cartOverlay');
+    if (!overlay) {
+        overlay = document.createElement('div');
+        overlay.id = 'cartOverlay';
+        overlay.className = 'fixed inset-0 bg-black bg-opacity-40 z-40';
+        overlay.onclick = closeCartModal;
+        document.body.appendChild(overlay);
+    }
+    overlay.classList.remove('hidden');
+}
+
+function hideCartOverlay() {
+    const overlay = document.getElementById('cartOverlay');
+    if (overlay) overlay.classList.add('hidden');
 }
 
 function updateCartUI() {
