@@ -327,18 +327,17 @@ body {
 
 /* Modern Card */
 .modern-card {
+    width: 100%;
     background: rgba(36, 38, 45, 0.85) !important;
     border-radius: 16px;
     padding: 0.6rem;
-    margin-bottom: 0.6rem;
+    margin: 0;
     border: 1px solid rgba(255, 255, 255, 0.08);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
     transition: transform 0.2s ease, box-shadow 0.2s ease;
-    overflow: hidden;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    position: relative;
 }
 
 .modern-card:hover {
@@ -1043,18 +1042,17 @@ body {
 
 /* Modern card styling for menu items */
 .modern-card {
+    width: 100%;
     background: rgba(36, 38, 45, 0.85) !important;
     border-radius: 16px;
     padding: 0.6rem;
-    margin-bottom: 0.6rem;
+    margin: 0;
     border: 1px solid rgba(255, 255, 255, 0.08);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
     transition: transform 0.2s ease, box-shadow 0.2s ease;
-    overflow: hidden;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    position: relative;
 }
 
 .modern-card:hover {
@@ -1296,4 +1294,9 @@ body {
 .price-color {
     color: #FF6B35;
     font-weight: 700;
+}
+
+/* Menü kapsayıcısı */
+#menuItemsContainer.flex {
+    width: 100%;
 } 
