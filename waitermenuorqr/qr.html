@@ -14,22 +14,24 @@
 </head>
 <body class="bg-gray-50 min-h-screen">
     <div id="qrPage" class="hidden pb-20">
-        <div class="bg-white shadow-md p-4 fixed top-0 left-0 right-0 z-10">
-            <div class="flex flex-col gap-2">
+        <div class="bg-white shadow-md p-4 fixed top-0 left-0 right-0 z-10 flex flex-col gap-2">
+            <div class="flex items-start justify-between">
                 <div>
                     <h1 class="text-xl font-semibold">Masa <span id="tableNumber">0</span></h1>
                     <p class="text-sm text-gray-600">Hoş geldiniz!</p>
                 </div>
-                <div class="flex gap-2 mt-2">
-                    <button id="callWaiterButton" class="flex items-center gap-2 bg-gradient-to-r from-primary to-orange-400 text-white px-4 py-2 rounded-full font-semibold shadow-lg text-sm hover:from-orange-500 hover:to-primary focus:ring-2 focus:ring-primary transition-all">
-                        <i class="ri-user-voice-line text-lg"></i>
-                        Garsonu Çağır
+                <div class="flex flex-col gap-2 items-end">
+                    <button id="callWaiterButton" class="call-btn bg-gradient-to-r from-orange-400 to-orange-500 text-white px-4 py-2 rounded-full font-semibold shadow-md text-sm flex items-center gap-2 w-max">
+                        <i class="ri-user-voice-line text-lg"></i> Garsonu Çağır
                     </button>
-                    <button id="requestCoalButton" class="flex items-center gap-2 bg-gradient-to-r from-secondary to-blue-400 text-white px-4 py-2 rounded-full font-semibold shadow-lg text-sm hover:from-blue-500 hover:to-secondary focus:ring-2 focus:ring-secondary transition-all">
-                        <i class="ri-fire-line text-lg"></i>
-                        Köz İstiyorum
+                    <button id="requestCoalButton" class="call-btn bg-gradient-to-r from-blue-500 to-blue-400 text-white px-4 py-2 rounded-full font-semibold shadow-md text-sm flex items-center gap-2 w-max">
+                        <i class="ri-fire-line text-lg"></i> Köz İstiyorum
                     </button>
                 </div>
+            </div>
+            <!-- Kategori Seçimi -->
+            <div class="mt-3 overflow-x-auto">
+                <div id="categoryButtons" class="flex space-x-2 pb-2"></div>
             </div>
         </div>
 
@@ -68,16 +70,13 @@
                     <span class="ml-2">Menü yükleniyor...</span>
                 </div>
             </div>
-        </div>
 
-        <!-- Sipariş Özeti -->
-        <!-- orderCartPanel tamamen kaldırıldı -->
-
-        <!-- Sepete Ekle Butonu -->
-        <div id="viewCartButton" class="fixed-cart-button">
-            <i class="ri-shopping-cart-2-line text-2xl"></i>
-            <span id="cartItemCount" class="ml-2 bg-white text-primary text-sm rounded-full flex items-center justify-center font-bold border-2 border-primary px-2 py-1" style="min-width: 28px;">0</span>
-            <span id="cartTotalMini" class="ml-2 font-semibold"></span>
+            <!-- Sepete Ekle Butonu (artık fixed değil, akışta) -->
+            <div id="viewCartButton" class="cart-button-in-flow mt-4 flex items-center justify-center gap-2">
+                <i class="ri-shopping-cart-2-line text-2xl"></i>
+                <span id="cartItemCount" class="ml-2 bg-white text-primary text-sm rounded-full flex items-center justify-center font-bold border-2 border-primary px-2 py-1" style="min-width: 28px;">0</span>
+                <span id="cartTotalMini" class="ml-2 font-semibold"></span>
+            </div>
         </div>
 
         <!-- Sepet Popup Paneli ve Blur Arka Plan -->
