@@ -210,7 +210,10 @@ function renderMenuItems(categoryName) {
         // Tüm kategorilerdeki ürünleri birleştir
         itemsToShow = Object.values(menu).flat();
     } else {
-        itemsToShow = menu[categoryName] || [];
+        // Kategori adını normalize ederek menüden ürünleri çek
+        const norm = categoryName.trim().toLowerCase();
+        const foundKey = Object.keys(menu).find(k => k.trim().toLowerCase() === norm);
+        itemsToShow = foundKey ? menu[foundKey] : [];
     }
     if (itemsToShow.length === 0) {
         container.innerHTML = `<p class="text-center p-3 text-gray-500 text-sm">Bu kategoride ürün bulunmuyor.</p>`;

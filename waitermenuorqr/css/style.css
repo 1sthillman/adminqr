@@ -1386,10 +1386,14 @@ button, .order-button, .call-btn, .menu-category-button {
 .menu-category-button {
   background: #23272f;
   color: #fff;
-  margin-right: 0.5rem;
-  padding: 0.5rem 1.1rem;
+  margin-right: 0.3rem;
+  margin-bottom: 0.4rem;
+  padding: 0.35rem 0.7rem;
   border: none;
-  font-size: 1rem;
+  font-size: 0.97rem;
+  min-width: 80px;
+  display: inline-block;
+  text-align: center;
 }
 .menu-category-button.bg-primary {
   background: linear-gradient(90deg, #00fff0 0%, #ff00ea 100%);
