@@ -590,13 +590,7 @@ async function placeOrder() {
                 masa_id: tableId,
                 masa_no: tableNumber,
                 durum: 'yeni',
-                not: orderNote,
-                items: cart.map(item => ({
-                    id: item.id,
-                    name: item.name,
-                    price: item.price,
-                    quantity: item.quantity
-                }))
+                not: orderNote
             })
             .select()
             .single();
