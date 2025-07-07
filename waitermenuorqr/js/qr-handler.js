@@ -222,9 +222,7 @@ function setupEventListeners() {
     document.getElementById('callWaiterButton').addEventListener('click', callWaiter);
     document.getElementById('viewCartButton').addEventListener('click', function(e) {
         e.stopPropagation();
-        const modal = document.getElementById('cartModal');
-        modal.classList.toggle('open');
-        updateCartUI();
+        openCartModal();
     });
     document.getElementById('placeOrderButton').addEventListener('click', placeOrder);
     // Köz İstiyorum butonu için event listener
@@ -237,7 +235,7 @@ function setupEventListeners() {
     if (closeCartBtn) {
         closeCartBtn.addEventListener('click', function(e) {
             e.stopPropagation();
-            document.getElementById('cartModal').classList.remove('open');
+            closeCartModal();
         });
     }
     // Dışarı tıklanınca popup kapansın
@@ -245,7 +243,7 @@ function setupEventListeners() {
         const modal = document.getElementById('cartModal');
         if (modal.classList.contains('open')) {
             if (!modal.contains(e.target) && !document.getElementById('viewCartButton').contains(e.target)) {
-                modal.classList.remove('open');
+                closeCartModal();
             }
         }
     });
@@ -389,16 +387,6 @@ function updateCartUI() {
     cartItemCount.textContent = cart.reduce((sum, item) => sum + item.quantity, 0);
     // Not ve sipariş butonu her zaman popup'ın altında olacak (HTML'de zaten var)
 }
-
-// Sepet popup açma/kapama eventleri
-setTimeout(() => {
-    const cartBtn = document.getElementById('viewCartButton');
-    const closeBtn = document.getElementById('closeCartModal');
-    const popupBg = document.getElementById('cartPopupBg');
-    if (cartBtn) cartBtn.onclick = openCartModal;
-    if (closeBtn) closeBtn.onclick = closeCartModal;
-    if (popupBg) popupBg.onclick = closeCartModal;
-}, 500);
 
 async function placeOrder() {
     const placeOrderButton = document.getElementById('placeOrderButton');
