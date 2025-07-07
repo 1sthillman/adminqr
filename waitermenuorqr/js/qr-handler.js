@@ -40,7 +40,7 @@ document.addEventListener('DOMContentLoaded', () => {
             await supabase.from('waiter_calls').insert({
                 table_id: tableId,
                 table_number: tableId,
-                type: 'köz'
+                type: 'coal'
             });
             // ...
         });
@@ -477,7 +477,7 @@ async function requestCoal() {
         const { error } = await supabase.from('waiter_calls').insert({
             table_id: tableId,
             table_number: tableId,
-            type: 'köz'
+            type: 'coal'
         });
         if (error) throw error;
         showToast('Köz isteğiniz alındı.', 'success');
