@@ -67,6 +67,19 @@
         <span id="toastMessage"></span>
     </div>
 
+    <!-- Sepet Modalı: body'nin en sonunda -->
+    <div id="cartModal" class="cart-popup-top">
+        <div class="cart-header flex items-center justify-between mb-2">
+            <h3 class="font-bold text-base">Sepetim</h3>
+            <button id="closeCartModal" class="text-gray-400 hover:text-white text-lg">&times;</button>
+        </div>
+        <div class="cart-items" id="cartItemsList">
+            <p class="text-gray-500 text-center text-xs py-2">Sepetiniz boş</p>
+        </div>
+        <textarea id="orderNoteInput" class="note w-full mt-2" rows="2" placeholder="Sipariş notunuz (isteğe bağlı)"></textarea>
+        <button id="placeOrderButton" class="order-button w-full mt-2">Sipariş Ver</button>
+    </div>
+
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.38.5/dist/umd/supabase.js"></script>
     <script src="js/qr-handler.js"></script>
 </body>
