@@ -399,7 +399,8 @@ async function placeOrder() {
                 status: 'pending_approval', // Garson onayı bekliyor
                 total_price: totalAmount,
                 note: orderNote,
-                source: 'qr'
+                source: 'qr',
+                items: JSON.stringify(cart)
             })
                 .select('id')
                 .single();
