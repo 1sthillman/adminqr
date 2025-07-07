@@ -87,8 +87,14 @@ async function initQrPage() {
                 const h = headerEl.offsetHeight;
                 document.body.style.paddingTop = `${h}px`;
             };
+
+            // İlk hesap
             updateHeaderSpace();
-            setTimeout(updateHeaderSpace, 500);
+
+            // Header yüksekliği değiştiğinde otomatik güncelle
+            const resizeObserver = new ResizeObserver(updateHeaderSpace);
+            resizeObserver.observe(headerEl);
+            // Güvenlik için pencere boyutu değişimini de dinle
             window.addEventListener('resize', updateHeaderSpace);
         }
         
