@@ -13,78 +13,51 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body class="bg-gray-50 min-h-screen">
-    <div id="qrPage" class="hidden pb-20">
-        <div class="bg-white shadow-md p-4 fixed top-0 left-0 right-0 z-10 flex flex-col gap-2">
-            <div class="flex items-start justify-between">
-                <div>
-                    <h1 class="text-xl font-semibold">Masa <span id="tableNumber" class="masa-renk">0</span></h1>
-                    <p class="text-sm text-gray-600">Hoş geldiniz!</p>
-                </div>
-                <div class="flex flex-col gap-2 items-end">
-                    <!-- Sepet ikonu en üstte -->
-                    <div class="relative">
-                        <button id="viewCartButton" class="cart-icon-top flex items-center justify-center">
-                            <i class="ri-shopping-cart-2-line text-2xl"></i>
-                            <span id="cartItemCount" class="ml-1 bg-white text-primary text-xs rounded-full flex items-center justify-center font-bold border-2 border-primary px-2 py-0.5" style="min-width: 22px;">0</span>
-                        </button>
-                        <!-- Sepet Popup Paneli ve Blur Arka Plan (ikonun hemen altında açılacak) -->
-                        <div id="cartPopupBg" class="cart-popup-bg"></div>
-                        <div id="cartModal" class="cart-popup-top">
-                            <div class="cart-header">
-                                <h3>Sepetim</h3>
-                                <button id="closeCartModal" class="close-button">&times;</button>
-                            </div>
-                            <div class="cart-items" id="cartItemsList">
-                                <p class="text-gray-500 text-center text-sm py-2">Sepetiniz boş</p>
-                            </div>
-                            <textarea id="orderNoteInput" class="note" rows="2" placeholder="Sipariş notunuz (isteğe bağlı)"></textarea>
-                            <button id="placeOrderButton" class="order-button">Sipariş Ver</button>
+    <div id="qrPage" class="min-h-screen flex flex-col">
+        <!-- HEADER -->
+        <header class="bg-white/90 shadow-md px-4 py-3 flex items-center justify-between sticky top-0 left-0 right-0 z-20">
+            <div class="flex items-center gap-2">
+                <span id="tableNumber" class="masa-renk">0</span>
+                <span class="text-lg font-bold text-gray-700 ml-2">Masa</span>
+            </div>
+            <div class="flex items-center gap-4">
+                <span class="text-base font-semibold text-gray-600">Menü</span>
+                <div class="relative">
+                    <button id="viewCartButton" class="cart-icon-top flex items-center justify-center">
+                        <i class="ri-shopping-cart-2-line text-2xl"></i>
+                        <span id="cartItemCount" class="ml-1 bg-white text-primary text-xs rounded-full flex items-center justify-center font-bold border-2 border-primary px-2 py-0.5" style="min-width: 22px;">0</span>
+                    </button>
+                    <div id="cartModal" class="cart-popup-top">
+                        <div class="cart-header flex items-center justify-between mb-2">
+                            <h3 class="font-bold text-lg">Sepetim</h3>
+                            <button id="closeCartModal" class="close-button">&times;</button>
                         </div>
+                        <div class="cart-items" id="cartItemsList">
+                            <p class="text-gray-500 text-center text-sm py-2">Sepetiniz boş</p>
+                        </div>
+                        <textarea id="orderNoteInput" class="note w-full mt-2" rows="2" placeholder="Sipariş notunuz (isteğe bağlı)"></textarea>
+                        <button id="placeOrderButton" class="order-button w-full mt-2">Sipariş Ver</button>
                     </div>
-                    <button id="callWaiterButton" class="call-btn bg-gradient-to-r from-orange-400 to-orange-500 text-white px-4 py-2 rounded-full font-semibold shadow-md text-sm flex items-center gap-2 w-max">
-                        <i class="ri-user-voice-line text-lg"></i> Garsonu Çağır
-                    </button>
-                    <button id="requestCoalButton" class="call-btn bg-gradient-to-r from-blue-500 to-blue-400 text-white px-4 py-2 rounded-full font-semibold shadow-md text-sm flex items-center gap-2 w-max">
-                        <i class="ri-fire-line text-lg"></i> Köz İstiyorum
-                    </button>
                 </div>
             </div>
-            <!-- Kategori Seçimi -->
-            <div class="mt-3 overflow-x-auto bg-glass-category rounded-xl px-2 py-1">
-                <div id="categoryButtons" class="flex space-x-2 pb-2"></div>
-            </div>
-        </div>
-
-                    <!-- Uyarı ve bildirim alanları -->
-        <div class="fixed top-16 left-0 right-0 z-20 px-4">
-            <div id="errorAlert" class="mt-2 p-3 bg-red-100 text-red-700 rounded-lg hidden">
-                        Bir hata oluştu. Lütfen tekrar deneyin.
-                    </div>
-                    
-            <div id="successAlert" class="mt-2 p-3 bg-green-100 text-green-700 rounded-lg hidden">
-                        Garson çağrınız alındı. En kısa sürede sizinle ilgileneceğiz.
-                    </div>
-                    
-            <div id="waiterResponseAlert" class="mt-2 p-3 bg-blue-100 text-blue-700 rounded-lg hidden">
-                        Garsonunuz geliyor.
-            </div>
-
-            <div id="orderSuccessAlert" class="mt-2 p-3 bg-green-100 text-green-700 rounded-lg hidden">
-                Siparişiniz alındı. Teşekkür ederiz!
-            </div>
-        </div>
-
-        <!-- Menü ve Sipariş Bölümü -->
-        <div class="mt-36 p-4">
-            <!-- Menü Öğeleri -->
-            <div id="menuItemsContainer" class="grid grid-cols-2 gap-4 mb-24">
-                <!-- Menü öğeleri buraya dinamik olarak eklenecek -->
-                <div class="animate-pulse flex justify-center items-center p-4 col-span-2">
-                    <i class="ri-loader-2-line text-primary text-3xl animate-spin"></i>
-                    <span class="ml-2">Menü yükleniyor...</span>
-                </div>
-            </div>
-        </div>
+        </header>
+        <!-- KATEGORİ BAR -->
+        <nav class="bg-glass-category sticky top-[60px] z-10 px-2 py-2 overflow-x-auto">
+            <div id="categoryButtons" class="flex space-x-2 pb-1"></div>
+        </nav>
+        <!-- ÜRÜNLER -->
+        <main class="flex-1 p-4">
+            <div id="menuItemsContainer" class="grid grid-cols-2 gap-4 mb-8"></div>
+        </main>
+        <!-- GARSON/KÖZ BUTONLARI -->
+        <footer class="w-full flex flex-col items-center gap-2 py-4 bg-transparent">
+            <button id="callWaiterButton" class="call-btn bg-gradient-to-r from-orange-400 to-orange-500 text-white px-6 py-3 rounded-full font-semibold shadow-md text-base flex items-center gap-2 w-64 justify-center">
+                <i class="ri-user-voice-line text-lg"></i> Garsonu Çağır
+            </button>
+            <button id="requestCoalButton" class="call-btn bg-gradient-to-r from-blue-500 to-blue-400 text-white px-6 py-3 rounded-full font-semibold shadow-md text-base flex items-center gap-2 w-64 justify-center">
+                <i class="ri-fire-line text-lg"></i> Köz İstiyorum
+            </button>
+        </footer>
     </div>
 
     <div id="loadingPage" class="flex flex-col items-center justify-center p-6 text-center min-h-screen">
