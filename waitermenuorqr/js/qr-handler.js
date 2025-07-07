@@ -90,8 +90,9 @@ async function initQrPage() {
                 document.body.style.paddingTop = `${h + 6}px`;
             };
             updateCategoryTop();
+            // header yüksekliği DOM içeriği değişince değişebilir
+            setTimeout(updateCategoryTop, 500);
             // Pencere boyutu değiştiğinde yeniden hesapla
-            window.addEventListener('resize', updateCategoryTop);
         }
         
     } catch (error) {
