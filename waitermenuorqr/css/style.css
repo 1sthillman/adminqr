@@ -1336,4 +1336,13 @@ body {
 /* Kategori bar */
 #categoryNav {
     z-index: 900;
+}
+
+@media (min-width: 768px) {
+    #categoryNav {
+        overflow-x: visible;
+    }
+    #categoryButtons {
+        flex-wrap: wrap;
+    }
 } 
