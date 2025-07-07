@@ -609,4 +609,81 @@ header {
   position: sticky;
   top: 0;
   z-index: 20;
+}
+
+/* Mobil uyumluluk ve responsive düzenlemeler */
+@media (max-width: 600px) {
+  header, .bg-glass-category, main, footer {
+    padding-left: 0.5rem !important;
+    padding-right: 0.5rem !important;
+  }
+  #menuItemsContainer {
+    grid-template-columns: 1fr 1fr;
+    gap: 0.5rem;
+  }
+  .modern-card {
+    padding: 0.7rem 0.3rem;
+    font-size: 0.98rem;
+    min-width: 0;
+  }
+  .cart-popup-top {
+    min-width: 90vw;
+    left: 50%;
+    right: auto;
+    transform: translateX(-50%);
+    top: 56px;
+    padding: 0.7rem 0.5rem 0.7rem 0.5rem;
+  }
+  .masa-renk {
+    font-size: 1.3rem;
+  }
+  .cart-icon-top {
+    width: 42px;
+    height: 42px;
+    font-size: 1.3rem;
+  }
+  .call-btn {
+    font-size: 1rem;
+    padding: 0.7rem 0.5rem;
+    width: 90vw;
+    max-width: 340px;
+  }
+}
+@media (max-width: 480px) {
+  #menuItemsContainer {
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+  }
+  .modern-card {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.4rem;
+    padding: 0.6rem 0.2rem;
+  }
+  .cart-popup-top {
+    min-width: 98vw;
+    left: 50%;
+    right: auto;
+    transform: translateX(-50%);
+    top: 52px;
+    padding: 0.5rem 0.2rem 0.5rem 0.2rem;
+  }
+  .call-btn {
+    font-size: 0.98rem;
+    padding: 0.6rem 0.2rem;
+    width: 98vw;
+    max-width: 98vw;
+  }
+}
+
+/* Kartlar ve grid overflow düzeltmeleri */
+#menuItemsContainer, .modern-card {
+  min-width: 0;
+  max-width: 100vw;
+  box-sizing: border-box;
+}
+
+body, html {
+  overflow-x: hidden;
+  max-width: 100vw;
 } 
