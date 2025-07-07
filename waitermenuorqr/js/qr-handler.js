@@ -87,6 +87,7 @@ async function initQrPage() {
             const updateCategoryTop = () => {
                 const h = headerEl.offsetHeight;
                 categoryNav.style.top = `${h + 6}px`;
+                document.body.style.paddingTop = `${h + 6}px`;
             };
             updateCategoryTop();
             // Pencere boyutu değiştiğinde yeniden hesapla
