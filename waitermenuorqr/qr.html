@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <meta name="theme-color" content="#FF6B35">
+    <meta name="theme-color" content="#181A20">
     <meta name="description" content="Restoran Garson Çağır ve Sipariş Servisi">
     <title>Restoran Menü</title>
     <script src="https://cdn.tailwindcss.com/3.4.16"></script>
@@ -12,63 +12,66 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css">
     <link rel="stylesheet" href="css/style.css">
 </head>
-<body class="bg-gray-50 min-h-screen">
+<body class="bg-gray-900">
     <div id="qrPage" class="min-h-screen flex flex-col">
         <!-- HEADER -->
-        <header class="bg-white/90 shadow-md px-4 py-3 flex items-center justify-between sticky top-0 left-0 right-0 z-20">
+        <header class="header-glass px-4 py-3 flex items-center justify-between sticky top-0 left-0 right-0 z-50">
             <div class="flex items-center gap-2">
-                <span id="tableNumber" class="masa-renk">0</span>
-                <span class="text-lg font-bold text-gray-700 ml-2">Masa</span>
+                <span id="tableNumber" class="masa-renk">17</span>
+                <span class="text-lg font-medium text-gray-300">Masa</span>
             </div>
             <div class="flex items-center gap-4">
-                <span class="text-base font-semibold text-gray-600">Menü</span>
+                <span class="text-base font-medium text-gray-400">Hoş geldiniz!</span>
                 <div class="relative">
                     <button id="viewCartButton" class="cart-icon-top flex items-center justify-center">
-                        <i class="ri-shopping-cart-2-line text-2xl"></i>
-                        <span id="cartItemCount" class="ml-1 bg-white text-primary text-xs rounded-full flex items-center justify-center font-bold border-2 border-primary px-2 py-0.5" style="min-width: 22px;">0</span>
+                        <i class="ri-shopping-cart-2-line text-xl"></i>
+                        <span id="cartItemCount" class="absolute">0</span>
                     </button>
                     <div id="cartModal" class="cart-popup-top">
-                        <div class="cart-header flex items-center justify-between mb-2">
+                        <div class="cart-header flex items-center justify-between mb-3">
                             <h3 class="font-bold text-lg">Sepetim</h3>
-                            <button id="closeCartModal" class="close-button">&times;</button>
+                            <button id="closeCartModal" class="text-gray-400 hover:text-white text-xl">&times;</button>
                         </div>
                         <div class="cart-items" id="cartItemsList">
                             <p class="text-gray-500 text-center text-sm py-2">Sepetiniz boş</p>
                         </div>
-                        <textarea id="orderNoteInput" class="note w-full mt-2" rows="2" placeholder="Sipariş notunuz (isteğe bağlı)"></textarea>
-                        <button id="placeOrderButton" class="order-button w-full mt-2">Sipariş Ver</button>
+                        <textarea id="orderNoteInput" class="note w-full mt-3" rows="2" placeholder="Sipariş notunuz (isteğe bağlı)"></textarea>
+                        <button id="placeOrderButton" class="order-button w-full mt-3">Sipariş Ver</button>
                     </div>
                 </div>
             </div>
         </header>
-        <!-- GARSON/KÖZ BUTONLARI EN ÜSTE -->
-        <div class="w-full flex flex-row flex-wrap gap-2 justify-center items-center py-3 bg-transparent sticky top-[60px] z-20 garson-coal-bar">
+        
+        <!-- GARSON/KÖZ BUTONLARI -->
+        <div class="w-full flex flex-row gap-3 justify-center items-center py-3 sticky top-[60px] z-20 garson-coal-bar">
             <button id="callWaiterButton" class="call-btn bg-gradient-to-r from-orange-400 to-orange-500 text-white px-4 py-2 rounded-full font-semibold shadow-md text-sm flex items-center gap-2">
-                <i class="ri-user-voice-line text-lg"></i> Garsonu Çağır
+                <i class="ri-user-voice-line text-lg"></i> Garson Çağır
             </button>
             <button id="requestCoalButton" class="call-btn bg-gradient-to-r from-blue-500 to-blue-400 text-white px-4 py-2 rounded-full font-semibold shadow-md text-sm flex items-center gap-2">
                 <i class="ri-fire-line text-lg"></i> Köz İstiyorum
             </button>
         </div>
+        
         <!-- KATEGORİ BAR -->
         <nav class="bg-glass-category sticky top-[110px] z-10 px-2 py-2 overflow-x-auto">
-            <div class="flex items-center gap-2">
-                <div id="categoryButtons" class="flex space-x-2 pb-1"></div>
+            <div class="flex items-center">
+                <div id="categoryButtons" class="flex pb-1"></div>
             </div>
         </nav>
+        
         <!-- ÜRÜNLER -->
         <main class="flex-1 p-4">
             <div id="menuItemsContainer" class="grid grid-cols-2 gap-4 mb-8"></div>
         </main>
     </div>
 
-    <div id="loadingPage" class="flex flex-col items-center justify-center p-6 text-center min-h-screen">
+    <div id="loadingPage" class="flex flex-col items-center justify-center p-6 text-center min-h-screen bg-gray-900">
         <div class="w-16 h-16 border-t-4 border-primary border-solid rounded-full animate-spin mb-4"></div>
-        <p class="text-gray-600">Yükleniyor...</p>
+        <p class="text-gray-400">Yükleniyor...</p>
     </div>
 
     <!-- Toast mesajı için eklendi -->
-    <div id="toast" class="fixed bottom-24 left-1/2 transform -translate-x-1/2 bg-primary text-white px-4 py-2 rounded-lg shadow-lg z-50 hidden flex items-center gap-2">
+    <div id="toast" class="fixed bottom-24 left-1/2 transform -translate-x-1/2 px-4 py-2 rounded-lg shadow-lg z-50 hidden flex items-center gap-2">
         <span id="toastIcon"></span>
         <span id="toastMessage"></span>
     </div>

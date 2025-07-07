@@ -1,409 +1,933 @@
-/* === ULTRA SADE VE MODERN QR MENÜ TASARIMI === */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Inter', sans-serif;
+:where([class^="ri-"])::before { content: "\f3c2"; }
+
+html, body, #qrPage, header, .garson-coal-bar, .bg-glass-category, main, footer, #menuItemsContainer, .modern-card, .cart-popup-top, nav {
+    background: #181A20 !important;
+    color: #fff;
+    overflow-x: hidden !important;
+    max-width: 100vw !important;
+    font-family: 'Inter', 'Poppins', sans-serif !important;
+    min-height: 100vh;
+    box-sizing: border-box !important;
 }
 
 body, html {
-    background-color: #181A20;
+    background: #181A20 !important;
     color: #fff;
-    overflow-x: hidden;
-    max-width: 100vw;
     min-height: 100vh;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
 }
 
-/* HEADER */
-header {
-    background-color: #1E1F25;
-    padding: 12px 16px;
-    position: sticky;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 50;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+.notification-sound {
+    display: none;
 }
 
-.masa-renk {
-    font-size: 24px;
-    font-weight: 700;
-    color: #3A86FF;
-    margin-right: 4px;
+.table-card {
+    transition: all 0.3s ease;
 }
 
-/* GARSON/KÖZ BUTONLARI */
-.garson-coal-bar {
-    background-color: #1E1F25;
-    padding: 10px;
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-    position: sticky;
-    top: 56px;
-    z-index: 40;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-}
-
-.call-btn {
-    background: linear-gradient(135deg, #FF6B35 0%, #FF9F1C 100%);
-    color: white;
-    border: none;
-    border-radius: 50px;
-    padding: 8px 16px;
-    font-size: 14px;
-    font-weight: 600;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    box-shadow: 0 2px 6px rgba(255,107,53,0.3);
-    cursor: pointer;
-    transition: transform 0.2s, box-shadow 0.2s;
-}
-
-.call-btn:hover {
+.table-card:hover {
     transform: translateY(-2px);
-    box-shadow: 0 4px 10px rgba(255,107,53,0.4);
 }
 
-/* KATEGORİ BAR */
-.bg-glass-category {
-    background-color: #1E1F25;
-    padding: 8px 10px;
-    position: sticky;
-    top: 110px;
-    z-index: 30;
-    overflow-x: auto;
-    white-space: nowrap;
-    scrollbar-width: none; /* Firefox */
-    -ms-overflow-style: none; /* IE/Edge */
+.table-empty {
+    border-color: #e5e7eb;
 }
 
-.bg-glass-category::-webkit-scrollbar {
-    display: none; /* Chrome/Safari/Opera */
+.table-active {
+    border-color: #3A86FF;
 }
 
-.menu-category-button {
-    background-color: #282A36;
-    color: #fff;
-    border: none;
-    border-radius: 50px;
-    padding: 8px 16px;
-    margin-right: 8px;
-    font-size: 14px;
-    font-weight: 500;
-    cursor: pointer;
-    transition: background-color 0.2s;
-    display: inline-block;
+.table-ready {
+    border-color: #10B981;
 }
 
-.menu-category-button.bg-primary {
-    background: linear-gradient(135deg, #3A86FF 0%, #5D3FD3 100%);
-    color: white;
-    box-shadow: 0 2px 6px rgba(58,134,255,0.3);
+.table-delivered {
+    border-color: #FBBF24;
 }
 
-/* ÜRÜN GRID */
-#menuItemsContainer {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 16px;
-    padding: 16px;
-    max-width: 100%;
+.table-served {
+    border-color: #8B5CF6;
 }
 
+.fade-in {
+    animation: fadeIn 0.3s ease-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.slide-up {
+    animation: slideUp 0.3s ease-out;
+}
+
+@keyframes slideUp {
+    from { transform: translateY(30px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+.shake {
+    animation: shake 0.5s ease-in-out;
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+    20%, 40%, 60%, 80% { transform: translateX(5px); }
+}
+
+/* QR kod sayfası için özel stiller */
+#qrPage {
+    animation: fadeIn 0.5s ease-out;
+}
+
+#callWaiterButton {
+    transition: all 0.3s ease;
+}
+
+#callWaiterButton:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+#callWaiterButton:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
+#errorAlert, #successAlert, #waiterResponseAlert {
+    animation: slideUp 0.3s ease-out;
+}
+
+/* Yükleme animasyonu */
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+.animate-spin {
+    animation: spin 1s linear infinite;
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Responsive grid */
 @media (min-width: 640px) {
-    #menuItemsContainer {
-        grid-template-columns: repeat(2, 1fr);
+    #tableGrid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+}
+
+@media (min-width: 768px) {
+    #tableGrid {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
     }
 }
 
 @media (min-width: 1024px) {
-    #menuItemsContainer {
-        grid-template-columns: repeat(3, 1fr);
+    #tableGrid {
+        grid-template-columns: repeat(5, minmax(0, 1fr));
     }
 }
 
-/* ÜRÜN KARTI */
-.modern-card {
-    background-color: #282A36;
-    border-radius: 12px;
-    padding: 16px;
-    display: grid;
-    grid-template-columns: auto 1fr auto;
-    align-items: center;
-    gap: 16px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-    transition: transform 0.2s, box-shadow 0.2s;
-    position: relative;
-    overflow: hidden;
-    width: 100%;
+@media (min-width: 1280px) {
+    #tableGrid {
+        grid-template-columns: repeat(8, minmax(0, 1fr));
+    }
 }
 
-.modern-card:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+@media (min-width: 1536px) {
+    #tableGrid {
+        grid-template-columns: repeat(10, minmax(0, 1fr));
+    }
 }
 
-.modern-card img {
-    width: 60px;
-    height: 60px;
-    object-fit: cover;
-    border-radius: 8px;
-    background-color: #1E1F25;
-}
-
-.card-info {
-    overflow: hidden;
-}
-
-.modern-card .font-medium.text-lg {
-    font-size: 16px;
-    font-weight: 600;
-    color: #fff;
-    margin-bottom: 4px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-.modern-card .text-gray-500.text-sm {
-    font-size: 14px;
-    color: #A0AEC0;
-    margin-bottom: 4px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-.modern-card .text-primary.font-bold.mt-1.text-lg {
-    font-size: 16px;
-    font-weight: 700;
-    color: #FF6B35;
-}
-
-/* SEPETE EKLE BUTONU */
-.modern-card .add-btn {
-    width: 36px;
-    height: 36px;
-    border-radius: 50%;
-    background: linear-gradient(135deg, #FF6B35 0%, #FF9F1C 100%);
-    color: white;
-    border: none;
-    font-size: 24px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    box-shadow: 0 2px 6px rgba(255,107,53,0.3);
-    transition: transform 0.2s, box-shadow 0.2s;
-}
-
-.modern-card .add-btn:hover {
-    transform: scale(1.1);
-    box-shadow: 0 4px 10px rgba(255,107,53,0.4);
-}
-
-/* MİKTAR KONTROL BUTONLARI */
-.quantity-controls {
-    display: flex;
-    align-items: center;
-    background-color: #1E1F25;
-    border-radius: 8px;
-    overflow: hidden;
-}
-
-.quantity-btn {
-    width: 32px;
-    height: 32px;
-    background-color: #1E1F25;
-    color: white;
-    border: none;
-    font-size: 18px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.quantity-btn.decrease {
-    color: #FF6B35;
-}
-
-.quantity-btn.increase {
-    color: #3A86FF;
-}
-
-.quantity {
-    padding: 0 12px;
-    font-size: 16px;
-    font-weight: 600;
-}
-
-/* SEPET POPUP */
-.cart-icon-top {
-    background-color: #3A86FF;
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: white;
-    cursor: pointer;
-    position: relative;
-    box-shadow: 0 2px 8px rgba(58,134,255,0.3);
-    transition: transform 0.2s;
-}
-
-.cart-icon-top:hover {
-    transform: scale(1.05);
-}
-
-#cartItemCount {
-    position: absolute;
-    top: -5px;
-    right: -5px;
-    background-color: #FF6B35;
-    color: white;
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    font-size: 12px;
-    font-weight: 700;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.cart-popup-top {
-    display: none;
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background-color: #282A36;
+/* ==================== Futuristic Glassmorphism & Neon Styles ==================== */
+.glass-card {
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
     border-radius: 16px;
-    padding: 24px;
-    width: 90%;
-    max-width: 400px;
-    z-index: 100;
-    box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+    box-shadow: 0 4px 20px rgba(0, 230, 255, 0.25);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 
-.cart-popup-top.open {
-    display: block;
-    animation: fadeIn 0.3s;
+.glass-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 6px 30px rgba(0, 230, 255, 0.45);
 }
 
-@keyframes fadeIn {
-    from { opacity: 0; transform: translate(-50%, -48%); }
-    to { opacity: 1; transform: translate(-50%, -50%); }
+.neon-border {
+    box-shadow: 0 0 6px rgba(0, 230, 255, 0.6) inset, 0 0 12px rgba(0, 230, 255, 0.5);
 }
 
-.cart-popup-top .cart-header {
+/* Grid tweaks for menu items */
+#menuItemsContainer.grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+/* === Overrides to eliminate pure white/light patches === */
+.bg-white, .bg-gray-50, .bg-gray-100 {
+    background-color: rgba(255, 255, 255, 0.04) !important;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.border-gray-300 {
+    border-color: rgba(255, 255, 255, 0.18) !important;
+}
+
+.text-gray-500 {
+    color: #94a3b8 !important; /* slate-400 */
+}
+
+.text-gray-600 {
+    color: #cbd5e1 !important; /* slate-300 */
+}
+
+.text-gray-700 {
+    color: #f1f5f9 !important; /* slate-100 */
+}
+
+/* === Form elements dark theme === */
+textarea, input, select {
+    background: rgba(255, 255, 255, 0.06) !important;
+    color: #f1f5f9 !important;
+    border: 1px solid rgba(255, 255, 255, 0.18) !important;
+}
+
+textarea::placeholder, input::placeholder {
+    color: #94a3b8 !important;
+}
+
+/* === Glass Buttons === */
+.glass-btn {
+    background: rgba(255, 255, 255, 0.08) !important;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    box-shadow: 0 0 8px rgba(0, 230, 255, 0.6);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    color: #00E6FF !important;
+}
+.glass-btn:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 0 12px rgba(0, 230, 255, 0.9);
+}
+.glass-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+/* === Category Buttons Smaller & Glass === */
+.menu-category-button {
+    font-family: 'Inter', 'Poppins', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 600;
+    border-radius: 9999px;
+    background: rgba(36,38,45,0.85);
+    color: #fff;
+    padding: 0.5rem 1.2rem;
+    margin-right: 0.5rem;
+    margin-bottom: 0.2rem;
+    box-shadow: 0 2px 8px 0 rgba(58,134,255,0.07);
+    border: 1.5px solid rgba(255,255,255,0.10);
+    transition: background 0.18s, color 0.18s, box-shadow 0.18s;
+    cursor: pointer;
+    outline: none;
+}
+.menu-category-button.bg-primary {
+    background: linear-gradient(90deg, #3A86FF 0%, #FF6B35 100%);
+    color: #fff;
+    box-shadow: 0 4px 16px 0 rgba(58,134,255,0.13);
+}
+.menu-category-button:hover {
+    background: linear-gradient(90deg, #FF6B35 0%, #3A86FF 100%);
+    color: #fff;
+}
+
+#categoryButtons {
+    overflow-x: auto;
+    padding-bottom: 0.2rem;
+    scrollbar-width: thin;
+    scrollbar-color: #FF6B35 #181A20;
+    display: flex;
+    flex-wrap: nowrap;
+    padding: 0.5rem 0;
+}
+#categoryButtons::-webkit-scrollbar {
+    height: 4px;
+}
+#categoryButtons::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 10px;
+}
+#categoryButtons::-webkit-scrollbar-thumb {
+    background: #FF6B35;
+    border-radius: 10px;
+}
+
+/* Masa numarası için modern stil */
+#tableNumber {
+    font-size: 1.8rem;
+    font-weight: 700;
+    background: linear-gradient(90deg, #FF6B35 0%, #3A86FF 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 0 0 10px rgba(255, 107, 53, 0.3);
+    display: inline-block;
+}
+
+h1 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    background: linear-gradient(90deg, #FF6B35 0%, #3A86FF 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 0 0 10px rgba(255, 107, 53, 0.3);
+    display: inline-block;
+}
+
+/* === Header Glass === */
+.header-glass {
+    background: rgba(24, 26, 32, 0.85) !important;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+}
+
+/* further shrink category buttons on very small screens */
+@media (max-width: 375px) {
+    .menu-category-button {
+        font-size: 0.85rem;
+        padding: 0.4rem 1rem;
+    }
+}
+
+/* === MODERN YENİ NESİL RESTORAN UI EKLEMELERİ === */
+body {
+    background: #1E1E2F !important;
+    color: #f1f5f9 !important;
+    font-family: 'Inter', 'Poppins', sans-serif !important;
+}
+
+/* Modern Card */
+.modern-card {
+    background: rgba(36, 38, 45, 0.85) !important;
+    border-radius: 16px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    overflow: hidden;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 16px;
+    position: relative;
+}
+.modern-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25), 
+                0 0 0 1px rgba(255, 107, 53, 0.2);
+    border-color: rgba(255, 107, 53, 0.3);
 }
 
-.cart-popup-top .cart-header h3 {
-    font-size: 20px;
-    font-weight: 700;
+/* Eski fixed-cart-button stilini etkisiz bırak */
+.fixed-cart-button {
+  display: none !important;
 }
 
-.cart-popup-top .close-button {
+/* Yeni akış içi sepet butonu */
+.cart-button-in-flow {
+  width: 100%;
+  max-width: 420px;
+  margin: 0 auto;
+  background: linear-gradient(90deg, rgba(255,107,53,0.85) 0%, rgba(58,134,255,0.85) 100%);
+  color: #fff;
+  font-family: 'Inter', 'Poppins', sans-serif;
+  font-size: 1.15rem;
+  font-weight: 600;
+  border-radius: 2rem;
+  box-shadow: 0 4px 24px 0 rgba(58,134,255,0.10), 0 1.5px 8px 0 rgba(255,107,53,0.10);
+  padding: 0.85rem 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  cursor: pointer;
+  transition: transform 0.15s cubic-bezier(.4,2,.6,1), box-shadow 0.15s;
+  backdrop-filter: blur(8px) saturate(1.2);
+  border: 1.5px solid rgba(255,255,255,0.25);
+}
+.cart-button-in-flow:hover {
+  transform: scale(1.04) translateY(-2px);
+  box-shadow: 0 8px 32px 0 rgba(58,134,255,0.18), 0 3px 16px 0 rgba(255,107,53,0.18);
+  background: linear-gradient(90deg, rgba(58,134,255,0.95) 0%, rgba(255,107,53,0.95) 100%);
+}
+
+.cart-button-in-flow i {
+  font-size: 2rem;
+  filter: drop-shadow(0 1px 2px rgba(0,0,0,0.10));
+}
+
+.cart-button-in-flow #cartItemCount {
+  background: #fff;
+  color: #FF6B35;
+  border: 2px solid #FF6B35;
+  min-width: 28px;
+  font-size: 1rem;
+  font-weight: 700;
+  box-shadow: 0 1px 4px 0 rgba(255,107,53,0.10);
+}
+
+.cart-button-in-flow #cartTotalMini {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #fff;
+  margin-left: 0.5rem;
+}
+
+/* Sepet popup paneli */
+.cart-popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.96);
+    background: rgba(30,34,47,0.98);
+    border-radius: 20px;
+    padding: 28px 20px 20px 20px;
+    width: 92vw;
+    max-width: 420px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.6);
+    color: #fff;
+    z-index: 100;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.22s cubic-bezier(.4,2,.6,1), transform 0.22s cubic-bezier(.4,2,.6,1);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+}
+.cart-popup.open {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translate(-50%, -50%) scale(1);
+}
+.cart-popup .cart-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+}
+.cart-popup .close-button {
     background: none;
     border: none;
-    color: #A0AEC0;
-    font-size: 24px;
+    color: #fff;
+    font-size: 2rem;
     cursor: pointer;
+    opacity: 0.7;
+    transition: opacity 0.15s;
 }
-
-.cart-popup-top .cart-items {
-    max-height: 300px;
+.cart-popup .close-button:hover {
+    opacity: 1;
+}
+.cart-popup .cart-items {
+    max-height: 180px;
     overflow-y: auto;
-    margin-bottom: 16px;
+    margin-bottom: 12px;
+}
+.cart-popup .note {
+    width: 100%;
+    border-radius: 12px;
+    border: 1px solid #334155;
+    background: rgba(255,255,255,0.06);
+    color: #f1f5f9;
+    padding: 10px;
+    margin-bottom: 14px;
+    font-size: 1rem;
+    resize: none;
+}
+.cart-popup .order-button {
+    width: 100%;
+    background: linear-gradient(90deg, #fb923c 0%, #f97316 100%);
+    color: #fff;
+    border: none;
+    border-radius: 9999px;
+    padding: 14px 0;
+    font-size: 1.1rem;
+    font-weight: 600;
+    box-shadow: 0 2px 12px rgba(251,146,60,0.18);
+    cursor: pointer;
+    transition: background 0.18s, box-shadow 0.18s;
+}
+.cart-popup .order-button:hover {
+    background: linear-gradient(90deg, #f97316 0%, #fb923c 100%);
+    box-shadow: 0 4px 24px rgba(251,146,60,0.28);
 }
 
+/* Pulse animasyonu ürün eklenince */
+@keyframes pulse {
+    0% { box-shadow: 0 0 0 0 rgba(251,146,60,0.5); }
+    70% { box-shadow: 0 0 0 10px rgba(251,146,60,0); }
+    100% { box-shadow: 0 0 0 0 rgba(251,146,60,0); }
+}
+.pulse {
+    animation: pulse 0.5s;
+}
+
+/* Sepet popup arka plan blur */
+.cart-popup-bg {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(30,34,47,0.7);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    z-index: 99;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.18s;
+}
+.cart-popup-bg.open {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+/* Responsive tweaks */
+@media (max-width: 600px) {
+    .cart-popup {
+        padding: 16px 6px 12px 6px;
+        max-width: 98vw;
+    }
+    .fixed-cart-button {
+        padding: 12px 10vw;
+        font-size: 1rem;
+    }
+}
+
+/* Kategori barı glassmorphism */
+.bg-glass-category {
+  margin-bottom: 0.5rem;
+  z-index: 19;
+  background: rgba(24,26,32,0.9) !important;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+
+/* Masa numarası belirgin renk */
+.masa-renk {
+  font-size: 1.8rem;
+  font-weight: 700;
+  background: linear-gradient(90deg, #FF6B35 0%, #3A86FF 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 0 10px rgba(255, 107, 53, 0.3);
+  display: inline-block;
+}
+
+/* Sepet ikonu üstte */
+.cart-icon-top {
+  position: relative;
+  background: rgba(255, 107, 53, 0.15);
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #FF6B35;
+  border: 1px solid rgba(255, 107, 53, 0.3);
+  box-shadow: 0 0 10px rgba(255, 107, 53, 0.2);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.cart-icon-top:hover {
+  background: rgba(255, 107, 53, 0.25);
+  box-shadow: 0 0 15px rgba(255, 107, 53, 0.35);
+}
+.cart-icon-top #cartItemCount {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  background: #FF6B35;
+  color: white;
+  border-radius: 50%;
+  width: 22px;
+  height: 22px;
+  font-size: 0.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  border: 2px solid #181A20;
+}
+
+/* Sepet popup üstte, ikonun hemen altında açılır */
+.cart-popup-top {
+  position: absolute;
+  top: 50px;
+  right: 0;
+  width: 320px;
+  background: #24262D !important;
+  border-radius: 16px;
+  padding: 1rem;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2), 0 0 0 1px rgba(255, 255, 255, 0.1);
+  z-index: 100;
+  transform: translateY(-10px);
+  opacity: 0;
+  visibility: hidden;
+  transition: transform 0.3s ease, opacity 0.3s ease, visibility 0.3s ease;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  max-height: 80vh;
+  overflow-y: auto;
+}
+.cart-popup-top.open {
+  transform: translateY(0);
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Mobile responsive cart popup */
+@media (max-width: 600px) {
+  .cart-popup-top {
+    position: fixed;
+    top: auto;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    border-radius: 16px 16px 0 0;
+    max-height: 80vh;
+    transform: translateY(100%);
+    z-index: 1000;
+  }
+  
+  .cart-popup-top.open {
+    transform: translateY(0);
+  }
+  
+  .cart-popup-top textarea,
+  .cart-popup-top .order-button {
+    width: 100%;
+    box-sizing: border-box;
+    margin-top: 0.75rem;
+  }
+  
+  .cart-popup-top .order-button {
+    margin-bottom: 1rem;
+    padding: 0.75rem;
+    font-size: 1rem;
+  }
+}
+
+/* Cart textarea and order button */
+.cart-popup-top textarea,
 .cart-popup-top .note {
     width: 100%;
-    background-color: #1E1F25;
-    border: 1px solid #3E4152;
+    background: rgba(255, 255, 255, 0.05) !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
     border-radius: 8px;
-    padding: 12px;
-    color: white;
-    font-size: 14px;
-    margin-bottom: 16px;
-    resize: none;
+    color: #fff !important;
+    padding: 0.5rem;
+    font-size: 0.9rem;
+    resize: vertical;
+    min-height: 60px;
+    margin-top: 0.75rem;
 }
 
 .cart-popup-top .order-button {
     width: 100%;
-    background: linear-gradient(135deg, #FF6B35 0%, #FF9F1C 100%);
+    background: linear-gradient(90deg, #FF6B35 0%, #3A86FF 100%);
     color: white;
     border: none;
     border-radius: 8px;
-    padding: 14px;
-    font-size: 16px;
+    padding: 0.75rem;
     font-weight: 600;
     cursor: pointer;
-    box-shadow: 0 2px 8px rgba(255,107,53,0.3);
-    transition: transform 0.2s, box-shadow 0.2s;
+    transition: all 0.2s ease;
+    margin-top: 0.75rem;
+    box-shadow: 0 4px 10px rgba(255, 107, 53, 0.3);
 }
 
 .cart-popup-top .order-button:hover {
+    background: linear-gradient(90deg, #FF6B35 20%, #3A86FF 120%);
     transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(255,107,53,0.4);
+    box-shadow: 0 6px 15px rgba(255, 107, 53, 0.4);
 }
 
-/* MOBİL UYUMLULUK */
-@media (max-width: 640px) {
-    header {
-        padding: 10px 12px;
-    }
-    
-    .masa-renk {
-        font-size: 20px;
-    }
-    
-    .garson-coal-bar {
-        padding: 8px;
-        top: 52px;
-    }
-    
-    .bg-glass-category {
-        padding: 6px 8px;
-        top: 100px;
-    }
-    
-    .menu-category-button {
-        padding: 6px 12px;
-        font-size: 13px;
-    }
-    
-    #menuItemsContainer {
-        padding: 12px;
-        gap: 12px;
-    }
-    
-    .modern-card {
-        padding: 12px;
-        gap: 12px;
-    }
-    
-    .modern-card img {
-        width: 50px;
-        height: 50px;
-    }
-    
-    .cart-popup-top {
-        padding: 20px;
-        width: 95%;
-    }
+/* Ürün grid kartları */
+#menuItemsContainer {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+  padding-bottom: 5rem;
+}
+@media (max-width: 900px) {
+  #menuItemsContainer {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .modern-card {
+    padding: 0.75rem;
+  }
+}
+@media (max-width: 600px) {
+  #menuItemsContainer {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+  
+  .modern-card {
+    margin-bottom: 0.75rem;
+    padding: 0.75rem;
+  }
+  
+  .garson-coal-bar {
+    padding: 0.5rem;
+    top: 56px !important;
+  }
+}
+
+/* Garson/Köz barı sticky ve üstte */
+.garson-coal-bar {
+  background: rgba(24, 26, 32, 0.9) !important;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+}
+
+/* Kategori barı spacing ve sticky */
+.bg-glass-category {
+  margin-bottom: 0.5rem;
+  z-index: 19;
+}
+
+/* Garson/Köz butonları */
+footer {
+  background: transparent;
+  z-index: 5;
+}
+.call-btn {
+  font-size: 1.1rem;
+  border-radius: 2rem;
+  box-shadow: 0 2px 8px 0 rgba(58,134,255,0.07);
+  transition: box-shadow 0.15s, background 0.15s;
+}
+.call-btn:hover {
+  box-shadow: 0 8px 32px 0 rgba(255,107,53,0.13);
+  background: linear-gradient(90deg, #FF6B35 0%, #3A86FF 100%);
+}
+
+/* Eski sepet butonu stillerini kaldır */
+.cart-button-in-flow, .fixed-cart-button { display: none !important; }
+
+/* HEADER */
+header {
+  background: rgba(24, 26, 32, 0.95) !important;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+  padding: 0.75rem 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  z-index: 50;
+}
+
+/* Mobil uyumluluk ve responsive düzenlemeler */
+@media (max-width: 600px) {
+  header, .garson-coal-bar, .bg-glass-category, main, footer {
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+  }
+  header {
+    padding-top: 0.6rem;
+    padding-bottom: 0.6rem;
+  }
+  .garson-coal-bar {
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+  }
+  .bg-glass-category {
+    padding-top: 0.25rem;
+    padding-bottom: 0.25rem;
+  }
+  nav .flex.items-center, .kategori-action-btns {
+    overflow-x: auto;
+  }
+  .menu-category-button {
+    font-size: 0.85rem;
+    padding: 0.4rem 0.9rem;
+  }
+  #menuItemsContainer {
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+  }
+  .modern-card {
+    border-radius: 12px;
+    padding: 0.75rem;
+  }
+  .cart-popup-top {
+    width: 100%;
+    left: 0;
+    right: 0;
+    border-radius: 16px 16px 0 0;
+    padding: 1rem;
+  }
+  .cart-popup-top textarea,
+  .cart-popup-top .note {
+    font-size: 0.9rem;
+    padding: 0.5rem;
+  }
+  .cart-popup-top .order-button {
+    font-size: 1rem;
+    padding: 0.6rem;
+  }
+}
+@media (max-width: 480px) {
+  header, .garson-coal-bar, .bg-glass-category, main, footer {
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+  }
+  .menu-category-button {
+    font-size: 0.8rem;
+    padding: 0.35rem 0.8rem;
+  }
+  .cart-popup-top {
+    padding: 0.75rem;
+  }
+  .cart-popup-top textarea,
+  .note {
+    font-size: 0.85rem;
+  }
+  .cart-popup-top .order-button {
+    font-size: 0.95rem;
+    padding: 0.5rem;
+  }
+}
+
+/* Kartlar ve grid overflow düzeltmeleri */
+#menuItemsContainer, .modern-card {
+  min-width: 0;
+  max-width: 100vw;
+  box-sizing: border-box;
+}
+
+body, html {
+  overflow-x: hidden;
+  max-width: 100vw;
+}
+
+/* Kategori barı aksiyon butonları */
+.kategori-action-btns {
+  flex-shrink: 0;
+  gap: 0.5rem;
+}
+@media (max-width: 900px) {
+  .kategori-action-btns {
+    flex-direction: column;
+    gap: 0.4rem;
+    margin-left: 0.5rem;
+  }
+}
+@media (max-width: 600px) {
+  .kategori-action-btns {
+    flex-direction: row;
+    width: 100%;
+    justify-content: flex-end;
+    margin-top: 0.5rem;
+    margin-left: 0;
+  }
+  nav .flex.items-center {
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+}
+.call-btn {
+  font-size: 0.98rem;
+  padding: 0.6rem 1.1rem;
+  min-width: 120px;
+  max-width: 180px;
+  white-space: nowrap;
+}
+
+* {
+  box-sizing: border-box !important;
+}
+
+.modern-card, .cart-popup-top, .menu-category-button, .call-btn, .cart-icon-top, .cart-header, .cart-items, .note, .order-button {
+  word-break: break-word;
+  text-overflow: ellipsis;
+  overflow-wrap: break-word;
+}
+
+img, svg {
+  max-width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+
+/* Add to cart button styling */
+.add-to-cart-btn {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #FF6B35 0%, #FF8F6B 100%);
+    color: white;
+    border: none;
+    box-shadow: 0 4px 10px rgba(255, 107, 53, 0.3);
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.add-to-cart-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 15px rgba(255, 107, 53, 0.4);
+}
+
+/* Quantity buttons styling */
+.quantity-btn {
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(36, 38, 45, 0.9);
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.quantity-btn:hover {
+    background: rgba(255, 107, 53, 0.2);
+}
+
+/* Toast notification styling */
+#toast {
+    background: rgba(36, 38, 45, 0.95);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
 } 
