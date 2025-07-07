@@ -466,6 +466,7 @@ function openCartModal() {
     }
     const backdrop = document.getElementById('modalBackdrop');
     if (backdrop) backdrop.style.display = 'block';
+    document.body.classList.add('modal-open');
 }
 
 function closeCartModal() {
@@ -475,6 +476,7 @@ function closeCartModal() {
     }
     const backdrop = document.getElementById('modalBackdrop');
     if (backdrop) backdrop.style.display = 'none';
+    document.body.classList.remove('modal-open');
 }
 
 function updateCartUI() {

@@ -586,9 +586,9 @@ body {
     left: 0 !important;
     width: 100vw !important;
     height: 100vh !important;
-    background: rgba(24, 26, 32, 0.98) !important;
+    background: rgba(24, 26, 32, 0.99) !important;
     border-radius: 0 !important;
-    z-index: 3000 !important;
+    z-index: 9999 !important;
     box-shadow: none !important;
     display: flex;
     flex-direction: column;
@@ -602,14 +602,10 @@ body {
 .cart-popup-top:not(.open) {
     display: none;
 }
-.cart-header {
-    width: 100%;
+.cart-header, .cart-items, #orderNoteInput, .order-button {
     max-width: 400px;
     margin: 0 auto;
-}
-.cart-items, #orderNoteInput, .order-button {
-    max-width: 400px;
-    margin: 0 auto;
+    z-index: 10000;
 }
 @media (max-width: 600px) {
     .cart-popup-top {
@@ -1347,4 +1343,9 @@ body {
     body {
         padding-top: 140px;
     }
+}
+
+/* Modal açıkken body scroll'u engelle */
+body.modal-open {
+    overflow: hidden !important;
 } 
