@@ -17,10 +17,30 @@
         <div class="bg-white shadow-md p-4 fixed top-0 left-0 right-0 z-10 flex flex-col gap-2">
             <div class="flex items-start justify-between">
                 <div>
-                    <h1 class="text-xl font-semibold">Masa <span id="tableNumber">0</span></h1>
+                    <h1 class="text-xl font-semibold">Masa <span id="tableNumber" class="masa-renk">0</span></h1>
                     <p class="text-sm text-gray-600">Hoş geldiniz!</p>
                 </div>
                 <div class="flex flex-col gap-2 items-end">
+                    <!-- Sepet ikonu en üstte -->
+                    <div class="relative">
+                        <button id="viewCartButton" class="cart-icon-top flex items-center justify-center">
+                            <i class="ri-shopping-cart-2-line text-2xl"></i>
+                            <span id="cartItemCount" class="ml-1 bg-white text-primary text-xs rounded-full flex items-center justify-center font-bold border-2 border-primary px-2 py-0.5" style="min-width: 22px;">0</span>
+                        </button>
+                        <!-- Sepet Popup Paneli ve Blur Arka Plan (ikonun hemen altında açılacak) -->
+                        <div id="cartPopupBg" class="cart-popup-bg"></div>
+                        <div id="cartModal" class="cart-popup-top">
+                            <div class="cart-header">
+                                <h3>Sepetim</h3>
+                                <button id="closeCartModal" class="close-button">&times;</button>
+                            </div>
+                            <div class="cart-items" id="cartItemsList">
+                                <p class="text-gray-500 text-center text-sm py-2">Sepetiniz boş</p>
+                            </div>
+                            <textarea id="orderNoteInput" class="note" rows="2" placeholder="Sipariş notunuz (isteğe bağlı)"></textarea>
+                            <button id="placeOrderButton" class="order-button">Sipariş Ver</button>
+                        </div>
+                    </div>
                     <button id="callWaiterButton" class="call-btn bg-gradient-to-r from-orange-400 to-orange-500 text-white px-4 py-2 rounded-full font-semibold shadow-md text-sm flex items-center gap-2 w-max">
                         <i class="ri-user-voice-line text-lg"></i> Garsonu Çağır
                     </button>
@@ -30,7 +50,7 @@
                 </div>
             </div>
             <!-- Kategori Seçimi -->
-            <div class="mt-3 overflow-x-auto">
+            <div class="mt-3 overflow-x-auto bg-glass-category rounded-xl px-2 py-1">
                 <div id="categoryButtons" class="flex space-x-2 pb-2"></div>
             </div>
         </div>
@@ -55,37 +75,15 @@
         </div>
 
         <!-- Menü ve Sipariş Bölümü -->
-        <div class="mt-28 p-4">
-            <!-- Kategori Seçimi -->
+        <div class="mt-36 p-4">
             <!-- Menü Öğeleri -->
-            <div id="menuItemsContainer" class="space-y-3 mb-24">
+            <div id="menuItemsContainer" class="grid grid-cols-2 gap-4 mb-24">
                 <!-- Menü öğeleri buraya dinamik olarak eklenecek -->
-                <div class="animate-pulse flex justify-center items-center p-4">
+                <div class="animate-pulse flex justify-center items-center p-4 col-span-2">
                     <i class="ri-loader-2-line text-primary text-3xl animate-spin"></i>
                     <span class="ml-2">Menü yükleniyor...</span>
                 </div>
             </div>
-
-            <!-- Sepete Ekle Butonu (artık fixed değil, akışta) -->
-            <div id="viewCartButton" class="cart-button-in-flow mt-4 flex items-center justify-center gap-2">
-                <i class="ri-shopping-cart-2-line text-2xl"></i>
-                <span id="cartItemCount" class="ml-2 bg-white text-primary text-sm rounded-full flex items-center justify-center font-bold border-2 border-primary px-2 py-1" style="min-width: 28px;">0</span>
-                <span id="cartTotalMini" class="ml-2 font-semibold"></span>
-            </div>
-        </div>
-
-        <!-- Sepet Popup Paneli ve Blur Arka Plan -->
-        <div id="cartPopupBg" class="cart-popup-bg"></div>
-        <div id="cartModal" class="cart-popup">
-            <div class="cart-header">
-                <h3>Sepetim</h3>
-                <button id="closeCartModal" class="close-button">&times;</button>
-            </div>
-            <div class="cart-items" id="cartItemsList">
-                <p class="text-gray-500 text-center text-sm py-2">Sepetiniz boş</p>
-            </div>
-            <textarea id="orderNoteInput" class="note" rows="2" placeholder="Sipariş notunuz (isteğe bağlı)"></textarea>
-            <button id="placeOrderButton" class="order-button">Sipariş Ver</button>
         </div>
     </div>
 

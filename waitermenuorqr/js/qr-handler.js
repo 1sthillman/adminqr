@@ -96,11 +96,11 @@ async function getOrCreateTable() {
     } else {
         // Sadece masa_no ve durum ile yeni masa ekle, id gönderme
         const { data: newTable, error: insertError } = await supabase
-            .from('masalar')
+                .from('masalar')
             .insert({ masa_no: tableNumber, durum: 'bos' })
-            .select('id')
-            .single();
-        
+                .select('id')
+                .single();
+                
         if (insertError) {
             throw new Error('Yeni masa oluşturulamadı: ' + insertError.message);
         }
@@ -220,7 +220,12 @@ function renderMenuItems(categoryName) {
 
 function setupEventListeners() {
     document.getElementById('callWaiterButton').addEventListener('click', callWaiter);
-    document.getElementById('viewCartButton').addEventListener('click', openCartModal);
+    document.getElementById('viewCartButton').addEventListener('click', function(e) {
+        e.stopPropagation();
+        const modal = document.getElementById('cartModal');
+        modal.classList.toggle('open');
+        updateCartUI();
+    });
     document.getElementById('placeOrderButton').addEventListener('click', placeOrder);
     // Köz İstiyorum butonu için event listener
     const coalBtn = document.getElementById('requestCoalButton');
@@ -230,8 +235,20 @@ function setupEventListeners() {
     // Sepet popup kapatma
     const closeCartBtn = document.getElementById('closeCartModal');
     if (closeCartBtn) {
-        closeCartBtn.addEventListener('click', closeCartModal);
+        closeCartBtn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            document.getElementById('cartModal').classList.remove('open');
+        });
     }
+    // Dışarı tıklanınca popup kapansın
+    document.addEventListener('click', function(e) {
+        const modal = document.getElementById('cartModal');
+        if (modal.classList.contains('open')) {
+            if (!modal.contains(e.target) && !document.getElementById('viewCartButton').contains(e.target)) {
+                modal.classList.remove('open');
+            }
+        }
+    });
     // Menü container'ı için olay delegasyonu (event delegation)
     const menuContainer = document.getElementById('menuItemsContainer');
     menuContainer.addEventListener('click', (e) => {
