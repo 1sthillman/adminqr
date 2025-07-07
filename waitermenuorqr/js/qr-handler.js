@@ -363,44 +363,31 @@ function closeCartModal() {
 }
 
 function updateCartUI() {
-    const cartButton = document.getElementById('viewCartButton');
-    const cartItemCount = document.getElementById('cartItemCount');
-    const cartTotalMini = document.getElementById('cartTotalMini');
     const cartItemsList = document.getElementById('cartItemsList');
-    const placeOrderButton = document.getElementById('placeOrderButton');
-    const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
-    const total = cart.reduce((sum, item) => sum + (item.fiyat * item.quantity), 0);
-    // Sepet butonu
-    cartItemCount.textContent = totalItems;
-    cartTotalMini.textContent = total > 0 ? `${total.toLocaleString('tr-TR')}₺` : '';
-    // Sepet popup içeriği
-    if (totalItems > 0) {
-        placeOrderButton.disabled = false;
-        cartItemsList.innerHTML = '';
-        cart.forEach(item => {
-            const itemElement = document.createElement('div');
-            itemElement.className = 'flex justify-between items-center py-2 border-b border-gray-700';
-            const imageUrl = item.image_url || DEFAULT_IMAGES[item.kategori?.toLowerCase()] || DEFAULT_IMAGES.default;
-            itemElement.innerHTML = `
-                <div class="flex items-center flex-1">
-                    <div class="w-10 h-10 mr-2 rounded-lg overflow-hidden flex-shrink-0">
-                        <img src="${imageUrl}" alt="${item.ad}" class="w-full h-full object-cover" onerror="this.src='${DEFAULT_IMAGES.default}'">
-                    </div>
-                    <div class="flex-1">
-                        <div class="text-sm font-medium">${item.ad} <span class="text-xs text-gray-400">x${item.quantity}</span></div>
-                    </div>
-                </div>
-                <div class="text-sm font-semibold">${(item.fiyat * item.quantity).toLocaleString('tr-TR')}₺</div>
-            `;
-            cartItemsList.appendChild(itemElement);
-            // Pulse animasyonu
-            itemElement.classList.add('pulse');
-            setTimeout(() => itemElement.classList.remove('pulse'), 500);
-        });
+    const cartItemCount = document.getElementById('cartItemCount');
+    let total = 0;
+    if (cart.length === 0) {
+        cartItemsList.innerHTML = `<p class="text-gray-500 text-center text-sm py-2">Sepetiniz boş</p>`;
     } else {
-        placeOrderButton.disabled = true;
-        cartItemsList.innerHTML = '<p class="text-gray-500 text-center text-sm py-2">Sepetiniz boş</p>';
+        cartItemsList.innerHTML = cart.map(item => `
+            <div class="flex items-center justify-between py-2 border-b border-gray-200">
+                <div class="flex-1">
+                    <div class="font-medium text-base">${item.ad}</div>
+                    <div class="text-xs text-gray-500">${item.fiyat?.toLocaleString('tr-TR')}₺ x ${item.quantity}</div>
+                </div>
+                <div class="flex items-center gap-2">
+                    <button class="quantity-btn bg-gray-200 px-2 py-1 rounded" data-id="${item.id}" data-action="decrease">-</button>
+                    <span class="font-semibold">${item.quantity}</span>
+                    <button class="quantity-btn bg-gray-200 px-2 py-1 rounded" data-id="${item.id}" data-action="increase">+</button>
+                </div>
+            </div>
+        `).join('');
+        total = cart.reduce((sum, item) => sum + (item.fiyat * item.quantity), 0);
+        // Toplam fiyatı göster
+        cartItemsList.innerHTML += `<div class="flex justify-between items-center mt-3 mb-2 text-base font-bold"><span>Toplam</span><span>${total.toLocaleString('tr-TR')}₺</span></div>`;
     }
+    cartItemCount.textContent = cart.reduce((sum, item) => sum + item.quantity, 0);
+    // Not ve sipariş butonu her zaman popup'ın altında olacak (HTML'de zaten var)
 }
 
 // Sepet popup açma/kapama eventleri
