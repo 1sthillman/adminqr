@@ -1,12 +1,13 @@
 :where([class^="ri-"])::before { content: "\f3c2"; }
 
-html, body, #qrPage {
+html, body, #qrPage, header, .garson-coal-bar, .bg-glass-category, main, footer, #menuItemsContainer, .modern-card, .cart-popup-top, nav {
     background: #181A20 !important;
     color: #fff;
-    overflow-x: hidden;
-    max-width: 100vw;
+    overflow-x: hidden !important;
+    max-width: 100vw !important;
     font-family: 'Inter', 'Poppins', sans-serif !important;
     min-height: 100vh;
+    box-sizing: border-box !important;
 }
 
 .notification-sound {
@@ -856,4 +857,20 @@ body, html {
   min-width: 120px;
   max-width: 180px;
   white-space: nowrap;
+}
+
+* {
+  box-sizing: border-box !important;
+}
+
+.modern-card, .cart-popup-top, .menu-category-button, .call-btn, .cart-icon-top, .cart-header, .cart-items, .note, .order-button {
+  word-break: break-word;
+  text-overflow: ellipsis;
+  overflow-wrap: break-word;
+}
+
+img, svg {
+  max-width: 100%;
+  height: auto;
+  display: block;
 } 
