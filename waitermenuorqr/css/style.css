@@ -1,11 +1,12 @@
 :where([class^="ri-"])::before { content: "\f3c2"; }
 
-body, html {
+html, body, #qrPage {
     background: #181A20 !important;
     color: #fff;
     overflow-x: hidden;
     max-width: 100vw;
     font-family: 'Inter', 'Poppins', sans-serif !important;
+    min-height: 100vh;
 }
 
 .notification-sound {
