@@ -1458,6 +1458,220 @@ button, .order-button, .call-btn, .menu-category-button {
 
 /* --- Topbar ve Kategori Barı --- */
 .topbar-fixed {
+  background: linear-gradient(135deg, #181A20 60%, #23272f 100%);
+  box-shadow: 0 2px 16px #00fff033;
+  border-bottom: 2px solid #00fff033;
+  padding: 0.5rem 1rem 0.3rem 1rem;
+  border-radius: 0 0 18px 18px;
+}
+.topbar-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.2rem;
+}
+.masa-numarasi {
+  color: #00fff0;
+  font-size: 1.1rem;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+}
+.masa-renk {
+  color: #ff00ea;
+}
+.topbar-actions {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1.2rem;
+  width: 100%;
+  margin-top: 0.7rem;
+}
+.call-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  min-width: 170px;
+  min-height: 54px;
+  background: linear-gradient(90deg, #00fff0 0%, #3A86FF 100%);
+  color: #181A20;
+  border-radius: 22px;
+  font-weight: 800;
+  font-size: 1.18rem;
+  box-shadow: 0 4px 24px #00fff055, 0 1px 8px #3A86FF33;
+  border: none;
+  padding: 0.9rem 2.5rem;
+  margin: 0 0.2rem;
+  transition: background 0.18s, color 0.18s, box-shadow 0.18s, transform 0.12s;
+  letter-spacing: 0.01em;
+  cursor: pointer;
+  outline: none;
+}
+.call-btn i {
+  font-size: 1.45em;
+  margin-right: 0.5em;
+}
+#callWaiterButton {
+  background: linear-gradient(90deg, #ff6b35 0%, #ff00ea 100%);
+  color: #fff;
+  box-shadow: 0 4px 24px #ff00ea55, 0 1px 8px #ff6b3555;
+}
+#callWaiterButton:hover {
+  background: linear-gradient(90deg, #ff00ea 0%, #ff6b35 100%);
+  color: #fff;
+  box-shadow: 0 8px 32px #ff00ea99;
+  transform: translateY(-2px) scale(1.05);
+}
+#requestCoalButton {
+  background: linear-gradient(90deg, #3A86FF 0%, #00fff0 100%);
+  color: #fff;
+  box-shadow: 0 4px 24px #00fff055, 0 1px 8px #3A86FF55;
+}
+#requestCoalButton:hover {
+  background: linear-gradient(90deg, #00fff0 0%, #3A86FF 100%);
+  color: #181A20;
+  box-shadow: 0 8px 32px #00fff099;
+  transform: translateY(-2px) scale(1.05);
+}
+.call-btn:hover {
+  background: linear-gradient(90deg, #3A86FF 0%, #00fff0 100%);
+  color: #181A20;
+  box-shadow: 0 4px 20px #3A86FF55;
+}
+.category-toggle-btn:hover {
+  background: linear-gradient(90deg, #ff00ea 0%, #00fff0 100%);
+  color: #fff;
+}
+#categoryButtons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.2rem 0.3rem;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 0.2rem;
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  transition: max-height 0.4s cubic-bezier(0.4,0,0.2,1), opacity 0.3s;
+}
+#categoryButtons.open {
+  max-height: 400px;
+  opacity: 1;
+  margin-bottom: 0.5rem;
+}
+#menuItemsContainer {
+  margin-top: 4.5rem !important;
+}
+
+body {
+    padding-top: 0 !important;
+}
+
+@media (max-width: 600px) {
+    .topbar-content {
+        flex-direction: column;
+        gap: 1rem;
+        align-items: flex-start;
+    }
+    .topbar-actions {
+        width: 100%;
+        justify-content: flex-start;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+    }
+    body {
+        padding-top: 140px;
+    }
+}
+
+/* Modal açıkken body scroll'u engelle */
+body.modal-open {
+    overflow: hidden !important;
+} 
+
+/* --- Modern Neon Ürün Kartları ve Grid --- */
+#menuItemsContainer {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.5rem;
+}
+
+.modern-card {
+  background: rgba(24,26,32,0.95);
+  border-radius: 20px;
+  border: 2.5px solid;
+  border-image: linear-gradient(135deg, #00fff0 0%, #ff00ea 100%) 1;
+  box-shadow: 0 4px 32px 0 rgba(0,255,255,0.12), 0 1.5px 8px 0 rgba(255,0,234,0.10);
+  padding: 1.2rem 1rem;
+  transition: transform 0.15s, box-shadow 0.15s;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 180px;
+}
+.modern-card:hover {
+  transform: translateY(-4px) scale(1.03);
+  box-shadow: 0 8px 40px 0 #00fff0cc, 0 2px 16px 0 #ff00eacc;
+  border-image: linear-gradient(135deg, #ff00ea 0%, #00fff0 100%) 1;
+}
+
+.product-image {
+  width: 90px;
+  height: 90px;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 0 0 3px #00fff0, 0 0 16px #ff00ea99;
+  margin-right: 1rem;
+  background: #181A20;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.product-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 16px;
+}
+
+/* --- Modern Butonlar --- */
+button, .order-button, .call-btn, .menu-category-button {
+  border-radius: 12px !important;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  transition: background 0.15s, color 0.15s, box-shadow 0.15s;
+}
+.order-button, .call-btn {
+  background: linear-gradient(90deg, #00fff0 0%, #ff00ea 100%);
+  color: #181A20;
+  box-shadow: 0 2px 12px #00fff099, 0 1px 4px #ff00ea66;
+  border: none;
+}
+.order-button:hover, .call-btn:hover {
+  background: linear-gradient(90deg, #ff00ea 0%, #00fff0 100%);
+  color: #fff;
+}
+.menu-category-button {
+  background: #23272f;
+  color: #fff;
+  margin-right: 0.3rem;
+  margin-bottom: 0.4rem;
+  padding: 0.35rem 0.7rem;
+  border: none;
+  font-size: 0.97rem;
+  min-width: 80px;
+  display: inline-block;
+  text-align: center;
+}
+.menu-category-button.bg-primary {
+  background: linear-gradient(90deg, #00fff0 0%, #ff00ea 100%);
+  color: #181A20;
+  box-shadow: 0 2px 8px #00fff099;
+}
+
+/* --- Topbar ve Kategori Barı --- */
+.topbar-fixed {
   background: #20232a;
   box-shadow: 0 2px 8px #00fff022;
   border-bottom: 1.5px solid #00fff033;
@@ -1597,4 +1811,19 @@ button, .order-button, .call-btn, .menu-category-button {
     max-width: 98vw;
     padding: 1.1rem 0.5rem 1rem 0.5rem;
   }
+} 
+
+.contact-footer {
+  background: rgba(24,26,32,0.97);
+  border-top: 1.5px solid #00fff033;
+  margin-top: 2rem;
+  box-shadow: 0 -2px 16px #00fff022;
+}
+.contact-mail-link {
+  color: #00fff0;
+  transition: color 0.15s;
+}
+.contact-mail-link:hover {
+  color: #ff00ea;
+  text-decoration: underline;
 } 
