@@ -16,27 +16,27 @@
     <!-- SABİT TOPBAR -->
     <div class="topbar-fixed">
         <div class="topbar-content">
+            <button id="viewCartButton" class="cart-icon-top">
+                <i class="ri-shopping-cart-2-line text-lg"></i>
+                <span id="cartItemCount" class="absolute">0</span>
+            </button>
             <div class="masa-numarasi">
                 <span class="text-xl font-bold">Masa </span>
                 <span id="tableNumber" class="masa-renk ml-1">17</span>
             </div>
-            <div class="topbar-actions-bg">
-                <button id="callWaiterButton" class="call-btn">
+            <div class="topbar-actions justify-center w-full flex-col items-center">
+                <button id="callWaiterButton" class="call-btn mb-2">
                     <i class="ri-user-voice-line mr-1"></i> Garson Çağır
                 </button>
-                <button id="requestCoalButton" class="call-btn">
+                <button id="requestCoalButton" class="call-btn mb-2">
                     <i class="ri-fire-line mr-1"></i> Köz İstiyorum
                 </button>
-                <button id="viewCartButton" class="cart-icon-top">
-                    <i class="ri-shopping-cart-2-line text-lg"></i>
-                    <span id="cartItemCount" class="absolute">0</span>
-                </button>
+                <button id="toggleCategoriesBtn" class="category-toggle-btn mb-2">Kategoriler</button>
             </div>
         </div>
         <!-- KATEGORİ BAR AÇILIR MENÜ -->
         <nav class="bg-glass-category w-full px-3 py-2" id="categoryNav">
             <div class="flex flex-col items-center">
-                <button id="toggleCategoriesBtn" class="category-toggle-btn mb-2">Kategoriler</button>
                 <div id="categoryButtons" class="flex pb-0.5 flex-wrap justify-center"></div>
             </div>
         </nav>
@@ -45,7 +45,7 @@
     <div id="qrPage" class="min-h-screen flex flex-col">
         <!-- HEADER KALDIRILDI -->
         <!-- ÜRÜNLER -->
-        <main class="flex-1 p-3 mt-48">
+        <main class="flex-1 p-3 mt-56">
             <div id="menuItemsContainer" class="mb-4"></div>
         </main>
     </div>
